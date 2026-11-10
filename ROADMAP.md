@@ -6,7 +6,7 @@ Cozy, replayable circuit puzzles with no timer or move limit. Progression should
 
 ## Current milestone
 
-The 12-stage campaign and Stage Clear screen work. Existing matching, shields, walls, shape selection, hints, undo, wire animation, and pop effects are included.
+The guided Level 0, 12-stage campaign, tutorial completion screen, and Stage Clear screen work. Existing matching, shields, walls, shape selection, hints, undo, wire animation, and pop effects are included.
 
 Dead ends are possible, but uncommon and unevenly distributed across the current campaign. Failure is defined as remaining chips with no legal pair. The game currently shows a message and offers undo/restart; a dedicated fail or recovery screen is not implemented.
 
@@ -20,3 +20,4 @@ Dead ends are possible, but uncommon and unevenly distributed across the current
 - Premium currency was discussed; direct cosmetic purchases are the current simpler starting direction. No purchase, reward, pricing, or currency implementation exists.
 
 Finish Doom Scrolling first, then return to this game, then build a third game. Doom Scrolling and the other cabinet prototypes are outside this repository.
+

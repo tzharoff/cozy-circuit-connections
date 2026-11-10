@@ -10,6 +10,7 @@ Match two identical chips along an empty horizontal/vertical path with at most t
 
 ## Included
 
+- Guided Level 0 with four small lessons: matching, bends, shields, and walls.
 - 12 deterministic campaign stages, sequential unlocks, level selection, and replays.
 - Stage Clear screen with Next Stage, Replay, and Level Select.
 - Endless mode and six shapes: Classic, Ring, Cross, Islands, Bridge, and Staircase.
@@ -27,7 +28,7 @@ With Node.js 20 or newer:
 npm test
 ```
 
-No dependency installation is needed. Checks exercise all campaign solutions, unlocking and save restoration, 300 wall layouts, blocked routes, undo, spark arrival, and pop timing. These are logic and mocked-animation checks; they do not replace visual browser testing.
+No dependency installation is needed. Checks exercise tutorial guidance and saved lessons, all campaign solutions, unlocking and save restoration, 300 wall layouts, blocked routes, undo, spark arrival, and pop timing. These are logic and mocked-animation checks; they do not replace visual browser testing.
 
 ## Project structure
 
@@ -36,3 +37,4 @@ No dependency installation is needed. Checks exercise all campaign solutions, un
 - `ROADMAP.md`: agreed direction and features held for later.
 
 This is an early playable prototype. No ads, payments, premium currency, or backend services are implemented.
+
