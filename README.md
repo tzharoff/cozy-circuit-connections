@@ -61,4 +61,6 @@ Progress is saved locally, not in GitHub or an account. Changing browser or orig
 
 See [ARCHITECTURE.md](ARCHITECTURE.md) for source boundaries, the match lifecycle, and save compatibility. See [ROADMAP.md](ROADMAP.md) for the agreed direction.
 
+The detailed gameplay, lives, currency, rotating challenges, and social-race notes are in [docs/GAME_DESIGN.md](docs/GAME_DESIGN.md). That document distinguishes decisions from implemented features and open questions.
+
 This is a playable prototype. Capacitor, ads, payments, premium currency, and backend services are not implemented yet.
