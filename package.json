@@ -1,0 +1,12 @@
+{
+  "name": "cozy-circuit-connections",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A cozy browser matching puzzle with cartoon components, shields, walls, and a 12-stage campaign.",
+  "scripts": {
+    "test": "node tests/run.cjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
