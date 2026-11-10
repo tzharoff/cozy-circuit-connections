@@ -1,0 +1,338 @@
+.editor-app main {
+  max-width: 1540px;
+  margin: 35px auto;
+}
+.editor-app header {
+  max-width: 1540px;
+}
+.editor-intro {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: center;
+}
+.editor-intro h1 {
+  font-size: 48px;
+}
+.editor-intro p,
+.editor-help {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.8;
+}
+.editor-intro > span {
+  font: 10px monospace;
+  color: var(--mint);
+}
+.editor-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  align-items: center;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: #172a28;
+  padding: 14px;
+  margin: 25px 0;
+}
+.editor-app button:not(.chip):not(.editor-cell) {
+  border: 1px solid #4c665b;
+  border-radius: 6px;
+  padding: 10px 12px;
+  background: #29423a;
+  color: var(--ink);
+  font-size: 11px;
+}
+.editor-app button:not(.chip):not(.editor-cell):hover {
+  background: #3c5c4b;
+}
+.editor-app button:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+.editor-app input,
+.editor-app select,
+.editor-app textarea {
+  box-sizing: border-box;
+  width: 100%;
+  border: 1px solid #496258;
+  border-radius: 5px;
+  padding: 9px;
+  background: #132923;
+  color: #e1eddf;
+  font: 12px system-ui;
+}
+.editor-app label {
+  font-size: 10px;
+  color: #a6bdaf;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.editor-toolbar label {
+  flex-direction: row;
+  align-items: center;
+}
+.editor-toolbar select {
+  width: auto;
+}
+.editor-layout {
+  display: grid;
+  grid-template-columns: 220px minmax(360px, 1fr) 260px;
+  gap: 20px;
+  align-items: start;
+}
+.editor-panel {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #182b27;
+  padding: 18px;
+}
+.editor-panel h2 {
+  font-size: 17px;
+  font-weight: 500;
+  margin: 0 0 12px;
+}
+.editor-meta {
+  display: grid;
+  gap: 13px;
+  margin-top: 24px;
+}
+.brushes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.brushes button {
+  padding: 6px;
+  font-size: 9px;
+}
+.brushes .component-art {
+  height: 43px;
+  width: 43px;
+  margin: auto;
+}
+.brushes button.active {
+  outline: 2px solid var(--mint);
+  outline-offset: 1px;
+  background: #416345;
+}
+.brushes .tool-icon {
+  display: block;
+  font-size: 24px;
+  margin: 5px;
+}
+.workbench-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 13px;
+  font: 10px monospace;
+  letter-spacing: 1px;
+  color: var(--mint);
+}
+.workbench-heading #testLevel {
+  background: var(--mint);
+  color: #173626;
+  font-weight: 600;
+}
+.editor-pcb {
+  max-width: 680px;
+  margin: auto;
+}
+.editor-board {
+  touch-action: pan-y;
+  user-select: none;
+}
+.editor-app .editor-cell {
+  aspect-ratio: 1;
+  padding: 2px !important;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  min-width: 0;
+}
+.editor-app .editor-cell.chip {
+  flex-direction: column;
+  background: linear-gradient(145deg, #fff9e9, #e7ead6);
+}
+.editor-app .editor-cell.socket {
+  background: #68836433;
+  border: 1px dashed #8ab38477;
+  color: #89ab8d;
+  font-size: 18px;
+}
+.editor-app .editor-cell.lane {
+  background: transparent;
+  border: 1px dotted #6c8e6f33;
+  color: #5c806a;
+  font-size: 15px;
+}
+.editor-app .editor-cell.wall {
+  background: repeating-linear-gradient(135deg, #b9a177 0 6px, #635e50 6px 12px);
+}
+.editor-cell .shield-mark {
+  pointer-events: none;
+}
+.editor-message {
+  font-size: 12px;
+  line-height: 1.8;
+  min-height: 35px;
+  color: #c9dcbd;
+  margin: 16px 0;
+}
+.validation {
+  margin-top: 20px;
+}
+.validation ul {
+  padding-left: 18px;
+  font-size: 12px;
+  color: #e7c28a;
+  line-height: 1.7;
+}
+.validation p {
+  font-size: 12px;
+  line-height: 1.8;
+  color: #a9beb0;
+}
+.component-counts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 16px 0;
+}
+.component-counts span {
+  background: #253f33;
+  border-radius: 5px;
+  padding: 6px 9px;
+  font: 10px monospace;
+}
+.component-counts .odd {
+  color: #ffbc9f;
+  border: 1px solid #b57d63;
+}
+#boardStats {
+  font: 11px monospace;
+  color: #c5dcb4;
+  line-height: 1.9;
+}
+.library-panel {
+  display: grid;
+  gap: 12px;
+}
+.library-panel h2,
+.library-panel p {
+  margin: 0;
+}
+.library-panel hr {
+  width: 100%;
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: 10px 0;
+}
+.library-panel textarea {
+  font: 10px monospace;
+}
+.file-label {
+  padding: 10px;
+  border: 1px dashed #607c68;
+  border-radius: 6px;
+}
+.file-label input {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font-size: 10px;
+}
+.test-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.test-tools span {
+  width: 100%;
+  font-size: 10px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+.editor-app [hidden] {
+  display: none !important;
+}
+.editor-app .chip {
+  font-size: 9px;
+}
+.editor-app .chip small {
+  font-size: 7px;
+}
+@media (max-width: 1150px) {
+  .editor-layout {
+    grid-template-columns: 200px 1fr;
+  }
+  .library-panel {
+    grid-column: 1/-1;
+    grid-template-columns: 1fr 1fr;
+  }
+  .library-panel h2,
+  .library-panel p,
+  .library-panel hr,
+  .library-panel label:has(textarea) {
+    grid-column: 1/-1;
+  }
+}
+@media (max-width: 680px) {
+  .editor-layout {
+    display: flex;
+    flex-direction: column;
+  }
+  .editor-layout > section,
+  .editor-panel {
+    width: 100%;
+  }
+  .brushes {
+    grid-template-columns: repeat(5, 1fr);
+  }
+  .brushes button {
+    font-size: 8px;
+  }
+  .brushes .component-art {
+    width: 30px;
+    height: 30px;
+  }
+  .editor-meta {
+    grid-template-columns: 1fr 1fr;
+  }
+  .editor-intro h1 {
+    font-size: 38px;
+  }
+  .editor-intro {
+    flex-direction: column;
+    align-items: start;
+    gap: 10px;
+  }
+  .editor-app main {
+    padding: 0 12px;
+  }
+  .library-panel {
+    display: grid;
+  }
+  .editor-app .editor-cell {
+    border-radius: 5px;
+  }
+  .workbench-heading {
+    font-size: 9px;
+  }
+  .editor-toolbar {
+    padding: 10px;
+    gap: 7px;
+  }
+  .editor-app .chip small {
+    font-size: 5px;
+  }
+}
+@media (pointer: fine) {
+  .editor-board {
+    touch-action: none;
+  }
+}

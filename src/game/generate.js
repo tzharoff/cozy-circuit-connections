@@ -1,5 +1,7 @@
 import { shapes, lessons, levels } from '../data/definitions.js';
 import { rng, route, findPair, neighbors, breakShields, solvable } from './rules.js';
+import { authoredLevels } from '../data/authored-levels.js';
+import { levelState } from './level-format.js';
 /** Deterministic factories for endless boards, stages, and tutorial lessons. */
 export function shieldsFor(board, seed, walls = [], limit = 6) {
   if (!limit) return Array(64).fill(0);
@@ -126,6 +128,7 @@ export function makeTutorial(step = 0, total = 0) {
   };
 }
 export function makeStage(n) {
+  if (authoredLevels[n]) return levelState(authoredLevels[n], n);
   const spec = levels[n - 1],
     seed = 83641 + n * 7919,
     s = makePlain(seed, spec.shape);

@@ -2,7 +2,7 @@ import { types, levels } from '../data/definitions.js';
 import { maskFor } from '../game/generate.js';
 import { componentIcon } from './components.js';
 export function boardMarkup({ state, selected, hints, busy }) {
-  const mask = maskFor(state.shape);
+  const mask = state.mask || maskFor(state.shape);
   return state.board
     .map((v, i) => {
       if (state.walls[i])

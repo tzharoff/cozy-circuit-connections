@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Cozy Circuit Level Editor</title>
+    <link rel="stylesheet" href="/src/styles/game.css" />
+    <link rel="stylesheet" href="/src/editor/editor.css" />
+  </head>
+  <body class="editor-app">
+    <header>
+      <a href="./index.html">← PLAY THE GAME</a><span>COZY CIRCUIT · LEVEL WORKSHOP</span>
+    </header>
+    <main>
+      <div class="editor-intro">
+        <div>
+          <div class="eyebrow">A WORKBENCH FOR LITTLE PUZZLES</div>
+          <h1>Level <span>Workshop</span></h1>
+          <p>Paint a circuit. Try a connection. Make something worth untangling.</p>
+        </div>
+        <span id="draftStatus" role="status">Draft saved locally</span>
+      </div>
+      <div class="editor-toolbar">
+        <button id="newDraft">New board</button
+        ><label
+          >Shape
+          <select id="shapeTemplate"></select></label
+        ><button id="applyShape">Use empty shape</button
+        ><label
+          >Campaign
+          <select id="stageSource"></select></label
+        ><button id="loadStage">Load stage</button><button id="editUndo">↶ Undo edit</button
+        ><button id="editRedo">↷ Redo</button>
+      </div>
+      <div class="editor-layout">
+        <aside class="editor-panel">
+          <h2>Paint box</h2>
+          <p class="editor-help">
+            Choose a brush, then click or drag across cells. Chips stay inside the dotted border.
+          </p>
+          <div id="brushes" class="brushes" aria-label="Painting tools"></div>
+          <div class="editor-meta">
+            <label>Level ID<input id="levelId" maxlength="80" spellcheck="false" /></label
+            ><label>Name<input id="levelName" maxlength="100" /></label
+            ><label>Player tip<textarea id="levelTip" rows="3" maxlength="500"></textarea></label
+            ><label
+              >Campaign stage (replace or append)<input
+                id="campaignStage"
+                type="number"
+                min="1"
+                step="1"
+            /></label>
+          </div>
+        </aside>
+        <section>
+          <div class="workbench-heading">
+            <span id="modeTitle">EDIT MODE</span>
+            <div>
+              <button id="testLevel">▶ Test level</button
+              ><button id="stopTest" hidden>Back to editing</button>
+            </div>
+          </div>
+          <div class="pcb editor-pcb">
+            <div class="board-wrap">
+              <div id="board" class="board editor-board"></div>
+              <svg
+                id="wires"
+                class="wires"
+                viewBox="0 0 100 100"
+                preserveAspectRatio="none"
+                aria-hidden="true"
+              ></svg>
+              <div id="pops" class="pop-layer" aria-hidden="true"></div>
+            </div>
+          </div>
+          <p id="editorMessage" class="editor-message" role="status" aria-live="polite">
+            Load a stage or paint a new layout.
+          </p>
+          <div id="testTools" class="test-tools" hidden>
+            <button id="testUndo">Undo test move</button
+            ><button id="testRestart">Restart test</button><button id="testHint">Show a pair</button
+            ><span>Test moves never change your draft or campaign progress.</span>
+          </div>
+          <div class="editor-panel validation">
+            <h2>Board check</h2>
+            <div id="boardStats"></div>
+            <ul id="validationMessages"></ul>
+            <div id="componentCounts" class="component-counts"></div>
+            <button id="checkSolution">Check for a solution</button>
+            <p id="solutionMessage" aria-live="polite">
+              A solution check does not rate difficulty.
+            </p>
+          </div>
+        </section>
+        <aside class="editor-panel library-panel">
+          <h2>Your level shelf</h2>
+          <p class="editor-help">
+            Drafts and saved levels stay in this browser. Download JSON for a portable backup.
+          </p>
+          <button id="saveLevel">Save to shelf</button
+          ><label>Saved levels<select id="librarySelect"></select></label
+          ><button id="loadSaved">Load selected</button
+          ><button id="deleteSaved">Remove from shelf</button>
+          <hr />
+          <h2>Import & export</h2>
+          <button id="downloadLevel">Download level JSON</button
+          ><label class="file-label"
+            >Import level JSON<input
+              id="importFile"
+              type="file"
+              accept=".json,application/json" /></label
+          ><button id="showJson">Show current JSON</button
+          ><button id="applyJson">Apply JSON below</button
+          ><button id="campaignExport">Export campaign override</button
+          ><label
+            >Level JSON / campaign code<textarea
+              id="jsonText"
+              rows="12"
+              spellcheck="false"
+              aria-describedby="jsonHelp"
+            ></textarea>
+          </label>
+          <p id="jsonHelp" class="editor-help">
+            Campaign export creates authored-levels.js for src/data/. Existing project overrides are
+            preserved. It does not publish or alter the game automatically.
+          </p>
+        </aside>
+      </div>
+    </main>
+    <script type="module" src="/src/editor/main.js"></script>
+  </body>
+</html>

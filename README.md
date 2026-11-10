@@ -15,6 +15,8 @@ npm run dev
 
 Open the local URL printed by Vite. Source modules need an HTTP server; double-clicking the source `index.html` is not the development workflow.
 
+Open `/editor.html` for the **Level Workshop**: paint chips, shields, walls, and shapes; load stages; check solutions; play-test; save drafts; and import/export levels. See [the editor guide](docs/LEVEL_EDITOR.md) for replacing or appending campaign stages.
+
 ## Build, preview, or export
 
 ```sh
@@ -31,6 +33,8 @@ npm run export
 ```
 
 Open `exports/Cozy Circuit Connections.html`. Code, styles, and artwork are embedded, so gameplay works offline. No account is required.
+
+The export also creates `exports/Cozy Circuit Connections - Level Editor.html`, a standalone workshop.
 
 ## Check and format
 

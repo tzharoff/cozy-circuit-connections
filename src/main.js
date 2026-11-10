@@ -131,7 +131,7 @@ function showWin() {
   $('winPairs').textContent = state.score;
   $('winShields').textContent = state.initialShields.filter(Boolean).length;
   $('winNote').textContent = final
-    ? 'All 12 stages cleared. Replay a favorite or keep going in Endless.'
+    ? 'All ' + levels.length + ' stages cleared. Replay a favorite or keep going in Endless.'
     : n
       ? 'Stage ' + (n + 1) + ' is unlocked. Ready for the next circuit?'
       : 'Fresh boards are always waiting.';

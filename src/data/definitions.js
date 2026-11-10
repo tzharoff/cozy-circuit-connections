@@ -1,3 +1,4 @@
+import { authoredLevels } from './authored-levels.js';
 /** Component identities, board shapes, campaign stages, and tutorial lessons. */
 export const types = [
   { symbol: 'Ω', name: 'Resistor', color: '#e4c88d' },
@@ -183,4 +184,19 @@ export const levels = [
     walls: 4,
     tip: 'One final full board. Bring the whole machine back online.',
   },
-];
+].map((spec, index) => {
+  const authored = authoredLevels[index + 1];
+  return authored ? { ...spec, name: authored.name, tip: authored.tip } : spec;
+});
+// Additional authored stages must be contiguous (13, then 14, and so on).
+for (let stage = levels.length + 1; authoredLevels[stage]; stage++) {
+  const level = authoredLevels[stage];
+  levels.push({
+    name: level.name,
+    tip: level.tip,
+    shape: 'classic',
+    pairs: level.board.filter(Boolean).length / 2,
+    shields: level.shields.filter(Boolean).length,
+    walls: level.walls.filter(Boolean).length,
+  });
+}
