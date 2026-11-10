@@ -1,4 +1,6 @@
 node_modules/
+dist/
+exports/
 .DS_Store
 Thumbs.db
 *.log

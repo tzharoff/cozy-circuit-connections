@@ -2,39 +2,62 @@
 
 A relaxed browser puzzle about connecting cheerful little circuit components.
 
-## Play
+Match identical chips along an empty horizontal/vertical path with at most two bends. Wires may travel around the outside edge. Clear adjacent pairs to free shielded chips; hazard-striped walls block wires permanently.
 
-Open `index.html` in a modern browser. No installation, build step, server, or account is required. The same file can be served by a static web host.
+## Develop
 
-Match two identical chips along an empty horizontal/vertical path with at most two bends. Wires may travel around the board's outside edge. Clear adjacent pairs to free shielded chips; hazard-striped walls block wires permanently.
+Use Node.js **22.12 or newer** and npm.
 
-## Included
+```sh
+npm ci
+npm run dev
+```
 
-- Guided Level 0 with four small lessons: matching, bends, shields, and walls.
-- 12 deterministic campaign stages, sequential unlocks, level selection, and replays.
-- Stage Clear screen with Next Stage, Replay, and Level Select.
-- Endless mode and six shapes: Classic, Ring, Cross, Islands, Bridge, and Staircase.
-- Single-layer shields, fixed walls, unlimited hints and undo, and restart.
-- Cartoon component art, a traveling spark, glowing wires, and chip pop effects.
-- Local browser saves and reduced-motion support.
+Open the local URL printed by Vite. Source modules need an HTTP server; double-clicking the source `index.html` is not the development workflow.
 
-Progress is stored in browser localStorage, not in GitHub or an account. Changing browser, site origin, or clearing browser data can reset the saved progress. The earlier local prototype remains a separate copy.
+## Build, preview, or export
 
-## Checks
+```sh
+npm run build
+npm run preview
+```
 
-With Node.js 20 or newer:
+`dist/` is the production web app, ready for static hosting or a future Capacitor wrapper.
+
+For a standalone file you can double-click:
+
+```sh
+npm run export
+```
+
+Open `exports/Cozy Circuit Connections.html`. Code, styles, and artwork are embedded, so gameplay works offline. No account is required.
+
+## Check and format
 
 ```sh
 npm test
+npm run format:check
+npm run format
 ```
 
-No dependency installation is needed. Checks exercise tutorial guidance and saved lessons, all campaign solutions, unlocking and save restoration, 300 wall layouts, blocked routes, undo, spark arrival, and pop timing. These are logic and mocked-animation checks; they do not replace visual browser testing.
+Checks cover the tutorial, 12 stage solutions, unlocks and save restoration, 300 wall layouts, wall-aware routing, undo, and spark/pop timing. Engine tests import real modules. UI integration checks use fake browser surfaces; visual testing is still needed on real devices.
 
-## Project structure
+## Included
 
-- `index.html`: complete game, including inline CSS, JavaScript, and vector character art.
-- `tests/`: checks that extract and exercise the actual inline game script.
-- `ROADMAP.md`: agreed direction and features held for later.
+- Guided Level 0: matching, bends, shields, and walls.
+- 12 deterministic stages, saved unlocks, level selection, and replays.
+- Tutorial completion and Stage Clear screens.
+- Endless mode and six board shapes.
+- Single-layer shields, walls, free hints, unlimited undo, and restart.
+- Cartoon SVG components, traveling sparks, glowing wires, and pop effects.
+- Browser saves, responsive layouts, and reduced-motion support.
 
-This is an early playable prototype. No ads, payments, premium currency, or backend services are implemented.
+Progress is saved locally, not in GitHub or an account. Changing browser or origin, or clearing browser data, can reset progress. Existing save keys are preserved by this refactor.
 
+## Code organization
+
+`src/game/` contains the browser-independent engine; `src/data/` holds content; `src/ui/` holds artwork, effects, and view helpers; `src/platform/` handles persistence. `src/main.js` coordinates gameplay and screens.
+
+See [ARCHITECTURE.md](ARCHITECTURE.md) for source boundaries, the match lifecycle, and save compatibility. See [ROADMAP.md](ROADMAP.md) for the agreed direction.
+
+This is a playable prototype. Capacitor, ads, payments, premium currency, and backend services are not implemented yet.

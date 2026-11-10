@@ -1,8 +1,45 @@
-const fs=require('fs'),vm=require('vm'),assert=require('assert');const els={},saved={};const ctx={document:{getElementById:id=>els[id]??(els[id]={value:'random',showModal(){},close(){}})},localStorage:{getItem:k=>saved[k]??null,setItem:(k,v)=>saved[k]=v},setTimeout:()=>1,clearTimeout(){},confirm:()=>true};vm.createContext(ctx);vm.runInContext(fs.readFileSync('index.html','utf8').match(/<script>([\s\S]*?)<\/script>/)[1],ctx);
-vm.runInContext(`
+const fs = require('fs'),
+  vm = require('vm'),
+  assert = require('assert');
+const els = {},
+  saved = {};
+const ctx = {
+  document: {
+    getElementById: (id) => els[id] ?? (els[id] = { value: 'random', showModal() {}, close() {} }),
+  },
+  localStorage: { getItem: (k) => saved[k] ?? null, setItem: (k, v) => (saved[k] = v) },
+  setTimeout: () => 1,
+  clearTimeout() {},
+  confirm: () => true,
+};
+vm.createContext(ctx);
+vm.runInContext(require('./helpers/source.cjs').gameSource(), ctx);
+vm.runInContext(
+  `
 for(const shape of Object.keys(shapes))for(let seed=1;seed<=50;seed++){let s=make(seed,shape);if(s.walls.filter(Boolean).length!==4)throw Error('wall count');if(s.walls.some((v,i)=>v&&s.board[i]))throw Error('wall overlaps chip');if(!solvable(s.board,s.shields,s.walls))throw Error('unsolvable');let p;while((p=findPair(s.board,s.shields,s.walls))){if(p.path.some(i=>s.walls[i]))throw Error('wire crossed wall');s.board[p.a]=s.board[p.z]=0;breakShields(s.shields,p.a,p.z)}if(s.board.some(Boolean))throw Error('incomplete')}
 var b=Array(64).fill(0),w=Array(64).fill(0);b[25]=b[29]=1;w[27]=1;var path=route(b,25,29,[],w);if(!path||path.includes(27)||path.length<=5)throw Error('failed to detour');for(const i of [17,33,24,26])w[i]=1;if(route(b,25,29,[],w))throw Error('enclosed endpoint allowed');
 state=make(42,'ring');var wallBefore=JSON.stringify(state.walls),before=JSON.stringify(state.board);var p=findPair(state.board,state.shields,state.walls);choose(p.a);choose(p.z);if(state.score!==1)throw Error('match did not complete');
-`,ctx);els.undo.onclick();assert(vm.runInContext('JSON.stringify(state.board)===before&&JSON.stringify(state.walls)===wallBefore',ctx));els.restart.onclick();assert(vm.runInContext('JSON.stringify(state.walls)===wallBefore',ctx));
-const legacy=vm.runInContext('make(77,"bridge")',ctx);delete legacy.walls;saved.circuitState=JSON.stringify(legacy);const ctx2={...ctx};vm.createContext(ctx2);vm.runInContext(fs.readFileSync('index.html','utf8').match(/<script>([\s\S]*?)<\/script>/)[1],ctx2);assert(vm.runInContext('state.walls.length===64&&solvable(state.board,state.shields,state.walls)',ctx2));
-console.log('PASS: 300 solvable boards with four walls, wall-aware paths, detours, blocked endpoints, undo/restart, saved-game migration');
+`,
+  ctx,
+);
+els.undo.onclick();
+assert(
+  vm.runInContext(
+    'JSON.stringify(state.board)===before&&JSON.stringify(state.walls)===wallBefore',
+    ctx,
+  ),
+);
+els.restart.onclick();
+assert(vm.runInContext('JSON.stringify(state.walls)===wallBefore', ctx));
+const legacy = vm.runInContext('make(77,"bridge")', ctx);
+delete legacy.walls;
+saved.circuitState = JSON.stringify(legacy);
+const ctx2 = { ...ctx };
+vm.createContext(ctx2);
+vm.runInContext(require('./helpers/source.cjs').gameSource(), ctx2);
+assert(
+  vm.runInContext('state.walls.length===64&&solvable(state.board,state.shields,state.walls)', ctx2),
+);
+console.log(
+  'PASS: 300 solvable boards with four walls, wall-aware paths, detours, blocked endpoints, undo/restart, saved-game migration',
+);

@@ -20,4 +20,3 @@ Dead ends are possible, but uncommon and unevenly distributed across the current
 - Premium currency was discussed; direct cosmetic purchases are the current simpler starting direction. No purchase, reward, pricing, or currency implementation exists.
 
 Finish Doom Scrolling first, then return to this game, then build a third game. Doom Scrolling and the other cabinet prototypes are outside this repository.
-

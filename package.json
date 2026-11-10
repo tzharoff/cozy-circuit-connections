@@ -4,9 +4,20 @@
   "private": true,
   "description": "A cozy browser matching puzzle with cartoon components, shields, walls, and a 12-stage campaign.",
   "scripts": {
-    "test": "node tests/run.cjs"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview --host 127.0.0.1",
+    "export": "npm run build && node scripts/export.mjs && node tests/export.mjs",
+    "test": "node tests/run.cjs",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "engines": {
-    "node": ">=20"
-  }
+    "node": ">=22.12.0"
+  },
+  "devDependencies": {
+    "prettier": "^3.9.10",
+    "vite": "^8.3.7"
+  },
+  "type": "module"
 }

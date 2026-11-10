@@ -1,1 +1,15 @@
-const {spawnSync}=require('node:child_process');const path=require('node:path');process.chdir(path.resolve(__dirname,'..'));for(const name of ['tutorial','campaign','walls','arrival','pop']){const result=spawnSync(process.execPath,[path.join('tests',name+'.cjs')],{stdio:'inherit'});if(result.error)throw result.error;if(result.status!==0)process.exit(result.status||1)}
+const { spawnSync } = require('node:child_process');
+const path = require('node:path');
+process.chdir(path.resolve(__dirname, '..'));
+for (const file of [
+  'engine.mjs',
+  'tutorial.cjs',
+  'campaign.cjs',
+  'walls.cjs',
+  'arrival.cjs',
+  'pop.cjs',
+]) {
+  const result = spawnSync(process.execPath, [path.join('tests', file)], { stdio: 'inherit' });
+  if (result.error) throw result.error;
+  if (result.status !== 0) process.exit(result.status || 1);
+}
