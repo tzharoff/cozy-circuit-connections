@@ -8,7 +8,7 @@ Cozy, replayable circuit puzzles with no timer or move limit. Progression should
 
 The guided Level 0, 12-stage campaign, tutorial completion screen, and Stage Clear screen work. Existing matching, shields, walls, shape selection, hints, undo, wire animation, and pop effects are included.
 
-Dead ends are possible, but uncommon and unevenly distributed across the current campaign. Failure is defined as remaining chips with no legal pair. The game currently shows a message and offers undo/restart; a dedicated fail or recovery screen is not implemented.
+Dead ends are possible, but uncommon and unevenly distributed across the current campaign. A dead end means chips remain with no legal pair. The game shows a no-moves recovery dialog with undo, restart, and level selection, plus a persistent notice if the player dismisses the dialog to inspect the board. Saved dead ends are detected on reload. Recovery has no penalty.
 
 ## Held for later
 

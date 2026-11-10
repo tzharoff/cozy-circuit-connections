@@ -1,3 +1,45 @@
+.stuck-notice {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  margin: 8px 8px 14px;
+  border: 1px solid #c5a767;
+  border-radius: 8px;
+  background: #4b4430;
+  color: #f4e6be;
+  font-size: 12px;
+  line-height: 1.6;
+}
+.stuck-notice[hidden] {
+  display: none;
+}
+.stuck-notice button {
+  flex-shrink: 0;
+  border: 1px solid #b49c66;
+  background: #655834;
+  border-radius: 5px;
+  padding: 8px;
+  font-size: 11px;
+}
+.stuck-dialog .win-emblem {
+  color: #e6c38a;
+}
+.stuck-dialog p {
+  font-size: 13px;
+}
+.stuck-dialog .review-board {
+  background: transparent;
+  color: #b8c6b4;
+  font-size: 11px;
+  margin-top: 14px;
+  padding: 8px;
+}
+.stuck-dialog button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
 :root {
   color-scheme: dark;
   --bg: #10171b;

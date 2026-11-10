@@ -47,6 +47,7 @@ Checks cover the tutorial, 12 stage solutions, unlocks and save restoration, 300
 - Guided Level 0: matching, bends, shields, and walls.
 - 12 deterministic stages, saved unlocks, level selection, and replays.
 - Tutorial completion and Stage Clear screens.
+- A clear no-moves dialog and persistent board notice, with undo/restart recovery.
 - Endless mode and six board shapes.
 - Single-layer shields, walls, free hints, unlimited undo, and restart.
 - Cartoon SVG components, traveling sparks, glowing wires, and pop effects.

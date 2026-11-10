@@ -1,5 +1,5 @@
 import { types, shapes, lessons, levels } from './data/definitions.js';
-import { route, findPair, breakShields } from './game/rules.js';
+import { route, findPair, breakShields, boardStatus } from './game/rules.js';
 import { make, makeStage, makeTutorial } from './game/generate.js';
 import { clone, valid } from './game/state.js';
 import { createStorage } from './platform/storage.js';
@@ -106,6 +106,7 @@ function startStage(n, skipConfirm = false) {
   render();
 }
 function openLevels() {
+  closeStuck();
   if (busy) return;
   closeWin();
   $('levelGrid').innerHTML = levelMarkup({ state, completed, tutorialDone, isUnlocked: unlocked });
@@ -167,11 +168,28 @@ let selected = null,
 function say(s) {
   $('message').textContent = s;
 }
+let stuckKey = '';
+function closeStuck() {
+  if ($('stuckDialog').open) $('stuckDialog').close();
+}
+function showStuck(force = false) {
+  if (busy) return;
+  const key = JSON.stringify([state.board, state.shields, state.walls]);
+  $('stuckUndo').disabled = !state.history.length;
+  if (!force && stuckKey === key) return;
+  stuckKey = key;
+  if (!$('stuckDialog').open) $('stuckDialog').showModal();
+}
 function save() {
   storage.saveGame({ state, wins, completed, tutorialDone });
 }
 const { clearWire, draw, popPair } = createEffects({ getElement: $, getState: () => state });
 function render() {
+  const stuck = !busy && boardStatus(state.board, state.shields, state.walls) === 'stuck';
+  if (stuck) {
+    selected = null;
+    hints = [];
+  }
   $('tutorialCoach').hidden = !state.tutorial;
   const stage = state.stage;
   const spec = stage ? levels[stage - 1] : null;
@@ -214,10 +232,23 @@ function render() {
     say('No connections remain. Undo a pair or restart this board.');
   $('wins').textContent = wins;
   save();
+  $('stuckNotice').hidden = !stuck;
+  if (stuck) {
+    say('No moves left. Undo a pair or restart this board.');
+    showStuck();
+  } else {
+    stuckKey = '';
+    closeStuck();
+  }
   if (!left && (!state.tutorial || state.tutorialStep === lessons.length - 1)) showWin();
 }
 function choose(i) {
   if (busy || !state.board[i]) return;
+  if (boardStatus(state.board, state.shields, state.walls) === 'stuck') {
+    say('No moves left. Undo a pair or restart this board.');
+    showStuck(true);
+    return;
+  }
   if (state.shields[i]) {
     say('Shield locked. Clear a pair directly above, below, left, or right to free this chip.');
     return;
@@ -397,6 +428,19 @@ $('winReplay').onclick = () => {
 };
 $('winLevels').onclick = openLevels;
 $('winClose').onclick = closeWin;
+$('stuckReview').onclick = closeStuck;
+$('stuckOptions').onclick = () => showStuck(true);
+$('stuckUndo').onclick = () => {
+  if (!state.history.length || busy) return;
+  closeStuck();
+  $('undo').onclick();
+};
+$('stuckRestart').onclick = () => {
+  if (busy) return;
+  closeStuck();
+  $('restart').onclick();
+};
+$('stuckLevels').onclick = openLevels;
 if (state) {
   if (
     state.stage &&

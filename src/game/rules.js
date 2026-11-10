@@ -53,6 +53,11 @@ export function findPair(b, shields = [], walls = []) {
 export function neighbors(a, z) {
   return Math.abs(((a / 8) | 0) - ((z / 8) | 0)) + Math.abs((a % 8) - (z % 8)) === 1;
 }
+/** A dead end means chips remain but no unshielded, routable pair exists. */
+export function boardStatus(board, shields = [], walls = []) {
+  if (!board.some(Boolean)) return 'cleared';
+  return findPair(board, shields, walls) ? 'playing' : 'stuck';
+}
 export function breakShields(shields, a, z) {
   let freed = 0;
   for (let i = 0; i < 64; i++)

@@ -3,6 +3,7 @@ const path = require('node:path');
 process.chdir(path.resolve(__dirname, '..'));
 for (const file of [
   'engine.mjs',
+  'stuck.cjs',
   'tutorial.cjs',
   'campaign.cjs',
   'walls.cjs',

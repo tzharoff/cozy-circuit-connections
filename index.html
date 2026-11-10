@@ -51,6 +51,13 @@
       </section>
       <div class="layout">
         <section class="pcb" aria-label="Circuit matching puzzle">
+          <div id="stuckNotice" class="stuck-notice" hidden role="status">
+            <span
+              ><strong>No moves left.</strong> Undo a pair or restart to untangle this
+              circuit.</span
+            >
+            <button id="stuckOptions">See options</button>
+          </div>
           <div class="board-wrap">
             <div id="board" class="board"></div>
             <svg
@@ -114,6 +121,19 @@
         <span>GUIDED TUTORIAL · 12 STAGES · ENDLESS MODE</span><span>LESS NOISE. MORE SIGNAL.</span>
       </footer>
     </main>
+    <dialog id="stuckDialog" class="win-dialog stuck-dialog" aria-labelledby="stuckTitle">
+      <div class="win-emblem" aria-hidden="true">⌁</div>
+      <div class="eyebrow">A LITTLE TANGLE</div>
+      <h2 id="stuckTitle">No moves left</h2>
+      <p>Chips remain, but no matching pair can connect around the shields and walls.</p>
+      <p>Your progress is safe. Take a step back or give this board a fresh start.</p>
+      <button id="stuckUndo" class="primary">Undo last pair ↶</button>
+      <div class="win-secondary">
+        <button id="stuckRestart">Restart board</button>
+        <button id="stuckLevels">Level select</button>
+      </div>
+      <button id="stuckReview" class="review-board">Look at the board</button>
+    </dialog>
     <dialog id="manual">
       <div class="eyebrow">QUICK START // 30 SECONDS</div>
       <h2>Two chips. One clear path.</h2>
