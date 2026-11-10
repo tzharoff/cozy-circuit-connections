@@ -12,7 +12,7 @@ For an offline copy, run `npm run export` and open `exports/Cozy Circuit Connect
 
 1. Load a campaign stage, create a blank board, or apply one of the six empty shapes.
 2. Select a component brush and paint matching chips in the inner 6×6 area. Each component count must be even.
-3. Toggle a single shield on a chip, or paint walls, floor sockets, and open wire lanes. Chips cannot go in the outer wire border. Walls can block border routes.
+3. Toggle a single shield on a chip, or paint walls, floor sockets, and open wire lanes inside the 6×6 board. Cables cannot leave its boundary. The former outside cells are neither shown nor editable.
 4. Use edit undo/redo while experimenting. Erase removes a chip/shield/wall while preserving the floor underneath.
 5. Read **Board check** for placement, pair-count, and opening-move errors. **Check for a solution** attempts a complete legal clear sequence. A search timeout means unknown, not impossible.
 6. Press **Test level** to use the real rules, shields, walls, spark, and pop. Test undo, restart, and hints help inspect a puzzle. **Back to editing** restores the unmodified draft.
@@ -51,4 +51,4 @@ Existing saves may contain an old in-progress stage; replaying it loads its new 
 | `walls`             | 64 permanent wall flags, 0 or 1                                           |
 | `mask`              | 64 booleans for visible chip-floor sockets                                |
 
-Rows/columns are 0–7; chips occupy 1–6. Empty cells carry wires regardless of whether their floor is visible. Walls block wires. Imported JSON is validated and never executed as code.
+The data retains 8×8 indices for save compatibility, but only rows/columns 1–6 are shown or routable. The 28 outside cells are inert padding. Older imported walls in that padding are discarded. Empty cells inside the boundary carry wires regardless of whether their floor is visible. Imported JSON is validated and never executed as code.

@@ -32,6 +32,8 @@ Effects receive callbacks and a state reader. They do not remove chips, award wi
 
 ## Content and save compatibility
 
+Routing version 2 uses only the inner 6×6 board, with a hard edge. The 8×8 arrays remain as a storage index format; 28 padding cells are hidden and cannot carry wires. Artwork/effects use actual visible cell rectangles. Generation and all solution checks use the same inner-boundary rule. Legacy in-progress boards are retained, obsolete padding walls are cleared, and restarting a legacy layout regenerates it under the new rules.
+
 Change content in `src/data/definitions.js`. Component IDs are one-based array positions stored in saves: do not reorder or remove existing components without a migration. Stage numbering, deterministic seeds, and shape keys also identify saved content.
 
 Existing localStorage keys are preserved: `circuitState`, `circuitCampaign`, `circuitWins`, `circuitEndlessState`, and `circuitShapeChoice`. A standalone export opened at the same previous local file path keeps using that browser's existing saves. Moving to another origin, browser, or native app needs a separate migration if progress must follow.

@@ -2,7 +2,7 @@
 
 A relaxed browser puzzle about connecting cheerful little circuit components.
 
-Match identical chips along an empty horizontal/vertical path with at most two bends. Wires may travel around the outside edge. Clear adjacent pairs to free shielded chips; hazard-striped walls block wires permanently.
+Match identical chips along an empty horizontal/vertical path with at most two bends. Cables must stay inside the compact 6×6 board; there are no outside wire lanes. Clear adjacent pairs to free shielded chips; hazard-striped walls block wires permanently.
 
 ## Develop
 

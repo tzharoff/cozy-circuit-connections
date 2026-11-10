@@ -1,10 +1,12 @@
 import { types, levels } from '../data/definitions.js';
 import { maskFor } from '../game/generate.js';
 import { componentIcon } from './components.js';
+import { insideBoard } from '../game/rules.js';
 export function boardMarkup({ state, selected, hints, busy }) {
   const mask = state.mask || maskFor(state.shape);
   return state.board
     .map((v, i) => {
+      if (!insideBoard(i)) return '<div class="outside" hidden aria-hidden="true"></div>';
       if (state.walls[i])
         return '<div class="wall" role="img" aria-label="Wall: cables cannot pass"><span>▰</span></div>';
       if (!v)

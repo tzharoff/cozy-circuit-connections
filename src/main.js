@@ -153,6 +153,7 @@ function enterEndless(skipConfirm = false) {
     endlessSave && valid(endlessSave)
       ? clone(endlessSave)
       : make(Math.floor(Math.random() * 2147483647), $('shape').value || 'random');
+  state = storage.migrate(state);
   if (!Array.isArray(state.walls)) state.walls = Array(64).fill(0);
   selected = null;
   hints = [];
@@ -340,6 +341,21 @@ $('undo').onclick = () => {
   render();
 };
 $('restart').onclick = () => {
+  if (state.needsBoundaryRestart) {
+    if (!confirm('Restart this older board with the new 6×6 routing rules?')) return;
+    clearWire();
+    winKey = '';
+    selected = null;
+    hints = [];
+    state = state.tutorial
+      ? makeTutorial(state.tutorialStep, state.tutorialTotal)
+      : state.stage
+        ? makeStage(state.stage)
+        : make(state.seed, state.shape);
+    say('Fresh layout. Cables now stay inside the board.');
+    render();
+    return;
+  }
   if (state.tutorial) {
     startStage(0);
     return;

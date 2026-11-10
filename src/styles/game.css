@@ -1,3 +1,14 @@
+.board > .outside {
+  display: none !important;
+}
+.pcb::before,
+.pcb::after {
+  display: none;
+}
+.board-wrap {
+  border: 1px solid #81ab7955;
+  border-radius: 9px;
+}
 .stuck-notice {
   display: flex;
   justify-content: space-between;
@@ -166,7 +177,7 @@ h1 span {
 }
 .board {
   display: grid;
-  grid-template-columns: repeat(8, 1fr);
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 7px;
   aspect-ratio: 1;
   position: relative;

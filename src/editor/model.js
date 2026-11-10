@@ -1,7 +1,7 @@
 import { types } from '../data/definitions.js';
 import { maskFor } from '../game/generate.js';
 import { parseLevel, levelState } from '../game/level-format.js';
-import { route, findPair, breakShields, boardStatus } from '../game/rules.js';
+import { route, findPair, breakShields, boardStatus, insideBoard } from '../game/rules.js';
 
 export function newLevel(shape = 'classic') {
   return {
@@ -44,6 +44,7 @@ export function paint(level, index, brush) {
     if (!next.board[index]) throw Error('Paint a chip before adding its shield.');
     next.shields[index] = next.shields[index] ? 0 : 1;
   } else if (brush.type === 'wall') {
+    if (!inside) throw Error('Walls must be inside the 6×6 board. Outside cells are not playable.');
     next.board[index] = 0;
     next.shields[index] = 0;
     next.walls[index] = 1;
@@ -52,7 +53,7 @@ export function paint(level, index, brush) {
     next.shields[index] = 0;
     next.walls[index] = 0;
   } else if (brush.type === 'floor' || brush.type === 'lane') {
-    if (!inside && brush.type === 'floor') throw Error('The outer border stays a wire lane.');
+    if (!inside && brush.type === 'floor') throw Error('Floor must stay inside the 6×6 board.');
     next.board[index] = 0;
     next.shields[index] = 0;
     next.walls[index] = 0;

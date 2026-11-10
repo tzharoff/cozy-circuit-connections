@@ -33,7 +33,7 @@ export function createEffects({ getElement: $, getState }) {
             ((rect.left + rect.width / 2 - bounds.left) / bounds.width) * 100,
             ((rect.top + rect.height / 2 - bounds.top) / bounds.height) * 100,
           ]
-        : [((p % 8) + 0.5) * 12.5, (((p / 8) | 0) + 0.5) * 12.5];
+        : [((p % 8) - 0.5) * (100 / 6), (((p / 8) | 0) - 0.5) * (100 / 6)];
     });
     const points = coords.map((p) => p.join(',')).join(' ');
     if (

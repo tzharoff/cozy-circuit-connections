@@ -2,6 +2,7 @@ import { levels, shapes } from '../data/definitions.js';
 import { clone, valid } from '../game/state.js';
 import { shieldsFor, wallsFor } from '../game/generate.js';
 import { solvable } from '../game/rules.js';
+import { insideBoard } from '../game/rules.js';
 
 /** Browser save adapter. Keep these existing keys stable across web/mobile refactors. */
 export function createStorage(storage) {
@@ -50,6 +51,10 @@ export function createStorage(storage) {
     },
     migrate(state) {
       if (!state) return state;
+      if (state.routingVersion !== 2) {
+        state.needsBoundaryRestart = true;
+        state.routingVersion = 2;
+      }
       if (!shapes[state.shape]) state.shape = 'classic';
       if (!Array.isArray(state.shields) || state.shields.length !== 64) {
         state.shields = shieldsFor(state.board, state.seed);
@@ -71,6 +76,7 @@ export function createStorage(storage) {
           )
             state.walls[i] = 0;
       }
+      state.walls = state.walls.map((v, i) => (insideBoard(i) ? v : 0));
       return state;
     },
     saveGame({ state, wins, completed, tutorialDone }) {

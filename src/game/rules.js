@@ -1,4 +1,8 @@
 /** Pure matching, routing, shield, and solvability rules. No DOM or storage. */
+// Keep 8x8 save indices stable, but only the inner 6x6 cells are playable/routable.
+export function insideBoard(index) {
+  return Number.isInteger(index) && index >= 8 && index < 56 && index % 8 >= 1 && index % 8 <= 6;
+}
 export function rng(seed) {
   return () => {
     seed |= 0;
@@ -9,7 +13,17 @@ export function rng(seed) {
   };
 }
 export function route(b, a, z, shields = [], walls = []) {
-  if (a === z || !b[a] || b[a] !== b[z] || shields[a] || shields[z] || walls[a] || walls[z])
+  if (
+    !insideBoard(a) ||
+    !insideBoard(z) ||
+    a === z ||
+    !b[a] ||
+    b[a] !== b[z] ||
+    shields[a] ||
+    shields[z] ||
+    walls[a] ||
+    walls[z]
+  )
     return null;
   const dirs = [
       [-1, 0],
@@ -27,7 +41,7 @@ export function route(b, a, z, shields = [], walls = []) {
       if (turns > 2) continue;
       let r = ((s.p / 8) | 0) + dirs[d][0],
         c = (s.p % 8) + dirs[d][1];
-      if (r < 0 || r > 7 || c < 0 || c > 7) continue;
+      if (r < 1 || r > 6 || c < 1 || c > 6) continue;
       let p = r * 8 + c;
       if (p === a || walls[p] || (b[p] && p !== z)) continue;
       let path = [...s.path, p];

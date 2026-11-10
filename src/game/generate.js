@@ -1,5 +1,5 @@
 import { shapes, lessons, levels } from '../data/definitions.js';
-import { rng, route, findPair, neighbors, breakShields, solvable } from './rules.js';
+import { rng, route, findPair, neighbors, breakShields, solvable, insideBoard } from './rules.js';
 import { authoredLevels } from '../data/authored-levels.js';
 import { levelState } from './level-format.js';
 /** Deterministic factories for endless boards, stages, and tutorial lessons. */
@@ -41,9 +41,7 @@ export function wallsFor(board, seed, shields = [], limit = 4) {
   if (!limit) return Array(64).fill(0);
   const random = rng(seed + 401),
     walls = Array(64).fill(0);
-  let candidates = board
-    .map((v, i) => i)
-    .filter((i) => !board[i] && i !== 0 && i !== 7 && i !== 56 && i !== 63);
+  let candidates = board.map((v, i) => i).filter((i) => !board[i] && insideBoard(i));
   for (let i = candidates.length - 1; i > 0; i--) {
     let j = Math.floor(random() * (i + 1));
     [candidates[i], candidates[j]] = [candidates[j], candidates[i]];
@@ -63,7 +61,19 @@ export function wallsFor(board, seed, shields = [], limit = 4) {
 export function make(seed, shape = 'random') {
   if (!shapes[shape]) shape = Object.keys(shapes)[seed % Object.keys(shapes).length];
   let s = makePlain(seed, shape);
+  // A full rectangle needs room for real interior walls, rather than hidden border walls.
+  while (s.board.filter(Boolean).length > 28) {
+    const p = findPair(s.board);
+    s.board[p.a] = s.board[p.z] = 0;
+  }
+  s.initial = s.board.slice();
   s.walls = wallsFor(s.board, seed);
+  while (s.walls.filter(Boolean).length < 4 && s.board.filter(Boolean).length > 8) {
+    const p = findPair(s.board);
+    s.board[p.a] = s.board[p.z] = 0;
+    s.walls = wallsFor(s.board, seed);
+  }
+  s.initial = s.board.slice();
   s.shields = shieldsFor(s.board, seed, s.walls);
   s.initialShields = s.shields.slice();
   return s;
@@ -74,6 +84,7 @@ export function makePlain(seed, shape = 'classic') {
     positions = mask.map((v, i) => (v ? i : -1)).filter((i) => i >= 0);
   let b;
   const result = () => ({
+    routingVersion: 2,
     seed,
     shape,
     board: b,
@@ -111,6 +122,7 @@ export function makeTutorial(step = 0, total = 0) {
   l.shields.forEach((i) => (s[i] = 1));
   l.walls.forEach((i) => (w[i] = 1));
   return {
+    routingVersion: 2,
     seed: 7000 + step,
     shape: 'classic',
     stage: 0,

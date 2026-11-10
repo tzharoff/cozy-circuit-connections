@@ -2,7 +2,7 @@ import { types, shapes, levels } from '../data/definitions.js';
 import { authoredLevels } from '../data/authored-levels.js';
 import { makeStage } from '../game/generate.js';
 import { parseLevel, levelState } from '../game/level-format.js';
-import { route, findPair, breakShields, boardStatus } from '../game/rules.js';
+import { route, findPair, breakShields, boardStatus, insideBoard } from '../game/rules.js';
 import { componentIcon } from '../ui/components.js';
 import { boardMarkup } from '../ui/view.js';
 import { createEffects } from '../ui/effects.js';
@@ -139,6 +139,7 @@ function renderBrushes() {
 function editMarkup(l) {
   return l.board
     .map((v, i) => {
+      if (!insideBoard(i)) return '<div class="outside" hidden aria-hidden="true"></div>';
       let cls = l.walls[i] ? 'wall' : v ? 'chip' : l.mask[i] ? 'socket' : 'lane';
       const content = l.walls[i]
         ? '<span>▰</span>'

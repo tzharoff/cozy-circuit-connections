@@ -1,4 +1,5 @@
 import { types } from '../data/definitions.js';
+import { insideBoard } from './rules.js';
 
 export const LEVEL_SCHEMA_VERSION = 1;
 const arrayOf = (value, check) => Array.isArray(value) && value.length === 64 && value.every(check);
@@ -31,7 +32,7 @@ export function parseLevel(value) {
     if (value.walls[i] && (value.board[i] || value.shields[i]))
       throw Error('A wall cannot overlap a chip or shield.');
     if (value.mask[i] && !interior(i))
-      throw Error('The outer border is a wire lane, not chip floor.');
+      throw Error('Outside cells are inert save padding, not playable floor.');
   }
   const result = {
     schemaVersion: LEVEL_SCHEMA_VERSION,
@@ -40,7 +41,7 @@ export function parseLevel(value) {
     tip: value.tip,
     board: value.board.slice(),
     shields: value.shields.slice(),
-    walls: value.walls.slice(),
+    walls: value.walls.map((v, i) => (insideBoard(i) ? v : 0)),
     mask: value.mask.slice(),
   };
   if (value.campaignStage !== undefined) {
@@ -58,6 +59,7 @@ export function parseLevel(value) {
 export function levelState(value, stage) {
   const level = parseLevel(value);
   const result = {
+    routingVersion: 2,
     seed: 100000 + (stage || 0),
     shape: 'classic',
     customLevel: true,

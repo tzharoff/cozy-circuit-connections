@@ -110,7 +110,7 @@ export const levels = [
     pairs: 12,
     shields: 0,
     walls: 0,
-    tip: 'The center opening and outside border both carry wires.',
+    tip: 'Use the center opening. Cables must stay inside the board boundary.',
   },
   {
     name: 'Full house',
@@ -179,7 +179,7 @@ export const levels = [
   {
     name: 'Power restored',
     shape: 'classic',
-    pairs: 18,
+    pairs: 14,
     shields: 6,
     walls: 4,
     tip: 'One final full board. Bring the whole machine back online.',
