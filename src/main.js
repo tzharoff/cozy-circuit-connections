@@ -94,6 +94,8 @@ function updateCharges() {
     status = charges.count >= MAX_CHARGES ? 'Full' : '+1 in ' + clock(wait),
     empty = charges.count < 1;
   $('homeBattery').innerHTML = batteryIcon(charges.count, MAX_CHARGES);
+  // The battery shows no number, so screen readers get the count from the label.
+  $('homeCharges').ariaLabel = 'Charges: ' + charges.count + ' of ' + MAX_CHARGES;
   $('homeRefill').textContent = charges.count >= MAX_CHARGES ? 'Full' : clock(wait);
   $('homeCoins').textContent = chipCoins;
   $('chargesBattery').innerHTML = batteryIcon(charges.count, MAX_CHARGES);

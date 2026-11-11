@@ -1,6 +1,6 @@
 /** Inline artwork for the Charges battery and Chip Coins (see docs/GAME_DESIGN.md). */
 
-/** The battery counter: the count is printed on the battery, and the cells fill to match.
+/** The battery counter: the cells fill to show how many Charges are left (no number).
  * At zero it turns gray and shows an orange spark instead of cells. */
 export function batteryIcon(count, max = 5) {
   const empty = count < 1;
@@ -8,14 +8,14 @@ export function batteryIcon(count, max = 5) {
   let inside = '';
   if (empty) {
     inside =
-      '<path class="battery-spark" d="M80 9 63 35h12l-7 21 21-28H77Z" fill="#ffb066" stroke="#c4602a" stroke-width="3" stroke-linejoin="round"/>';
+      '<path class="battery-spark" d="M64 9 47 35h12l-7 21 21-28H61Z" fill="#ffb066" stroke="#c4602a" stroke-width="3" stroke-linejoin="round"/>';
   } else {
     for (let i = 0; i < max; i++)
       inside +=
         '<rect x="' +
         (12 + i * 20) +
         '" y="12" width="16" height="40" rx="4" fill="' +
-        (i < count ? '#a7e6a0' : '#d7eedd') +
+        (i < count ? '#5cc97c' : '#dcefe2') +
         '"/>';
   }
   return (
@@ -30,15 +30,7 @@ export function batteryIcon(count, max = 5) {
     body[1] +
     '"/>' +
     inside +
-    '<text x="' +
-    (empty ? 38 : 60) +
-    '" y="45" text-anchor="middle" font-size="34" font-weight="700" fill="' +
-    (empty ? '#6e6557' : '#1d4d35') +
-    '" stroke="' +
-    (empty ? '#e6dfd2' : '#effff6') +
-    '" stroke-width="6" paint-order="stroke">' +
-    count +
-    '</text></svg>'
+    '</svg>'
   );
 }
 

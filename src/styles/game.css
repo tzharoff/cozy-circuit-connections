@@ -2485,9 +2485,6 @@ button[hidden] {
   display: block;
   flex: none;
 }
-.battery-art text {
-  font-family: var(--ui);
-}
 .charges-art {
   position: relative;
   display: flex;

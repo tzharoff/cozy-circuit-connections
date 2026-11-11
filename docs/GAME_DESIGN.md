@@ -59,7 +59,7 @@ Implemented November 11, 2026. The fried Chip’um is a type still on the stuck 
 
 Decided November 11, 2026. Lives are **Charges**, shown as a battery instead of hearts.
 
-- **Counter:** a battery icon whose number is printed on the battery itself, so the count is readable at a glance. The cells inside fill or empty to match how many Charges are left.
+- **Counter:** a battery icon with no number: the five cells inside fill or empty to show how many Charges are left. (Screen readers hear the count.)
 - **Refill wording:** the battery "recharges" over time ("Recharging 12:30"; "Full" at the maximum). This fits Bastion the Battery, who stores the energy, and Carly the Capacitor, who keeps a little charge for later; either can appear on refill or out-of-Charges screens.
 - **Restart cost:** the failed card's Restart button shows its cost as one battery cell ("−1").
 - **Empty battery:** at zero Charges the battery shows the spark graphic in a different color (color not chosen), so it reads as drained rather than broken. The failed card's Restart button becomes **Recharge**, which asks to spend Chip Coins to refill.
@@ -75,7 +75,7 @@ Implemented November 11, 2026: the battery counter and Chip Coin count at the to
 Approved November 11, 2026. Same structure as the level clear card: heading **Charges**, cream body, close ✕.
 
 - **Opens** when the player taps the battery on home, automatically when they tap **Play** with zero Charges, and from the failed card's **Recharge** button.
-- **Body:** a big battery with the count printed on it and cells filled to match, then one line: "Full" or "+1 in 12:30".
+- **Body:** a big battery with its cells filled to match the count, then one line: "Full" or "+1 in 12:30".
 - **Full or recharging:** no button, only the close ✕.
 - **Empty:** the battery turns gray with the recolored spark, a sleepy Bastion sits beside it, and a warm orange **Recharge** button shows its Chip Coin price on a gold tag.
 
@@ -108,7 +108,7 @@ No currency, life, or item balance has been chosen. The current recovery screen 
 
 | Item or system  | Decision                                                                                | Still to define                                                                                    |
 | --------------- | --------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
-| Lives (Charges) | Restarting a level spends one Charge; shown as a battery with the count on it           | Recharge price, other ways to earn Charges, confirmation flow                                      |
+| Lives (Charges) | Restarting a level spends one Charge; shown as a battery whose cells fill to match      | Recharge price, other ways to earn Charges, confirmation flow                                      |
 | Chip Coins      | Buy Recharges and Shield Breakers; can be earned from challenge rewards                 | Prices, purchase packs, balances, caps, and other uses                                             |
 | Shield Breakers | Remove one layer from a chosen shield; available through currency and challenge rewards | Shop/inventory flow, whether to buy-and-use or store items, behavior when no helpful target exists |
 | Hints           | Part of the monetization plan, including optional rewarded ads for extra hints          | Free allowance, refill rules, prices, and rewards                                                  |
