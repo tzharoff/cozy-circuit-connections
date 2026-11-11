@@ -55,12 +55,18 @@ run('render();render()');
 assert.equal(run('completed.length'), 1);
 assert.equal(run('wins'), 1);
 els.winNext.onclick();
+assert(!els.home.hidden);
+assert.equal(els.homeLevel.textContent, 2);
+els.homePlay.onclick();
 assert.equal(run('state.stage'), 2);
 assert(!els.stageWin.open);
 for (let n = 2; n <= 12; n++) {
   assert.equal(run('state.stage'), n);
   clear();
-  if (n < 12) els.winNext.onclick();
+  if (n < 12) {
+    els.winNext.onclick();
+    els.homePlay.onclick();
+  }
 }
 assert.equal(run('completed.length'), 12);
 assert.equal(els.winTitle.textContent, 'Level 12');
@@ -69,8 +75,10 @@ assert.equal(els.winNext.textContent, 'Continue');
 const restored = boot(saved);
 assert.equal(restored.run('completed.length'), 12);
 assert.equal(restored.run('state.stage'), 12);
-assert(restored.els.stageWin.open);
+assert(!restored.els.home.hidden);
+assert(!restored.els.stageWin.open);
 els.winNext.onclick();
+els.homePlay.onclick();
 assert(!run('state.stage'));
 assert(!els.shapePicker.hidden);
 const endless = run('JSON.stringify(state)');
@@ -98,21 +106,26 @@ assert.equal(run('state.score'), 1);
 els.restart.onclick();
 els.confirmOk.onclick();
 assert.equal(run('state.score'), 0);
-// Forward only: with every stage cleared, Continue goes to Endless and nothing is left to replay.
+// Forward only: with every stage cleared, home offers Endless and nothing is left to replay.
 clear();
 els.winNext.onclick();
-assert(!run('state.stage'));
 assert(!els.stageWin.open);
 assert.equal(run('completed.length'), 12);
-assert(els.campaignButton.hidden);
-// Continue always picks the first uncleared stage, even after a stray older board.
+assert.equal(els.homeKind.textContent, 'Endless');
+els.homePlay.onclick();
+assert(!run('state.stage'));
+assert(run('state.board.some(Boolean)'));
+// Play always picks the first uncleared stage, even after a stray older board.
 run('completed=[1,2,3];startStage(2)');
 clear();
 els.winNext.onclick();
+els.homePlay.onclick();
 assert.equal(run('state.stage'), 4);
-// Closing the clear card also moves on.
+// Closing the clear card also goes home.
 clear();
 els.winClose.onclick();
+assert(!els.home.hidden);
+els.homePlay.onclick();
 assert.equal(run('state.stage'), 5);
 // An existing endless board is preserved on upgrade.
 const oldState = run('make(256,"ring")');
@@ -153,5 +166,5 @@ timers.find((t) => t.ms === 200).f();
 assert(animated.els.stageWin.open);
 assert(animated.run('!busy&&state.board.every(v=>!v)'));
 console.log(
-  'PASS: 12 stage solutions, unlocks, win/replay/finale, reload, endless saves, undo/restart, migration, win screen after spark and pop',
+  'PASS: 12 stage solutions, unlocks, win/home/finale, reload, endless saves, undo/restart, migration, win screen after spark and pop',
 );

@@ -78,9 +78,18 @@ assert.equal(run('completed.length'), 0);
 assert.equal(els.winNext.textContent, 'Continue');
 const finished = boot(saved);
 assert(finished.run('tutorialDone'));
-assert(finished.els.stageWin.open);
-// Forward only: Continue after the tutorial starts Stage 1; there is no replay.
+// Returning players open on the home screen, not a leftover clear card.
+assert(!finished.els.home.hidden);
+assert(!finished.els.stageWin.open);
+assert.equal(finished.els.homeKind.textContent, 'Level');
+assert.equal(finished.els.homeLevel.textContent, 1);
+// Forward only: Continue returns home, and Play starts Stage 1; there is no replay.
 els.winNext.onclick();
+assert(!els.home.hidden);
+assert(els.game.hidden);
+assert.equal(els.homeLevel.textContent, 1);
+els.homePlay.onclick();
+assert(els.home.hidden);
 assert.equal(run('state.stage'), 1);
 assert.equal(run('completed.length'), 0);
 assert(!els.stageWin.open);
@@ -92,11 +101,17 @@ assert.equal(skipper.run('completed.length'), 0);
 run('enterEndless()');
 assert(!run('state.tutorial'));
 assert(!els.shapePicker.hidden);
-// From Endless, the menu offers the way back to the next level.
-assert(!els.campaignButton.hidden);
-assert.equal(els.campaignButton.textContent, 'Level 1');
-els.campaignButton.onclick();
+// From Endless, Home then Play goes back to the next campaign level.
+els.homeButton.onclick();
+assert.equal(els.homeLevel.textContent, 1);
+els.homePlay.onclick();
 assert.equal(run('state.stage'), 1);
+// Leaving mid-level and pressing Play resumes the same board.
+run('var p=findPair(state.board,state.shields,state.walls);choose(p.a);choose(p.z)');
+const midBoardState = run('JSON.stringify(state.board)');
+els.homeButton.onclick();
+els.homePlay.onclick();
+assert.equal(run('JSON.stringify(state.board)'), midBoardState);
 // Existing campaign players keep their stage and unlocks when upgrading.
 run('state=makeStage(7);completed=[1,2,3,4,5,6];save()');
 const veteran = boot(saved);
@@ -106,5 +121,5 @@ veteran.run('startStage(0)');
 assert(veteran.run('state.tutorial'));
 assert.equal(veteran.run('completed.length'), 6);
 console.log(
-  'PASS: four lessons, guidance, shield/wall teaching, undo, lesson resume, tutorial win/continue/skip, Stage 1 handoff, endless, existing campaign saves',
+  'PASS: four lessons, guidance, shield/wall teaching, undo, lesson resume, tutorial win/continue/home/play/skip, Stage 1 handoff, endless, existing campaign saves',
 );

@@ -71,6 +71,10 @@ elements.stuckNotice.hidden = true;
 const loaded = { ...ctx };
 vm.createContext(loaded);
 vm.runInContext(gameSource(), loaded);
+// The app opens on the home screen; returning to the board shows the dead end at once.
+assert(!elements.stuckDialog.open);
+assert(!elements.home.hidden);
+vm.runInContext('showGame()', loaded);
 assert(elements.stuckDialog.open);
 run('state.board=Array(64).fill(0);state.shields=Array(64).fill(0);render()');
 assert(!elements.stuckDialog.open);

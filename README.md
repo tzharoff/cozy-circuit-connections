@@ -60,6 +60,7 @@ Checks cover the tutorial, 12 stage solutions, unlocks and save restoration, 300
 
 - Guided Level 0: matching, bends, shields, and walls.
 - 12 deterministic stages played in order: progress only moves forward, Toon Blast style.
+- A home screen with the chip crew and a Play button for the next level; side columns are reserved for challenge icons.
 - Tutorial completion and Stage Clear screens.
 - A clear no-moves dialog and persistent board notice, with undo/restart recovery.
 - Endless mode and six board shapes.

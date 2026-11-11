@@ -7,7 +7,32 @@
     <link rel="stylesheet" href="/src/styles/game.css" />
   </head>
   <body class="play">
-    <main class="play-screen">
+    <section id="home" class="home-screen" aria-label="Home" hidden>
+      <div class="home-top">
+        <button id="homeHelp" class="hud-button" aria-label="How to play">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M9.2 9a3 3 0 1 1 4.3 2.7c-.9.5-1.5 1.2-1.5 2.3" />
+            <path d="M12 18h.01" />
+          </svg>
+        </button>
+      </div>
+      <h1 class="home-title">Cozy Circuit <span>Connections</span></h1>
+      <!-- Challenge icons go in these columns once events exist; they stay empty until then. -->
+      <div id="challengesLeft" class="home-side home-side-left" aria-label="Challenges"></div>
+      <div class="home-scene" aria-hidden="true">
+        <div class="home-glow"></div>
+        <svg class="home-spark" viewBox="0 0 200 60">
+          <path d="M18 50Q60 -6 100 30T182 50" />
+        </svg>
+        <div id="homeCrew" class="home-crew"></div>
+        <div class="home-bench"></div>
+      </div>
+      <div id="challengesRight" class="home-side home-side-right" aria-label="Challenges"></div>
+      <button id="homePlay" class="home-play">
+        <small id="homeKind">Level</small><span id="homeLevel">1</span>
+      </button>
+    </section>
+    <main id="game" class="play-screen">
       <header class="hud">
         <button id="menuButton" class="hud-button" aria-label="Menu">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14M5 12h14M5 17h14" /></svg>
@@ -77,7 +102,7 @@
       <h2 id="stageTitle"></h2>
       <p id="stageTip"></p>
       <div class="sheet-buttons">
-        <button id="campaignButton" class="primary" hidden>Level 1</button>
+        <button id="homeButton" class="primary">Home</button>
       </div>
       <div class="shape-picker" id="shapePicker">
         <label for="shape">Next board shape</label

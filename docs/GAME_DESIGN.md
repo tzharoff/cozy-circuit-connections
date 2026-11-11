@@ -13,11 +13,12 @@ The prototype has Level 0, 12 campaign stages played strictly in order, Endless 
 Decided November 11, 2026, following Toon Blast's model.
 
 - **Forward only.** Players never choose or replay old levels. The next level is always the first uncleared stage, so the main screen only needs to show that level and a **Play** button. There is no level select, no replay, and no tutorial replay; the How to play sheet covers the rules.
-- **Continue** on the clear card (and its close button) moves to the next uncleared stage, or to Endless once every stage is cleared. Endless is off the main path; from it, the menu offers the next level when new stages exist.
+- **Home screen**, after Toon Blast's: a fun scene (the chip crew on a workbench), challenge columns down the left and right sides, and one big **Play** button showing the next level. The side columns are reserved for challenge icons and stay empty until events exist (and again whenever every challenge is cleared). New players go straight into the tutorial; everyone else opens on home.
+- **Continue** on the clear card (and its close button) returns home; **Play** starts the next uncleared stage, resumes a board left mid-level, or plays Endless once every stage is cleared. The in-game menu's **Home** button returns home without losing the board.
 - **Stars are a collectible, not a rating.** Clearing a level earns stars toward collection goals such as "Earn stars" challenges. There is no per-level star grade and no reason to replay for more. The clear card shows three stars as celebration; the number earned per clear is not chosen yet.
 - Forward-only progress also protects first-try and collection events from farming easy, already-cleared boards.
 
-Implemented: forward-only progression and the Continue flow. Not implemented: earning, storing, or displaying a star total.
+Implemented: forward-only progression, the home screen with empty challenge columns, and the Continue/Play flow. Not implemented: earning, storing, or displaying a star total.
 
 ## Agreed gameplay and recovery direction
 

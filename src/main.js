@@ -107,7 +107,7 @@ function startStage(n) {
   hints = [];
   winKey = '';
   say(n === 0 ? lessons[0].tip : levels[n - 1].tip);
-  render();
+  showGame();
 }
 function showWin() {
   if (state.tutorial) {
@@ -136,7 +136,7 @@ function enterEndless() {
   closeWin();
   clearWire();
   state =
-    endlessSave && valid(endlessSave)
+    endlessSave && valid(endlessSave) && endlessSave.board.some(Boolean)
       ? clone(endlessSave)
       : make(Math.floor(Math.random() * 2147483647), $('shape').value || 'random');
   state = storage.migrate(state);
@@ -145,9 +145,50 @@ function enterEndless() {
   hints = [];
   winKey = '';
   say('Endless mode. Your campaign progress is saved.');
-  render();
+  showGame();
 }
 let { state, wins } = storage.loadCurrent();
+/** 'home' shows the home screen; 'play' shows the board and lets win/stuck cards open. */
+let screen = 'home';
+/** What the home Play button does: resume the tutorial, play the next level, or play Endless. */
+function homeTarget() {
+  const next = nextLevel(),
+    endless = !state.stage && !state.tutorial;
+  if (state.tutorial && !tutorialDone && state.board.some(Boolean))
+    return ['Tutorial', state.tutorialStep + 1 + '/' + lessons.length, showGame];
+  if (next)
+    return [
+      'Level',
+      next,
+      () => (state.stage === next && state.board.some(Boolean) ? showGame() : startStage(next)),
+    ];
+  return [
+    'Endless',
+    '∞',
+    () => (!endless ? enterEndless() : state.board.some(Boolean) ? showGame() : fresh()),
+  ];
+}
+function showHome() {
+  if (busy) return;
+  screen = 'home';
+  closeWin();
+  closeMenu();
+  closeStuck();
+  clearWire();
+  selected = null;
+  hints = [];
+  const [kind, badge] = homeTarget();
+  $('homeKind').textContent = kind;
+  $('homeLevel').textContent = badge;
+  $('game').hidden = true;
+  $('home').hidden = false;
+}
+function showGame() {
+  screen = 'play';
+  $('home').hidden = true;
+  $('game').hidden = false;
+  render();
+}
 state = storage.migrate(state);
 let selected = null,
   hints = [],
@@ -192,11 +233,6 @@ function render() {
     ? spec.tip
     : 'Choose a shape and play as many boards as you like.';
   $('shapePicker').hidden = !!stage;
-  // Endless is off the main path; from it, the menu offers the next campaign level if one exists.
-  const next = nextLevel();
-  $('campaignButton').hidden = !!(stage || state.tutorial || !next);
-  $('campaignButton').textContent = 'Level ' + next;
-  $('campaignButton').disabled = busy;
   const left = state.board.filter(Boolean).length / 2;
   $('shapeName').textContent = shapes[state.shape].name;
   $('shapeNote').textContent = shapes[state.shape].note;
@@ -227,12 +263,13 @@ function render() {
   $('stuckNotice').hidden = !stuck;
   if (stuck) {
     say('No moves left. Undo a pair or restart this board.');
-    showStuck();
+    if (screen === 'play') showStuck();
   } else {
     stuckKey = '';
     closeStuck();
   }
-  if (!left && (!state.tutorial || state.tutorialStep === lessons.length - 1)) showWin();
+  if (!left && (!state.tutorial || state.tutorialStep === lessons.length - 1) && screen === 'play')
+    showWin();
 }
 function choose(i) {
   if (busy || !state.board[i]) return;
@@ -307,7 +344,7 @@ function fresh() {
   selected = null;
   hints = [];
   say('Clear pairs beside shielded chips to break their shields.');
-  render();
+  showGame();
 }
 $('new').onclick = () => {
   if (state.stage || state.tutorial) return;
@@ -427,18 +464,18 @@ $('shape').onchange = () => {
 };
 $('lessonNext').onclick = nextLesson;
 $('tutorialSkip').onclick = () => startStage(nextLevel() || 1);
-$('campaignButton').onclick = () => startStage(nextLevel());
-/** Continue always moves forward: the next uncleared level, Endless once all are cleared. */
-function continueOn() {
-  if (state.stage || state.tutorial) {
-    const next = nextLevel();
-    if (next) startStage(next);
-    else enterEndless();
-  } else fresh();
-}
-$('winNext').onclick = continueOn;
+// Between levels, Continue returns home; the home Play button starts the next level.
+$('winNext').onclick = showHome;
 // Closing the clear card moves on too; there is no going back to a finished board.
-$('winClose').onclick = continueOn;
+$('winClose').onclick = showHome;
+$('homePlay').onclick = () => {
+  if (!busy) homeTarget()[2]();
+};
+$('homeButton').onclick = showHome;
+$('homeHelp').onclick = () => $('manual').showModal();
+$('homeCrew').innerHTML = [0, 4, 2, 1, 5]
+  .map((i) => '<span class="crew">' + componentIcon(i) + '</span>')
+  .join('');
 $('stageWin').oncancel = (e) => e.preventDefault();
 $('stuckReview').onclick = closeStuck;
 $('stuckOptions').onclick = () => showStuck(true);
@@ -458,9 +495,13 @@ if (state) {
     (!Number.isInteger(state.stage) || state.stage < 1 || state.stage > levels.length)
   )
     delete state.stage;
-  render();
 } else {
   state = makeTutorial();
   say(lessons[0].tip);
+}
+// New players go straight into the tutorial; everyone else opens on the home screen.
+if (state.tutorial && !tutorialDone) showGame();
+else {
   render();
+  showHome();
 }

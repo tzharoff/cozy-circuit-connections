@@ -1765,6 +1765,8 @@ button[hidden] {
   --toon-ink: #0d3a2b;
 }
 .toon-text,
+.play .home-title,
+.play .home-play,
 .play .card-head h2,
 .play .level-card .primary {
   color: #fff1c9;
@@ -2126,4 +2128,187 @@ button[hidden] {
     inset 0 2px 0 #ffffff26,
     0 2px 0 #071713,
     0 4px 8px #0006;
+}
+/* Home screen: a fun scene, challenge columns on the sides (empty until events exist), and Play. */
+.home-screen,
+.play-screen {
+  box-sizing: border-box;
+}
+.home-screen[hidden],
+.play-screen[hidden] {
+  display: none;
+}
+.home-screen {
+  max-width: 480px;
+  height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+  margin: 0 auto;
+  padding: 12px 12px 24px;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr) 64px;
+  grid-template-rows: auto auto minmax(0, 1fr) auto;
+  gap: 10px 6px;
+}
+.home-top {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: end;
+}
+.play .home-title {
+  grid-column: 1 / -1;
+  margin: 0;
+  font-size: 44px;
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: 0;
+  text-align: center;
+}
+.play .home-title span {
+  display: block;
+  color: var(--mint);
+  font-size: 36px;
+}
+.home-side {
+  grid-row: 3;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding-top: 12px;
+}
+.home-side-left {
+  grid-column: 1;
+}
+.home-side-right {
+  grid-column: 3;
+}
+/* The scene spans the full width; challenge columns sit on top of its edges. */
+.home-scene {
+  grid-row: 3;
+  grid-column: 1 / -1;
+  position: relative;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.home-glow {
+  position: absolute;
+  inset: 6% -8%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, #2f6b5c, #21493f 55%, transparent);
+}
+.home-spark {
+  position: relative;
+  width: 70%;
+  overflow: visible;
+  margin-bottom: -6px;
+  filter: drop-shadow(0 0 6px #ffd36b);
+}
+.home-spark path {
+  fill: none;
+  stroke: #ffd36b;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-dasharray: 2 10;
+  animation: spark-flow 1.1s linear infinite;
+}
+.home-crew {
+  position: relative;
+  display: flex;
+  align-items: end;
+  justify-content: center;
+  width: 92%;
+}
+.crew {
+  flex: 0 1 19%;
+  animation: crew-bob 2.6s ease-in-out infinite;
+}
+.crew:nth-child(2),
+.crew:nth-child(4) {
+  flex-basis: 22%;
+  animation-delay: 0.4s;
+}
+.crew:nth-child(3) {
+  flex-basis: 28%;
+  animation-delay: 0.8s;
+}
+.crew .component-art {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.home-bench {
+  position: relative;
+  width: 96%;
+  height: 26px;
+  margin-top: -4px;
+  border: 3px solid #3d2814;
+  border-radius: 12px;
+  background: linear-gradient(#a2744a, #6b4a2e);
+  box-shadow:
+    inset 0 3px 0 #ffffff33,
+    0 6px 0 #2a1b0d,
+    0 12px 20px #0007;
+}
+.home-play {
+  grid-column: 1 / -1;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid #17704e;
+  border-radius: 30px;
+  background: linear-gradient(#94f6d0, #44d29d 55%, #2cb783);
+  font-family: var(--ui);
+  font-weight: 600;
+  line-height: 1;
+  box-shadow:
+    inset 0 3px 0 #ffffff8c,
+    inset 0 -5px 0 #23a072,
+    0 7px 0 #0f5239,
+    0 14px 22px #0007;
+  animation: play-breathe 2.4s ease-in-out infinite;
+}
+.home-play small {
+  font-size: 22px;
+  -webkit-text-stroke-width: 5px;
+}
+.home-play span {
+  font-size: 48px;
+}
+.home-play:active {
+  animation: none;
+  transform: translateY(4px);
+  box-shadow:
+    inset 0 3px 0 #ffffff8c,
+    inset 0 -5px 0 #23a072,
+    0 3px 0 #0f5239,
+    0 6px 10px #0007;
+}
+@keyframes crew-bob {
+  50% {
+    transform: translateY(-6px);
+  }
+}
+@keyframes spark-flow {
+  to {
+    stroke-dashoffset: -24;
+  }
+}
+@keyframes play-breathe {
+  50% {
+    transform: scale(1.03);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .crew,
+  .home-spark path,
+  .home-play {
+    animation: none;
+  }
 }
