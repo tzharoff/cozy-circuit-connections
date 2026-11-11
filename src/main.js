@@ -74,14 +74,21 @@ function keepEndless() {
     storage.saveEndless(endlessSave);
   }
 }
-function leaving() {
-  return (
-    busy ||
-    (state &&
-      state.score &&
-      state.board.some(Boolean) &&
-      !confirm('Leave this board? You can replay this stage from the beginning.'))
-  );
+/** True when leaving now would throw away matches on an unfinished board. */
+function midBoard() {
+  return !!(state && state.score && state.board.some(Boolean));
+}
+let confirmed = null;
+/** In-game confirmation card; runs `then` only when the player taps the action button. */
+function ask(title, text, action, then) {
+  $('confirmTitle').textContent = title;
+  $('confirmText').textContent = text;
+  $('confirmOk').textContent = action;
+  confirmed = then;
+  if (!$('confirmDialog').open) $('confirmDialog').showModal();
+}
+function askLeave(then) {
+  ask('Leave level?', 'Your matches on this board will be lost.', 'Leave', then);
 }
 function closeWin() {
   if ($('stageWin').open) $('stageWin').close();
@@ -91,7 +98,10 @@ function closeMenu() {
 }
 function startStage(n, skipConfirm = false) {
   if (!Number.isInteger(n) || n < 0 || n > levels.length || !unlocked(n) || busy) return;
-  if (!skipConfirm && leaving()) return;
+  if (!skipConfirm && midBoard()) {
+    askLeave(() => startStage(n, true));
+    return;
+  }
   keepEndless();
   closeWin();
   closeMenu();
@@ -131,7 +141,11 @@ function showWin() {
   if (!$('stageWin').open) $('stageWin').showModal();
 }
 function enterEndless(skipConfirm = false) {
-  if (busy || (!skipConfirm && leaving())) return;
+  if (busy) return;
+  if (!skipConfirm && midBoard() && (state.stage || state.tutorial)) {
+    askLeave(() => enterEndless(true));
+    return;
+  }
   closeMenu();
   if (!state?.stage && !state?.tutorial) {
     closeWin();
@@ -318,8 +332,10 @@ $('new').onclick = () => {
     openLevels();
     return;
   }
-  if (state.score && state.board.some(Boolean) && !confirm('Leave this board and start a new one?'))
+  if (midBoard()) {
+    ask('New board?', 'Your matches on this board will be lost.', 'Deal', fresh);
     return;
+  }
   fresh();
 };
 $('undo').onclick = () => {
@@ -334,28 +350,29 @@ $('undo').onclick = () => {
   say('Last pair restored. Try another connection.');
   render();
 };
-$('restart').onclick = () => {
+function relayout() {
+  clearWire();
+  winKey = '';
+  selected = null;
+  hints = [];
+  state = state.tutorial
+    ? makeTutorial(state.tutorialStep, state.tutorialTotal)
+    : state.stage
+      ? makeStage(state.stage)
+      : make(state.seed, state.shape);
+  say('Fresh layout. Cables now stay inside the board.');
+  render();
+}
+function restartBoard() {
   if (state.needsBoundaryRestart) {
-    if (!confirm('Restart this older board with the new 6×6 routing rules?')) return;
-    clearWire();
-    winKey = '';
-    selected = null;
-    hints = [];
-    state = state.tutorial
-      ? makeTutorial(state.tutorialStep, state.tutorialTotal)
-      : state.stage
-        ? makeStage(state.stage)
-        : make(state.seed, state.shape);
-    say('Fresh layout. Cables now stay inside the board.');
-    render();
+    relayout();
     return;
   }
   if (state.tutorial) {
-    startStage(0);
+    startStage(0, true);
     return;
   }
   winKey = '';
-  if (state.score && !confirm('Restore this board to its starting layout?')) return;
   state.board = state.initial.slice();
   state.shields = state.initialShields.slice();
   state.history = [];
@@ -365,6 +382,29 @@ $('restart').onclick = () => {
   clearWire();
   say('Same board. A fresh start.');
   render();
+}
+$('restart').onclick = () => {
+  if (busy) return;
+  if (state.needsBoundaryRestart)
+    ask(
+      'New layout',
+      'This older board gets a fresh layout under the new rules.',
+      'Restart',
+      relayout,
+    );
+  else if (midBoard())
+    ask('Restart?', 'Start this board over from the beginning.', 'Restart', restartBoard);
+  else restartBoard();
+};
+$('confirmOk').onclick = () => {
+  const then = confirmed;
+  confirmed = null;
+  $('confirmDialog').close();
+  if (then) then();
+};
+$('confirmCancel').onclick = () => {
+  confirmed = null;
+  $('confirmDialog').close();
 };
 $('hint').onclick = () => {
   const p = findPair(state.board, state.shields, state.walls);
@@ -456,7 +496,7 @@ $('stuckUndo').onclick = () => {
 $('stuckRestart').onclick = () => {
   if (busy) return;
   closeStuck();
-  $('restart').onclick();
+  restartBoard();
 };
 $('stuckLevels').onclick = openLevels;
 if (state) {
