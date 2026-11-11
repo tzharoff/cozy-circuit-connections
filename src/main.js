@@ -19,7 +19,7 @@ function tutorialGuide() {
   $('lessonText').textContent = empty
     ? 'Nicely done. Ready for the next little lesson?'
     : state.tutorialStep === 2 && !state.shields.some(Boolean)
-      ? 'Shield broken! Now connect the two blue logic friends.'
+      ? 'Shield broken! Now connect the two blue logic Chip’ums.'
       : l.tip;
   $('lessonNext').hidden = !empty || state.tutorialStep === lessons.length - 1;
   $('lessonNext').disabled = busy;

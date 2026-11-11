@@ -1,5 +1,5 @@
 import { authoredLevels } from './authored-levels.js';
-/** Component identities, board shapes, campaign stages, and tutorial lessons. */
+/** Chip’um identities (the component characters), board shapes, campaign stages, and tutorial lessons. */
 export const types = [
   { symbol: 'Ω', name: 'Resistor', color: '#e4c88d' },
   { symbol: '⏻', name: 'Power', color: '#9ce5b8' },
@@ -45,7 +45,7 @@ export const shapes = {
 export const lessons = [
   {
     name: 'Meet your first pair',
-    tip: 'Click either highlighted resistor, then its matching friend. The spark will travel between them.',
+    tip: 'Tap either glowing resistor Chip’um, then its twin. The spark will travel between them.',
     chips: [
       [26, 1],
       [29, 1],
@@ -77,7 +77,7 @@ export const lessons = [
   },
   {
     name: 'Go around the wall',
-    tip: 'This metal wall blocks the straight route. Match the signal friends: the wire can go around the wall with two bends.',
+    tip: 'This metal wall blocks the straight route. Match the signal Chip’ums: the wire can go around the wall with two bends.',
     chips: [
       [26, 5],
       [29, 5],
@@ -94,7 +94,7 @@ export const levels = [
     pairs: 4,
     shields: 0,
     walls: 0,
-    tip: 'Match two identical friends. Wires can turn up to twice.',
+    tip: 'Match two identical Chip’ums. Wires can turn up to twice.',
   },
   {
     name: 'Island hopping',
@@ -142,7 +142,7 @@ export const levels = [
     pairs: 12,
     shields: 6,
     walls: 0,
-    tip: 'Choose nearby matches to free the shielded components.',
+    tip: 'Choose nearby matches to free the shielded Chip’ums.',
   },
   {
     name: 'Roadblocks',

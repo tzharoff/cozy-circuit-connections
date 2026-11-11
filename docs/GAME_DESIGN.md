@@ -8,6 +8,14 @@ This is the working design record for Cozy Circuit Connections. It distinguishes
 
 The prototype has Level 0, 12 campaign stages played strictly in order, Endless mode (reached after the last stage), six board shapes, single shields, walls, hints, undo, restart, saved local progress, win screens, and a no-moves recovery screen. It has no lives, economy, purchases, timed events, accounts, groups, or race services. Undo and free restarts are still in the code; the decisions below describe changes to make later.
 
+## Characters: the Chip’ums
+
+Decided November 11, 2026. The six component characters (Resistor, Power, Logic, Crystal, Signal, Capacitor) are called **Chip’ums**, as in "chip chums". The game itself does not have a final name yet.
+
+- **Spelling:** on screen, "Chip’ums" with a curly apostrophe (singular "Chip’um"). In code, filenames, URLs, and asset names, `chipums` with no apostrophe. Store keywords should include Chip’ums, Chip'ums, and Chipums.
+- **Merchandise:** the Chip’ums are intended for plush toys and 3D-printed figures later. Keep each design merch-friendly: a simple, readable silhouette, flat color areas, the shared face (dot eyes, small smile, blush), and the fixed palette in `src/data/definitions.js`. Treat silhouette or palette changes as brand changes, not quick tweaks.
+- **Before launch or merch:** run a trademark search on "Chip’ums", and consider individual names for each Chip’um.
+
 ## Progression and stars
 
 Decided November 11, 2026, following Toon Blast's model.
