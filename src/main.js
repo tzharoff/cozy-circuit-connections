@@ -55,16 +55,11 @@ function tutorialWin() {
   const key = 'tutorial:' + state.seed;
   if (winKey === key) return;
   winKey = key;
-  $('winEyebrow').textContent = 'LEVEL 0 · TUTORIAL COMPLETE';
-  $('winTitle').textContent = 'You’re connected!';
-  $('winSubtitle').textContent = 'You know the circuit basics.';
+  $('winTitle').textContent = 'Tutorial';
+  $('winSubtitle').textContent = 'You’re connected!';
   $('winPairs').textContent = state.tutorialTotal + state.score;
   $('winShields').textContent = 1;
-  $('winNote').textContent =
-    'Match friends, bend wires, free shields, and route around walls. Stage 1 is ready when you are.';
-  $('winNext').textContent = 'Start Stage 1 ↗';
-  $('winReplay').textContent = 'Replay tutorial';
-  $('winLevels').textContent = 'Level select';
+  $('winNext').textContent = 'Play';
   if (!$('stageWin').open) $('stageWin').showModal();
 }
 const storage = createStorage();
@@ -128,21 +123,11 @@ function showWin() {
   winKey = key;
   const n = state.stage,
     final = n === levels.length;
-  $('winEyebrow').textContent = n
-    ? 'STAGE ' + String(n).padStart(2, '0') + ' / ' + levels.length
-    : 'ENDLESS MODE';
-  $('winTitle').textContent = final ? 'Power restored!' : n ? 'Stage clear!' : 'Board clear!';
-  $('winSubtitle').textContent = n ? levels[n - 1].name : 'Another clean circuit.';
+  $('winTitle').textContent = n ? 'Level ' + n : 'Endless';
+  $('winSubtitle').textContent = final ? 'Power restored!' : 'Well done!';
   $('winPairs').textContent = state.score;
   $('winShields').textContent = state.initialShields.filter(Boolean).length;
-  $('winNote').textContent = final
-    ? 'All ' + levels.length + ' stages cleared. Replay a favorite or keep going in Endless.'
-    : n
-      ? 'Stage ' + (n + 1) + ' is unlocked. Ready for the next circuit?'
-      : 'Fresh boards are always waiting.';
-  $('winNext').textContent = final ? 'Play Endless ↗' : n ? 'Next stage ↗' : 'New board ↗';
-  $('winReplay').textContent = n ? 'Replay stage' : 'Replay board';
-  $('winLevels').textContent = 'Level select';
+  $('winNext').textContent = 'Play';
   if (!$('stageWin').open) $('stageWin').showModal();
 }
 function enterEndless(skipConfirm = false) {
@@ -404,7 +389,7 @@ $('menuButton').onclick = () => {
   if (!busy && !$('menu').open) $('menu').showModal();
 };
 $('menuClose').onclick = closeMenu;
-$('goalIcon').innerHTML = componentIcon(2);
+$('goalIcon').innerHTML = $('winPairsIcon').innerHTML = componentIcon(2);
 $('close').onclick = () => $('manual').close();
 $('components').innerHTML = types
   .map((t, i) => `<div style="color:${t.color}">${componentIcon(i)}<small>${t.name}</small></div>`)

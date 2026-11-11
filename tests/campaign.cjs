@@ -47,7 +47,7 @@ function clear() {
 }
 clear();
 assert(els.stageWin.open);
-assert.equal(els.winTitle.textContent, 'Stage clear!');
+assert.equal(els.winTitle.textContent, 'Level 1');
 assert.equal(els.winPairs.textContent, 4);
 assert.equal(run('completed.join()'), '1');
 assert(run('unlocked(2)'));
@@ -63,8 +63,9 @@ for (let n = 2; n <= 12; n++) {
   if (n < 12) els.winNext.onclick();
 }
 assert.equal(run('completed.length'), 12);
-assert.equal(els.winTitle.textContent, 'Power restored!');
-assert.equal(els.winNext.textContent, 'Play Endless ↗');
+assert.equal(els.winTitle.textContent, 'Level 12');
+assert.equal(els.winSubtitle.textContent, 'Power restored!');
+assert.equal(els.winNext.textContent, 'Play');
 const restored = boot(saved);
 assert.equal(restored.run('completed.length'), 12);
 assert.equal(restored.run('state.stage'), 12);

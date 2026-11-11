@@ -1362,7 +1362,8 @@ button[hidden] {
   gap: 12px;
 }
 .hud-button path,
-.booster path {
+.booster path,
+.level-card .win-secondary path {
   fill: none;
   stroke: currentColor;
   stroke-width: 2.4;
@@ -1715,4 +1716,137 @@ button[hidden] {
 }
 .play .components {
   margin: 12px 0 18px;
+}
+/* Between-screens card: the level is the heading, one big Play button. */
+.play .level-card {
+  width: min(360px, 90vw);
+  padding: 0 0 18px;
+  overflow: visible;
+  text-align: center;
+}
+.card-head {
+  display: block;
+  max-width: none;
+  margin: 0;
+  border: 0;
+  font: inherit;
+  letter-spacing: 0;
+  position: relative;
+  padding: 14px 52px;
+  border-radius: 24px 24px 0 0;
+  background: var(--panel);
+}
+.play .card-head h2 {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 600;
+  letter-spacing: 0;
+  color: var(--cream);
+}
+.play .card-close {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  width: 34px;
+  height: 34px;
+  margin-top: -17px;
+  padding: 0;
+  border-radius: 50%;
+  background: #ff6b6b;
+  color: #fff;
+  font-size: 22px;
+  line-height: 1;
+  box-shadow: 0 3px 0 #b03e3e;
+}
+.card-body {
+  margin: 16px 16px 18px;
+  padding: 14px 12px 12px;
+  border-radius: 18px;
+  background: var(--cream);
+  box-shadow: inset 0 -4px 0 #cfe9dc;
+}
+.win-stars {
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  gap: 4px;
+}
+.win-stars svg {
+  width: 58px;
+  height: 58px;
+  margin-top: 10px;
+}
+.win-stars svg:nth-child(2) {
+  width: 72px;
+  height: 72px;
+  margin-top: 0;
+}
+.win-stars path {
+  fill: var(--sun);
+  stroke: var(--sun-edge);
+  stroke-width: 1.3;
+  stroke-linejoin: round;
+}
+.play .level-card #winSubtitle {
+  margin: 4px 0 10px;
+  font-size: 19px;
+  font-weight: 600;
+  color: #2c5247;
+}
+.play .level-card .win-stats {
+  justify-content: center;
+  gap: 28px;
+  margin: 0;
+  padding: 10px 0 0;
+  border: 0;
+  border-top: 2px dashed #cfe9dc;
+}
+.level-card .win-stats div {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.play .level-card .win-stats strong {
+  display: inline;
+  margin: 0;
+  font-size: 24px;
+  color: #14352c;
+}
+#winPairsIcon .component-art {
+  width: 34px;
+  height: 34px;
+  display: block;
+}
+.win-shield {
+  font-size: 26px;
+  line-height: 1;
+  color: #c99e59;
+}
+.play .level-card #winNext {
+  width: calc(100% - 32px);
+  margin: 0 16px;
+  padding: 14px;
+  font-size: 24px;
+}
+.play .level-card .win-secondary {
+  justify-content: center;
+  gap: 16px;
+  margin-top: 16px;
+}
+.play .level-card .win-secondary button {
+  width: 48px;
+  height: 48px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--panel);
+  color: var(--mint);
+  box-shadow: 0 4px 0 var(--panel-edge);
+}
+.level-card .win-secondary svg {
+  width: 24px;
+  height: 24px;
 }

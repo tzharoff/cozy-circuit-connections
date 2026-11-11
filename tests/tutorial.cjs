@@ -70,12 +70,12 @@ run(
 );
 clearLesson();
 assert(els.stageWin.open);
-assert.equal(els.winTitle.textContent, 'You’re connected!');
+assert.equal(els.winTitle.textContent, 'Tutorial');
 assert.equal(els.winPairs.textContent, 5);
 assert.equal(run('wins'), 1);
 assert(run('tutorialDone'));
 assert.equal(run('completed.length'), 0);
-assert.equal(els.winNext.textContent, 'Start Stage 1 ↗');
+assert.equal(els.winNext.textContent, 'Play');
 const finished = boot(saved);
 assert(finished.run('tutorialDone'));
 assert(finished.els.stageWin.open);
