@@ -246,7 +246,7 @@ function choose(i) {
     return;
   }
   if (state.shields[i]) {
-    say('Shield locked. Clear a pair directly above, below, left, or right to free this chip.');
+    say('Shielded. Clear a pair right beside it (not diagonal) to free it.');
     return;
   }
   if (selected === null) {
@@ -293,9 +293,7 @@ function choose(i) {
   } else {
     selected = i;
     hints = [];
-    say(
-      'No clear route: wires cannot cross walls or chips, or bend more than twice. This chip is now selected.',
-    );
+    say('No route there. Wires can’t cross chips or walls, or bend more than twice.');
     render();
   }
 }

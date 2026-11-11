@@ -1352,9 +1352,11 @@ button[hidden] {
 .play button {
   font-family: var(--ui);
 }
+/* Exactly one screen tall, so the page never scrolls and the board never rescales. */
 .play-screen {
   max-width: 480px;
-  min-height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+  height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+  overflow: hidden;
   margin: 0 auto;
   padding: 12px 12px 18px;
   display: flex;
@@ -1377,10 +1379,21 @@ button[hidden] {
   border: 0;
   font: inherit;
   letter-spacing: 0;
-  display: flex;
+  /* Fixed columns keep the level badge centered when counts change width. */
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
-  justify-content: space-between;
   gap: 10px;
+}
+.hud-button {
+  justify-self: start;
+}
+.hud-goal {
+  justify-self: end;
+}
+.hud strong,
+.play .win-stats strong {
+  font-variant-numeric: tabular-nums;
 }
 .hud-button,
 .booster {
@@ -1492,10 +1505,17 @@ button[hidden] {
   font-weight: 500;
   padding: 8px 12px;
 }
+/* The board is the largest square that fits the space left between the HUD and buttons. */
+.board-area {
+  flex: 1 1 0;
+  min-height: 0;
+  container-type: size;
+  display: grid;
+  place-items: center;
+}
 .play .pcb {
-  width: max(260px, min(100%, 100dvh - 330px));
-  align-self: center;
-  margin: auto 0;
+  width: min(100cqw, 100cqh);
+  margin: 0;
   padding: 8px;
   border: 0;
   border-radius: 22px;
@@ -1525,8 +1545,14 @@ button[hidden] {
   width: 92%;
   height: 92%;
 }
+/* Floats over the status line below the tray, so the board never moves when stuck. */
 .play .stuck-notice {
-  margin: 4px 4px 10px;
+  position: absolute;
+  top: calc(100% + 12px);
+  left: 0;
+  right: 0;
+  z-index: 2;
+  margin: 0;
   border: 0;
   border-radius: 14px;
   font-size: 15px;
@@ -1541,8 +1567,13 @@ button[hidden] {
   padding: 6px 14px;
 }
 .play .status {
-  display: block;
-  min-height: 2.8em;
+  /* Always two lines tall, so messages never push the board. */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  height: 2.8em;
+  flex: none;
   margin: 0;
   padding: 0 8px;
   border: 0;
@@ -1550,6 +1581,9 @@ button[hidden] {
   color: #b9d3c8;
   font-size: 14px;
   line-height: 1.4;
+}
+.play .tutorial-copy p {
+  min-height: 4.2em;
 }
 .play-screen:has(.tutorial-coach:not([hidden])) .status {
   display: none;

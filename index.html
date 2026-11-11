@@ -30,23 +30,25 @@
           ><button id="tutorialSkip" aria-label="Skip tutorial and start Stage 1">Skip</button>
         </div>
       </section>
-      <section class="pcb" aria-label="Circuit matching puzzle">
-        <div id="stuckNotice" class="stuck-notice" hidden role="status">
-          <span><strong>No moves left.</strong></span>
-          <button id="stuckOptions">Options</button>
-        </div>
-        <div class="board-wrap">
-          <div id="board" class="board"></div>
-          <svg
-            id="wires"
-            class="wires"
-            viewBox="0 0 100 100"
-            preserveAspectRatio="none"
-            aria-hidden="true"
-          ></svg>
-          <div id="pops" class="pop-layer" aria-hidden="true"></div>
-        </div>
-      </section>
+      <div class="board-area">
+        <section class="pcb" aria-label="Circuit matching puzzle">
+          <div id="stuckNotice" class="stuck-notice" hidden role="status">
+            <span><strong>No moves left.</strong></span>
+            <button id="stuckOptions">Options</button>
+          </div>
+          <div class="board-wrap">
+            <div id="board" class="board"></div>
+            <svg
+              id="wires"
+              class="wires"
+              viewBox="0 0 100 100"
+              preserveAspectRatio="none"
+              aria-hidden="true"
+            ></svg>
+            <div id="pops" class="pop-layer" aria-hidden="true"></div>
+          </div>
+        </section>
+      </div>
       <p id="message" class="status" aria-live="polite">
         Choose a chip, then its matching partner.
       </p>
