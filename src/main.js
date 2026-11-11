@@ -91,11 +91,15 @@ function leaving() {
 function closeWin() {
   if ($('stageWin').open) $('stageWin').close();
 }
+function closeMenu() {
+  if ($('menu').open) $('menu').close();
+}
 function startStage(n, skipConfirm = false) {
   if (!Number.isInteger(n) || n < 0 || n > levels.length || !unlocked(n) || busy) return;
   if (!skipConfirm && leaving()) return;
   keepEndless();
   closeWin();
+  closeMenu();
   if ($('levelPicker').open) $('levelPicker').close();
   clearWire();
   state = n === 0 ? makeTutorial() : makeStage(n);
@@ -109,6 +113,7 @@ function openLevels() {
   closeStuck();
   if (busy) return;
   closeWin();
+  closeMenu();
   $('levelGrid').innerHTML = levelMarkup({ state, completed, tutorialDone, isUnlocked: unlocked });
   $('campaignCount').textContent = completed.length + ' / ' + levels.length + ' stages cleared';
   if (!$('levelPicker').open) $('levelPicker').showModal();
@@ -142,6 +147,7 @@ function showWin() {
 }
 function enterEndless(skipConfirm = false) {
   if (busy || (!skipConfirm && leaving())) return;
+  closeMenu();
   if (!state?.stage && !state?.tutorial) {
     closeWin();
     return;
@@ -193,6 +199,10 @@ function render() {
   }
   $('tutorialCoach').hidden = !state.tutorial;
   const stage = state.stage;
+  $('levelKind').textContent = state.tutorial ? 'Tutorial' : stage ? 'Level' : 'Endless';
+  $('levelBadge').textContent = state.tutorial
+    ? state.tutorialStep + 1 + '/' + lessons.length
+    : stage || '∞';
   const spec = stage ? levels[stage - 1] : null;
   $('modeLabel').textContent = stage
     ? 'STAGE ' + String(stage).padStart(2, '0') + ' / ' + levels.length
@@ -312,6 +322,7 @@ function fresh() {
   keepEndless();
   winKey = '';
   closeWin();
+  closeMenu();
   clearWire();
   state = make(Math.floor(Math.random() * 2147483647), $('shape').value || 'random');
   selected = null;
@@ -385,7 +396,15 @@ $('hint').onclick = () => {
     render();
   }
 };
-$('help').onclick = () => $('manual').showModal();
+$('help').onclick = () => {
+  closeMenu();
+  $('manual').showModal();
+};
+$('menuButton').onclick = () => {
+  if (!busy && !$('menu').open) $('menu').showModal();
+};
+$('menuClose').onclick = closeMenu;
+$('goalIcon').innerHTML = componentIcon(2);
 $('close').onclick = () => $('manual').close();
 $('components').innerHTML = types
   .map((t, i) => `<div style="color:${t.color}">${componentIcon(i)}<small>${t.name}</small></div>`)

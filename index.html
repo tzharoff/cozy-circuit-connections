@@ -6,39 +6,20 @@
     <title>Cozy Circuit Connections</title>
     <link rel="stylesheet" href="/src/styles/game.css" />
   </head>
-  <body>
-    <header>
-      <a href="./index.html">COZY CIRCUIT CONNECTIONS</a
-      ><span class="serial">BENCH 03 // LOGIC LAB</span>
-    </header>
-    <main>
-      <div class="hero">
-        <div>
-          <div class="eyebrow">A LITTLE ORDER IN THE MACHINE</div>
-          <h1>Cozy Circuit <span>Connections</span></h1>
-          <p class="intro">
-            Find a pair. Trace a connection. Clear your mind.<br />No electronics degree required.
-          </p>
+  <body class="play">
+    <main class="play-screen">
+      <header class="hud">
+        <button id="menuButton" class="hud-button" aria-label="Menu">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14M5 12h14M5 17h14" /></svg>
+        </button>
+        <div class="hud-pill hud-level">
+          <small id="levelKind">Level</small><strong id="levelBadge">1</strong>
         </div>
-        <div class="stats">
-          <div><small>PAIRS LEFT</small><strong id="left">18</strong></div>
-          <div><small>CONNECTIONS</small><strong id="score">0</strong></div>
-          <div><small>BOARDS CLEARED</small><strong id="wins">0</strong></div>
+        <div class="hud-pill hud-goal" aria-label="Pairs left">
+          <span id="goalIcon" aria-hidden="true"></span><strong id="left">18</strong>
         </div>
-      </div>
-      <section class="campaign-bar" aria-label="Current game">
-        <div>
-          <span id="modeLabel"></span>
-          <h2 id="stageTitle"></h2>
-          <p id="stageTip"></p>
-        </div>
-        <div class="mode-buttons">
-          <button id="campaignButton">Level select</button
-          ><button id="endlessButton">Endless mode ↗</button>
-        </div>
-      </section>
+      </header>
       <section id="tutorialCoach" class="tutorial-coach" aria-label="Tutorial guidance" hidden>
-        <div class="tutorial-mascot" aria-hidden="true">✦</div>
         <div class="tutorial-copy">
           <span id="lessonNumber"></span>
           <h2 id="lessonTitle"></h2>
@@ -49,78 +30,70 @@
           ><button id="tutorialSkip" aria-label="Skip tutorial and start Stage 1">Skip</button>
         </div>
       </section>
-      <div class="layout">
-        <section class="pcb" aria-label="Circuit matching puzzle">
-          <div id="stuckNotice" class="stuck-notice" hidden role="status">
-            <span
-              ><strong>No moves left.</strong> Undo a pair or restart to untangle this
-              circuit.</span
-            >
-            <button id="stuckOptions">See options</button>
-          </div>
-          <div class="board-wrap">
-            <div id="board" class="board"></div>
-            <svg
-              id="wires"
-              class="wires"
-              viewBox="0 0 100 100"
-              preserveAspectRatio="none"
-              aria-hidden="true"
-            ></svg>
-            <div id="pops" class="pop-layer" aria-hidden="true"></div>
-          </div>
-          <div class="status">
-            <span>⌁</span>
-            <p id="message" aria-live="polite">Choose a chip, then its matching partner.</p>
-          </div>
-        </section>
-        <aside class="side">
-          <div class="shape-picker" id="shapePicker">
-            <label for="shape">NEXT BOARD SHAPE</label
-            ><select id="shape"></select>
-            <p id="shapePreview">Choose a shape, then press New board.</p>
-          </div>
-          <div class="actions">
-            <button id="undo">↶ Undo</button><button id="hint">⌁ Hint</button
-            ><button id="restart">Restart</button><button id="new">New board ↗</button>
-          </div>
-          <div class="card">
-            <div class="shape-current">
-              <span id="shapeName"></span>
-              <p id="shapeNote"></p>
-            </div>
-            <h2>Make a clean connection.</h2>
-            <p>
-              Click two chips with the <b>same symbol</b>. They clear if a wire can join them with
-              <b>at most two bends</b>.
-            </p>
-            <div class="diagram" aria-hidden="true">▣ ─ ┐<br />└ ─ ▣</div>
-            <p>
-              Wires travel through <b>empty spaces inside the 6×6 board</b>. They can’t leave the
-              boundary or pass through other chips.
-            </p>
-            <p class="wall-rule">
-              <span class="wall-key">▰</span> <b>Wall blocks</b> stop every wire. Route around them
-              through open lanes. They stay in place for the whole board.
-            </p>
-            <p class="shield-rule">
-              <b>⬡ Shielded chips</b> can’t be matched yet. Clear a pair directly beside one to
-              break its shield. Diagonals don’t count.<strong id="shieldCount"></strong>
-            </p>
-            <p id="deal" class="eyebrow"></p>
-            <button id="help" class="help">Read the schematic &nbsp; ?</button>
-          </div>
-          <div class="card">
-            <div class="eyebrow">MEET THE COMPONENTS</div>
-            <div class="components" id="components"></div>
-            <p>Every starting board has a solution. Hints and undo are always free.</p>
-          </div>
-        </aside>
-      </div>
-      <footer>
-        <span>GUIDED TUTORIAL · 12 STAGES · ENDLESS MODE</span><span>LESS NOISE. MORE SIGNAL.</span>
-      </footer>
+      <section class="pcb" aria-label="Circuit matching puzzle">
+        <div id="stuckNotice" class="stuck-notice" hidden role="status">
+          <span><strong>No moves left.</strong></span>
+          <button id="stuckOptions">Options</button>
+        </div>
+        <div class="board-wrap">
+          <div id="board" class="board"></div>
+          <svg
+            id="wires"
+            class="wires"
+            viewBox="0 0 100 100"
+            preserveAspectRatio="none"
+            aria-hidden="true"
+          ></svg>
+          <div id="pops" class="pop-layer" aria-hidden="true"></div>
+        </div>
+      </section>
+      <p id="message" class="status" aria-live="polite">
+        Choose a chip, then its matching partner.
+      </p>
+      <nav class="boosters" aria-label="Board tools">
+        <button id="undo" class="booster" aria-label="Undo">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M9 7 5 11l4 4" />
+            <path d="M5 11h9a5 5 0 0 1 0 10h-2" />
+          </svg></button
+        ><button id="hint" class="booster booster-main" aria-label="Hint">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M9 17h6M10 21h4" />
+            <path d="M8.5 14.5A6 6 0 1 1 15.5 14.5c-.6.6-1 1.3-1 2.5h-5c0-1.2-.4-1.9-1-2.5Z" />
+          </svg></button
+        ><button id="restart" class="booster" aria-label="Restart">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M19 12a7 7 0 1 1-2.1-5" />
+            <path d="M19 4v4h-4" />
+          </svg>
+        </button>
+      </nav>
     </main>
+    <dialog id="menu" class="sheet" aria-labelledby="stageTitle">
+      <button id="menuClose" class="dialog-x" aria-label="Close menu">×</button>
+      <span id="modeLabel" class="eyebrow"></span>
+      <h2 id="stageTitle"></h2>
+      <p id="stageTip"></p>
+      <div class="sheet-buttons">
+        <button id="campaignButton" class="primary">Level select</button
+        ><button id="endlessButton">Endless mode</button>
+      </div>
+      <div class="shape-picker" id="shapePicker">
+        <label for="shape">Next board shape</label
+        ><select id="shape"></select>
+        <p id="shapePreview">Choose a shape, then press New board.</p>
+        <button id="new">New board</button>
+      </div>
+      <div class="sheet-stats">
+        <div><strong id="score">0</strong><small>Connections</small></div>
+        <div><strong id="wins">0</strong><small>Boards cleared</small></div>
+      </div>
+      <p class="sheet-board">
+        <span id="shapeName"></span> · <span id="shieldCount"></span> · <span id="deal"></span>
+      </p>
+      <p id="shapeNote" class="sheet-note"></p>
+      <button id="help" class="help">How to play</button>
+    </dialog>
     <dialog id="stuckDialog" class="win-dialog stuck-dialog" aria-labelledby="stuckTitle">
       <div class="win-emblem" aria-hidden="true">⌁</div>
       <div class="eyebrow">A LITTLE TANGLE</div>
@@ -161,6 +134,7 @@
         Hint highlights a currently available pair. If your choices leave no pairs available, undo a
         move or restart the same board. Every starting layout is checked for a complete solution.
       </p>
+      <div class="components" id="components" aria-label="Meet the components"></div>
       <button id="close">Power on ⏻</button>
     </dialog>
     <dialog id="levelPicker" class="campaign-dialog">

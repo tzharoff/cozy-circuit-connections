@@ -1,3 +1,4 @@
+@import '@fontsource-variable/fredoka';
 .board > .outside {
   display: none !important;
 }
@@ -1334,61 +1335,384 @@ button[hidden] {
     font-size: 8px;
   }
 }
-/* Phone play: keep the board on the first screen. The header already names the game. */
-@media (max-width: 500px) {
-  header {
-    padding: 10px 15px;
-  }
-  main {
-    margin-top: 10px;
-  }
-  .hero > div:first-child {
-    display: none;
-  }
-  .stats strong {
-    font-size: 18px;
-  }
-  .campaign-bar {
-    margin-top: 10px;
-    padding: 10px 12px;
-    align-items: center;
-  }
-  .campaign-bar h2 {
-    font-size: 16px;
-    margin: 3px 0;
-  }
-  .campaign-bar p {
-    line-height: 1.5;
-  }
-  .mode-buttons button {
-    padding: 8px 10px;
-  }
-  main:has(.tutorial-coach:not([hidden])) #stageTip {
-    display: none;
-  }
-  .tutorial-coach {
-    margin-top: 10px;
-    padding: 12px 14px;
-    gap: 8px;
-  }
-  .tutorial-mascot {
-    display: none;
-  }
-  .tutorial-copy h2 {
-    font-size: 16px;
-    margin: 4px 0;
-  }
-  .tutorial-copy p {
-    line-height: 1.5;
-  }
-  .tutorial-buttons button {
-    padding: 8px 12px;
-  }
-  .layout {
-    margin-top: 10px;
-  }
-  .status {
-    min-height: 0;
-    padding: 8px 0 4px;
-  }
+/* Night workshop play screen: one board, three numbers, a few big buttons. */
+.play {
+  --ui: 'Fredoka Variable', system-ui, sans-serif;
+  --panel: #2a4a46;
+  --panel-edge: #0c1a1c;
+  --tray: #2c5a49;
+  --tray-edge: #173a2f;
+  --sun: #ffd36b;
+  --sun-edge: #b88a1d;
+  --mint-edge: #4fa483;
+  --cream: #e8fff4;
+  background: #14262a;
+  font-family: var(--ui);
+}
+.play button {
+  font-family: var(--ui);
+}
+.play-screen {
+  max-width: 480px;
+  min-height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+  margin: 0 auto;
+  padding: 12px 12px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.hud-button path,
+.booster path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.hud {
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  letter-spacing: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.hud-button,
+.booster {
+  border: 0;
+  border-radius: 50%;
+  background: var(--panel);
+  color: var(--mint);
+  box-shadow: 0 4px 0 var(--panel-edge);
+  display: grid;
+  place-items: center;
+  padding: 0;
+  transition:
+    transform 0.08s,
+    box-shadow 0.08s;
+}
+.hud-button {
+  width: 48px;
+  height: 48px;
+}
+.hud-button svg {
+  width: 26px;
+  height: 26px;
+}
+.hud-button:active,
+.booster:active:not(:disabled) {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 var(--panel-edge);
+}
+.hud-pill {
+  background: var(--panel);
+  box-shadow: 0 4px 0 var(--panel-edge);
+  border-radius: 18px;
+  color: var(--cream);
+  line-height: 1.05;
+}
+.hud-level {
+  min-width: 96px;
+  padding: 5px 16px 6px;
+  text-align: center;
+}
+.hud-level small {
+  display: block;
+  font-size: 13px;
+  color: var(--mint);
+}
+.hud strong {
+  font-size: 26px;
+  font-weight: 600;
+}
+.hud-goal {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 16px 4px 6px;
+}
+#goalIcon .component-art {
+  width: 38px;
+  height: 38px;
+  display: block;
+}
+.play .tutorial-coach {
+  margin: 0;
+  padding: 12px 14px;
+  gap: 8px;
+  flex-wrap: wrap;
+  border: 0;
+  border-radius: 18px;
+  background: var(--cream);
+  box-shadow: 0 4px 0 #7fc7a8;
+  color: #14352c;
+}
+.play #lessonNumber {
+  display: none;
+}
+.play .tutorial-copy {
+  min-width: 180px;
+}
+.play .tutorial-copy h2 {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 2px;
+}
+.play .tutorial-copy p {
+  font-size: 15px;
+  line-height: 1.4;
+  color: #2c5247;
+}
+.play .tutorial-buttons {
+  width: 100%;
+  flex-direction: row;
+  justify-content: end;
+  align-items: center;
+}
+.play .tutorial-buttons button {
+  border: 0;
+  border-radius: 14px;
+  background: var(--sun);
+  color: #5a3d00;
+  box-shadow: 0 3px 0 var(--sun-edge);
+  font-size: 16px;
+  font-weight: 600;
+  padding: 8px 22px;
+}
+.play .tutorial-buttons #tutorialSkip {
+  background: transparent;
+  box-shadow: none;
+  color: #4c7a6c;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 8px 12px;
+}
+.play .pcb {
+  width: max(260px, min(100%, 100dvh - 330px));
+  align-self: center;
+  margin: auto 0;
+  padding: 8px;
+  border: 0;
+  border-radius: 22px;
+  background: var(--tray);
+  box-shadow: 0 6px 0 var(--tray-edge);
+}
+.play .board-wrap {
+  border: 0;
+}
+.play .board {
+  gap: 5px;
+  padding: 4px;
+  background-image: none;
+}
+.play .empty.socket {
+  border: 0;
+  border-radius: 9px;
+  background: #3b6e5966;
+}
+.play .chip {
+  border-radius: 10px;
+}
+.play .chip small {
+  display: none;
+}
+.play .chip .component-art {
+  width: 92%;
+  height: 92%;
+}
+.play .stuck-notice {
+  margin: 4px 4px 10px;
+  border: 0;
+  border-radius: 14px;
+  font-size: 15px;
+}
+.play .stuck-notice button {
+  border: 0;
+  border-radius: 12px;
+  background: var(--sun);
+  color: #5a3d00;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 6px 14px;
+}
+.play .status {
+  display: block;
+  min-height: 2.8em;
+  margin: 0;
+  padding: 0 8px;
+  border: 0;
+  text-align: center;
+  color: #b9d3c8;
+  font-size: 14px;
+  line-height: 1.4;
+}
+.play-screen:has(.tutorial-coach:not([hidden])) .status {
+  display: none;
+}
+.boosters {
+  display: flex;
+  justify-content: center;
+  align-items: end;
+  gap: 24px;
+}
+.booster {
+  width: 60px;
+  height: 60px;
+}
+.booster svg {
+  width: 28px;
+  height: 28px;
+}
+.booster-main {
+  width: 76px;
+  height: 76px;
+  background: var(--sun);
+  color: #5a3d00;
+  box-shadow: 0 5px 0 var(--sun-edge);
+}
+.booster-main svg {
+  width: 36px;
+  height: 36px;
+}
+.booster-main:active:not(:disabled) {
+  box-shadow: 0 2px 0 var(--sun-edge);
+}
+.booster:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.play dialog {
+  background: #1f3a37;
+  border: 0;
+  border-radius: 24px;
+  box-shadow: 0 6px 0 var(--panel-edge);
+  color: var(--cream);
+}
+.play dialog p {
+  color: #b9d3c8;
+}
+.play dialog button {
+  border-radius: 14px;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 12px;
+  color: #0f4a36;
+  box-shadow: 0 4px 0 var(--mint-edge);
+}
+.play dialog .dialog-x,
+.play dialog .level-tile {
+  box-shadow: none;
+}
+.play .win-secondary button,
+.play .stuck-dialog .review-board {
+  box-shadow: none;
+  font-size: 14px;
+  font-weight: 500;
+}
+.play .win-dialog h2,
+.play .win-stats strong,
+.play .level-tile .level-no {
+  font-family: var(--ui);
+  font-weight: 600;
+}
+.play .win-stats small,
+.play .level-tile small {
+  font-family: var(--ui);
+  font-size: 12px;
+  letter-spacing: 0;
+}
+.play .level-grid .level-tile {
+  border-radius: 16px;
+}
+.sheet {
+  width: min(420px, 92vw);
+  padding: 22px;
+}
+.sheet h2 {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 6px 0 4px;
+}
+.sheet .eyebrow {
+  font-family: var(--ui);
+  font-size: 13px;
+  letter-spacing: 0.5px;
+}
+.sheet-buttons {
+  display: flex;
+  gap: 10px;
+  margin: 16px 0 6px;
+}
+.play .sheet-buttons button,
+.play .shape-picker #new {
+  flex: 1;
+}
+.play #endlessButton,
+.play #help {
+  background: var(--panel);
+  color: var(--cream);
+  box-shadow: 0 4px 0 var(--panel-edge);
+  border: 0;
+}
+.play .sheet .shape-picker {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  align-items: center;
+  margin-top: 14px;
+  border: 0;
+  border-radius: 16px;
+  background: #16292b;
+}
+.play .shape-picker label {
+  font-family: var(--ui);
+  font-size: 14px;
+  letter-spacing: 0;
+  margin: 0;
+}
+.play .shape-picker p,
+.play .shape-picker #new {
+  grid-column: 1/-1;
+  margin: 0;
+}
+.play .shape-picker select {
+  border-radius: 12px;
+  font-family: var(--ui);
+}
+.sheet-stats {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+}
+.sheet-stats div {
+  flex: 1;
+  background: var(--panel);
+  border-radius: 14px;
+  padding: 10px 12px;
+}
+.sheet-stats strong {
+  display: block;
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--mint);
+}
+.sheet-stats small {
+  font-size: 13px;
+  color: #b9d3c8;
+}
+.play .sheet-board,
+.play .sheet-note {
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 12px 0 0;
+}
+.play .sheet-note {
+  margin: 4px 0 14px;
+}
+.play .components {
+  margin: 12px 0 18px;
 }

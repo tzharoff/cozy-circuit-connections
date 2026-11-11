@@ -5,6 +5,20 @@ import { build } from 'vite';
 // Bundle each standalone entry independently so shared production chunks do not
 // leave imports that would fail when the file is opened directly from disk.
 await mkdir('exports', { recursive: true });
+// Replace the bundled font import with @font-face rules whose files are embedded as data URIs.
+const fontDir = 'node_modules/@fontsource-variable/fredoka';
+const fontCss = (await readFile(path.join(fontDir, 'index.css'), 'utf8')).replace(
+  /url\(\.\/(files\/[^)]+\.woff2)\)/g,
+  (_, file) => 'url(data:font/woff2;base64,' + '\0' + file + ')',
+);
+async function embedFonts(css) {
+  let faces = fontCss;
+  for (const [, file] of fontCss.matchAll(/\0([^)]+)/g)) {
+    const data = (await readFile(path.join(fontDir, file))).toString('base64');
+    faces = faces.replace('\0' + file, data);
+  }
+  return css.replace("@import '@fontsource-variable/fredoka';", () => faces);
+}
 async function exportPage({ shell, entry, styles, filename, name }) {
   const result = await build({
     configFile: false,
@@ -22,7 +36,9 @@ async function exportPage({ shell, entry, styles, filename, name }) {
     .join('\n')
     .replace(/<\/script/gi, '<\\/script');
   let html = await readFile(shell, 'utf8');
-  const css = (await Promise.all(styles.map((f) => readFile(f, 'utf8')))).join('\n');
+  const css = await embedFonts(
+    (await Promise.all(styles.map((f) => readFile(f, 'utf8')))).join('\n'),
+  );
   html = html.replace(/<link\b[^>]*\brel="stylesheet"[^>]*>/g, '');
   html = html.replace('</head>', () => '<style>' + css + '</style></head>');
   html = html.replace(
