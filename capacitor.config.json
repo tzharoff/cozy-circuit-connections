@@ -2,5 +2,12 @@
   "appId": "com.tonyinthegame.cozycircuit",
   "appName": "Cozy Circuit Connections",
   "webDir": "dist",
-  "backgroundColor": "#10171b"
+  "backgroundColor": "#10171b",
+  "plugins": {
+    "SystemBars": {
+      "insetsHandling": "native",
+      "initialViewportFitValueHint": "cover",
+      "style": "DARK"
+    }
+  }
 }
