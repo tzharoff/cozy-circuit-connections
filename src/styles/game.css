@@ -1395,6 +1395,11 @@ button[hidden] {
 .play .win-stats strong {
   font-variant-numeric: tabular-nums;
 }
+/* Room for two digits, so the pill and its icon hold still as counts change. */
+.hud-goal strong {
+  min-width: 2ch;
+  text-align: center;
+}
 .hud-button,
 .booster {
   border: 0;
