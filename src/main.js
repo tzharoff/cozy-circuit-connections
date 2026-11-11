@@ -187,7 +187,44 @@ function openClearCard() {
   card.showModal();
 }
 function closeWin() {
-  if ($('stageWin').open) $('stageWin').close();
+  const card = $('stageWin');
+  if (card.open && !card.leaving) card.close();
+}
+/** Sends a card flying up off the top of the screen, then closes it. Closes at once with
+ * reduced motion or where animations aren't available. */
+function flyOut(card) {
+  if (!card.open || card.leaving) return;
+  if (globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches || !card.animate) {
+    card.close();
+    return;
+  }
+  card.leaving = true;
+  const timing = { duration: 520, easing: 'cubic-bezier(0.5, 0, 0.75, 0)', fill: 'forwards' };
+  // A small dip first, like it's pushing off, then up and away.
+  const fly = card.animate(
+    [
+      { transform: 'none' },
+      { transform: 'translateY(12px)', offset: 0.2 },
+      { transform: 'translateY(-120vh)' },
+    ],
+    timing,
+  );
+  const fade = card.animate([{ opacity: 1 }, { opacity: 0 }], {
+    ...timing,
+    pseudoElement: '::backdrop',
+  });
+  fly.onfinish = () => {
+    card.leaving = false;
+    card.close();
+    fly.cancel();
+    fade.cancel();
+  };
+}
+/** Continue (or ✕) on the clear card: the card flies off while home appears underneath. */
+function leaveClearCard() {
+  if (busy) return;
+  flyOut($('stageWin'));
+  showHome();
 }
 function closeMenu() {
   if ($('menu').open) $('menu').close();
@@ -586,9 +623,9 @@ $('shape').onchange = () => {
 $('lessonNext').onclick = nextLesson;
 $('tutorialSkip').onclick = () => startStage(nextLevel() || 1);
 // Between levels, Continue returns home; the home Play button starts the next level.
-$('winNext').onclick = showHome;
+$('winNext').onclick = leaveClearCard;
 // Closing the clear card moves on too; there is no going back to a finished board.
-$('winClose').onclick = showHome;
+$('winClose').onclick = leaveClearCard;
 $('homePlay').onclick = () => {
   if (busy) return;
   const target = homeTarget();
