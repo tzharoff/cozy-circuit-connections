@@ -14,6 +14,7 @@ import {
 } from './game/charges.js';
 import { componentIcon } from './ui/components.js';
 import { batteryIcon, chipCoinIcon } from './ui/currency.js';
+import { createSputter } from './ui/sputter.js';
 import { createEffects } from './ui/effects.js';
 import { boardMarkup } from './ui/view.js';
 /** Application controller: selection, stage navigation, UI events, and match commits. */
@@ -294,9 +295,12 @@ function say(s) {
   $('message').textContent = s;
 }
 let stuckKey = '';
+const sputter = createSputter({ head: $('sputterHead'), zap: $('sputterZap') });
 function closeStuck() {
   if ($('stuckDialog').open) $('stuckDialog').close();
+  sputter.stop();
 }
+/** The failed card: a broken twin of the clear card that clunks in with a fried Chip’um. */
 function showStuck(force = false) {
   if (busy) return;
   const key = JSON.stringify([state.board, state.shields, state.walls]);
@@ -304,7 +308,20 @@ function showStuck(force = false) {
   if (!force && stuckKey === key) return;
   updateCharges();
   stuckKey = key;
-  if (!$('stuckDialog').open) $('stuckDialog').showModal();
+  const card = $('stuckDialog');
+  if (card.open) return;
+  $('stuckTitle').textContent = state.tutorial
+    ? 'Tutorial'
+    : state.stage
+      ? 'Level ' + state.stage
+      : 'Endless';
+  // The frazzled Chip’um is one of the types still stuck on the board.
+  $('stuckChipum').innerHTML = componentIcon((state.board.find(Boolean) || 1) - 1, 'fried');
+  card.classList?.remove('clunk');
+  void card.offsetWidth;
+  card.classList?.add('clunk');
+  card.showModal();
+  sputter.start(800);
 }
 function save() {
   storage.saveGame({ state, wins, completed, tutorialDone });
@@ -586,6 +603,7 @@ $('homeCrew').innerHTML = [0, 4, 2, 1, 5]
   .join('');
 $('stageWin').oncancel = (e) => e.preventDefault();
 $('stuckReview').onclick = closeStuck;
+$('stuckDialog').onclose = sputter.stop;
 $('stuckOptions').onclick = () => showStuck(true);
 $('stuckUndo').onclick = () => {
   if (!state.history.length || busy) return;

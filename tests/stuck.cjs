@@ -42,6 +42,11 @@ var winsBefore=wins,completedBefore=JSON.stringify(completed);render();
 `);
 assert(elements.stuckDialog.open);
 assert(!elements.stuckNotice.hidden);
+// The failed card names the board and shows a fried Chip’um still on it.
+assert.equal(elements.stuckTitle.textContent, 'Endless');
+assert(elements.stuckChipum.innerHTML.includes('component-art'));
+assert.equal(elements.stuckRestartLabel.textContent, 'Restart');
+assert(elements.stuckRestartCost.hidden, 'Endless restarts are free');
 assert(!elements.stuckUndo.disabled);
 assert.equal(run('wins'), run('winsBefore'));
 assert.equal(run('JSON.stringify(completed)'), run('completedBefore'));

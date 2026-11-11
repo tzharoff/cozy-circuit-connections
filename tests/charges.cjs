@@ -83,6 +83,7 @@ state.board=stuckBoard.slice();state.shields=shield.slice();state.walls=wall;sta
 render();
 `);
 assert(els.stuckDialog.open);
+assert.equal(els.stuckTitle.textContent, 'Level 5');
 assert.equal(els.stuckRestartLabel.textContent, 'Recharge');
 assert(els.stuckRestartCost.hidden);
 els.stuckRestart.onclick();

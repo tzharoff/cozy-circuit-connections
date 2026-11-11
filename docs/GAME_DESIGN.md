@@ -41,7 +41,7 @@ Decided November 11, 2026, following Toon Blast's model.
 
 Implemented: forward-only progression, the home screen with empty challenge columns, and the Continue/Play flow. Not implemented: earning, storing, or displaying a star total.
 
-## Failed card (approved, in progress)
+## Failed card
 
 Approved November 11, 2026, to replace the old "No moves left" stuck dialog (whose Restart button text is currently unreadable). It is a broken version of the level clear card, so the two read as a pair:
 
@@ -52,6 +52,8 @@ Approved November 11, 2026, to replace the old "No moves left" stuck dialog (who
 - **Sputtering spark:** instead of the smooth loop, the edge spark starts at a random point, runs a short way, flickers, dies, sometimes pops a small zigzag zap, then restarts elsewhere after 0.5–2s. Stop when the card closes.
 - **Clunk landing:** drops in like the clear card but with no springy squash: it thuds and wobbles side to side, like a dropped toy.
 - **Reduced motion:** keep the burn and fried Chip’um; skip the sputter, smoke, and wobble.
+
+Implemented November 11, 2026. The fried Chip’um is a type still on the stuck board. Restart shows its Charge cost as a small battery cell with "−1" when it costs one, and becomes **Recharge** at zero Charges (see Charges below). The sputtering spark lives in `src/ui/sputter.js`; the in-board "No moves left" notice with its Options button is unchanged.
 
 ## Lives: Charges
 
@@ -66,7 +68,7 @@ Decided November 11, 2026. Lives are **Charges**, shown as a battery instead of 
 - **Which restarts cost a Charge:** restarting a campaign level after making at least one match, from the failed card or the Restart button. The tutorial, Endless (New board is free anyway), an untouched board, and the one-time layout upgrade for old saves are free.
 - Not chosen: the Chip Coin price of a Recharge.
 
-Implemented November 11, 2026: the battery counter and Chip Coin count at the top of home, the Charges card in all three states with the sleepy Bastion, real-time refills, Restart spending a Charge, and Recharge at zero (from the Restart button, the failed card, and Play). Logic is in `src/game/charges.js`; art is in `src/ui/currency.js` and the `'sleepy'` mood in `src/ui/components.js`. **Placeholders** in `src/game/charges.js`: `RECHARGE_PRICE` is 20 and `STARTING_CHIP_COINS` is 60, because there is no shop yet. The failed card itself is still the old stuck dialog; only its Restart button changed (it shows "−1" or becomes Recharge).
+Implemented November 11, 2026: the battery counter and Chip Coin count at the top of home, the Charges card in all three states with the sleepy Bastion, real-time refills, Restart spending a Charge, and Recharge at zero (from the Restart button, the failed card, and Play). Logic is in `src/game/charges.js`; art is in `src/ui/currency.js` and the `'sleepy'` mood in `src/ui/components.js`. **Placeholders** in `src/game/charges.js`: `RECHARGE_PRICE` is 20 and `STARTING_CHIP_COINS` is 60, because there is no shop yet. The failed card's Restart button shows "−1" or becomes Recharge.
 
 ### Charges card
 

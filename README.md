@@ -62,7 +62,7 @@ Checks cover the tutorial, 12 stage solutions, unlocks and save restoration, 300
 - 12 deterministic stages played in order: progress only moves forward, Toon Blast style.
 - A home screen with the chip crew and a Play button for the next level; side columns are reserved for challenge icons.
 - Tutorial completion and Stage Clear screens.
-- A clear no-moves dialog and persistent board notice, with undo/restart recovery.
+- A burnt "Short circuit!" failed card and persistent board notice when no pairs can connect, with undo/restart recovery.
 - Endless mode and six board shapes.
 - Charges (lives) on a battery counter: restarting a level after making matches spends one, they refill every 30 minutes up to five, and at zero a Recharge refills them for Chip Coins.
 - Single-layer shields, walls, free hints, unlimited undo, and restart.
