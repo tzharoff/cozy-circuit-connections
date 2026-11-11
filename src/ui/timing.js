@@ -4,23 +4,23 @@
  * To ship new values, change `timingDefaults` below. */
 export const timingDefaults = {
   /** Zap line travel time for the shortest wire. */
-  wireBase: 350,
+  wireBase: 330,
   /** Extra travel time for each cell the wire passes. */
-  wirePerCell: 28,
+  wirePerCell: 30,
   /** Longest a wire may take to travel, however long it is. */
   wireMax: 750,
   /** Ring that spreads where the spark arrives. */
   wireRing: 280,
   /** How long the finished wire stays before fading. */
-  wireLinger: 200,
+  wireLinger: 190,
   /** Wire fade-out. */
-  wireFade: 300,
+  wireFade: 280,
   /** Chip shrink-and-vanish; the pair is removed when this ends. */
-  popChip: 200,
+  popChip: 180,
   /** Confetti bits flying out. */
-  popConfetti: 460,
+  popConfetti: 480,
   /** Ring that bursts around each popping chip. */
-  popRing: 400,
+  popRing: 370,
 };
 
 /** Slider ranges for the play room: [min, max, step]. */

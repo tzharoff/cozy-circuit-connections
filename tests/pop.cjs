@@ -27,9 +27,12 @@ vm.runInContext('let committed=0;popPair(9,10,()=>committed++)', ctx);
 assert.equal(marked.length, 2);
 assert.equal((layer.innerHTML.match(/class="pop-bit"/g) || []).length, 16);
 assert.equal(vm.runInContext('committed', ctx), 0);
-timers.find((t) => t.ms === 200).f();
+// Timings come from src/ui/timing.js, so retuning the defaults doesn't break this test.
+const chipMs = vm.runInContext('animTiming.popChip', ctx),
+  clearMs = vm.runInContext('Math.max(animTiming.popConfetti + 20, animTiming.popRing) + 80', ctx);
+timers.find((t) => t.ms === chipMs).f();
 assert.equal(vm.runInContext('committed', ctx), 1);
-timers.find((t) => t.ms === 560).f();
+timers.find((t) => t.ms === clearMs).f();
 assert.equal(layer.innerHTML, '');
 ctx.matchMedia = () => ({ matches: true });
 vm.runInContext('popPair(9,10,()=>committed++)', ctx);

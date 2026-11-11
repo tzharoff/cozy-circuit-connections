@@ -162,7 +162,7 @@ frame(0);
 frame(1000);
 assert(!animated.els.stageWin.open);
 assert(animated.run('busy&&state.board.filter(Boolean).length===2'));
-timers.find((t) => t.ms === 200).f();
+timers.find((t) => t.ms === animated.run('animTiming.popChip')).f();
 assert(animated.els.stageWin.open);
 assert(animated.run('!busy&&state.board.every(v=>!v)'));
 console.log(
