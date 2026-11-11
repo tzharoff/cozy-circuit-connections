@@ -1,5 +1,6 @@
 /** Inline vector artwork; no external images or fonts are needed. */
-/** `mood` is 'happy' (the normal face) or 'fried' (X eyes and a wobbly mouth, for the failed card). */
+/** `mood` is 'happy' (the normal face), 'fried' (X eyes and a wobbly mouth, for the failed card),
+ * or 'sleepy' (closed eyes and a small open mouth, for the empty Charges card). */
 export function componentIcon(index, mood = 'happy') {
   const bodies = [
     '<path d="M8 30H3m53 0h5" stroke="#decaa0" stroke-width="5"/><rect x="9" y="16" width="46" height="34" rx="15" fill="#ffd28e"/><path d="M18 18v13m9-14v11m18-10v12" stroke="#d58b61" stroke-width="5"/><path d="M18 49v6m28-6v6"/>',
@@ -9,10 +10,14 @@ export function componentIcon(index, mood = 'happy') {
     '<path d="M24 17q-9-6-10 4m26-4q9-6 10 4" fill="none" stroke="#ffb0a5" stroke-width="4"/><path d="M16 29q0-12 16-12t16 12l7 14q3 11-10 11H19Q6 54 9 43Z" fill="#ffafa5"/><path d="M32 17V9"/><circle cx="32" cy="7" r="4" fill="#ffe49e"/><path d="m20 25-3 5" stroke="#ffe1ce" stroke-width="3"/>',
     '<path d="M22 51v8m20-8v8" stroke="#b5d9d5" stroke-width="4"/><rect x="12" y="13" width="40" height="40" rx="12" fill="#8fe1db"/><ellipse cx="32" cy="14" rx="19" ry="7" fill="#c4f7e7"/><path d="M26 14h12m-6-3v6" stroke="#5a9692" stroke-width="2"/><path d="M18 25v13" stroke="#cefff1" stroke-width="3"/>',
   ];
+  const sleepy =
+    '<g stroke="#344546" stroke-width="2.4" stroke-linecap="round"><path d="M21 34q3 2.5 6 0m10 0q3 2.5 6 0" fill="none"/><ellipse cx="32" cy="43" rx="2.2" ry="2.6" fill="#344546" stroke="none"/><g stroke="none" fill="#ef8b8c" opacity=".55"><ellipse cx="19" cy="40" rx="3" ry="2"/><ellipse cx="45" cy="40" rx="3" ry="2"/></g></g>';
   const face =
-    mood === 'fried'
-      ? '<g stroke="#344546" stroke-width="2.4" stroke-linecap="round"><path d="M21 31l5 5m0-5-5 5M38 31l5 5m0-5-5 5"/><path d="M26 44q3-3 6 0t6 0" fill="none"/><g stroke="none" fill="#3a2a1c" opacity=".35"><ellipse cx="18" cy="24" rx="4" ry="2.5"/><ellipse cx="46" cy="44" rx="3" ry="2"/></g></g>'
-      : '<g stroke="#344546" stroke-width="2.4" stroke-linecap="round"><path d="M24 33v3m16-3v3"/><path d="M28 42q4 4 8 0" fill="none"/><g stroke="none" fill="#ef8b8c" opacity=".55"><ellipse cx="19" cy="40" rx="3" ry="2"/><ellipse cx="45" cy="40" rx="3" ry="2"/></g></g>';
+    mood === 'sleepy'
+      ? sleepy
+      : mood === 'fried'
+        ? '<g stroke="#344546" stroke-width="2.4" stroke-linecap="round"><path d="M21 31l5 5m0-5-5 5M38 31l5 5m0-5-5 5"/><path d="M26 44q3-3 6 0t6 0" fill="none"/><g stroke="none" fill="#3a2a1c" opacity=".35"><ellipse cx="18" cy="24" rx="4" ry="2.5"/><ellipse cx="46" cy="44" rx="3" ry="2"/></g></g>'
+        : '<g stroke="#344546" stroke-width="2.4" stroke-linecap="round"><path d="M24 33v3m16-3v3"/><path d="M28 42q4 4 8 0" fill="none"/><g stroke="none" fill="#ef8b8c" opacity=".55"><ellipse cx="19" cy="40" rx="3" ry="2"/><ellipse cx="45" cy="40" rx="3" ry="2"/></g></g>';
   return (
     '<svg class="component-art" viewBox="0 0 64 64" aria-hidden="true"><ellipse cx="32" cy="58" rx="18" ry="3" fill="#193d3318"/><g stroke="#344546" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">' +
     bodies[index] +

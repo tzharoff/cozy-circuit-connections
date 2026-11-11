@@ -3,6 +3,7 @@ import { clone, valid } from '../game/state.js';
 import { shieldsFor, wallsFor } from '../game/generate.js';
 import { solvable } from '../game/rules.js';
 import { insideBoard } from '../game/rules.js';
+import { STARTING_CHIP_COINS, validCharges } from '../game/charges.js';
 
 /** Browser save adapter. Keep these existing keys stable across web/mobile refactors. */
 export function createStorage(storage) {
@@ -87,6 +88,19 @@ export function createStorage(storage) {
     },
     saveEndless(state) {
       write('circuitEndlessState', state);
+    },
+    loadCharges() {
+      return validCharges(read('circuitCharges'));
+    },
+    saveCharges(charges) {
+      write('circuitCharges', charges);
+    },
+    loadChipCoins() {
+      const coins = read('circuitChipCoins');
+      return Number.isInteger(coins) && coins >= 0 ? coins : STARTING_CHIP_COINS;
+    },
+    saveChipCoins(coins) {
+      write('circuitChipCoins', coins);
     },
     loadShapeChoice() {
       try {

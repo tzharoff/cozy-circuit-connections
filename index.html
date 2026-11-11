@@ -9,6 +9,12 @@
   <body class="play">
     <section id="home" class="home-screen" aria-label="Home" hidden>
       <div class="home-top">
+        <button id="homeCharges" class="home-charges" aria-label="Charges">
+          <span id="homeBattery" aria-hidden="true"></span><small id="homeRefill">Full</small>
+        </button>
+        <div class="home-coins" aria-label="Chip Coins">
+          <span id="homeCoinIcon" aria-hidden="true"></span><strong id="homeCoins">0</strong>
+        </div>
         <button id="homeHelp" class="hud-button" aria-label="How to play">
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M9.2 9a3 3 0 1 1 4.3 2.7c-.9.5-1.5 1.2-1.5 2.3" />
@@ -128,7 +134,10 @@
       <p>Your progress is safe. Take a step back or give this board a fresh start.</p>
       <button id="stuckUndo" class="primary">Undo last pair ↶</button>
       <div class="win-secondary">
-        <button id="stuckRestart">Restart board</button>
+        <button id="stuckRestart">
+          <span id="stuckRestartLabel">Restart</span
+          ><span id="stuckRestartCost" class="charge-cost" hidden>−1</span>
+        </button>
       </div>
       <button id="stuckReview" class="review-board">Look at the board</button>
     </dialog>
@@ -238,6 +247,25 @@
         </div>
       </div>
       <button id="winNext" class="primary">Continue</button>
+    </dialog>
+    <dialog id="chargesDialog" class="level-card charges-card" aria-labelledby="chargesTitle">
+      <header class="card-head">
+        <h2 id="chargesTitle">Charges</h2>
+        <button id="chargesClose" class="card-close" aria-label="Close">×</button>
+      </header>
+      <div class="card-body">
+        <div class="charges-art">
+          <span id="chargesBastion" class="charges-bastion" aria-hidden="true" hidden></span
+          ><span id="chargesBattery" class="charges-battery"></span>
+        </div>
+        <p id="chargesStatus" aria-live="polite">Full</p>
+      </div>
+      <button id="chargesRecharge" class="primary recharge-button" hidden>
+        Recharge<span class="price-tag"
+          ><span id="rechargeCoin" aria-hidden="true"></span
+          ><span id="rechargePrice">20</span></span
+        >
+      </button>
     </dialog>
     <dialog id="confirmDialog" class="level-card confirm-card" aria-labelledby="confirmTitle">
       <header class="card-head"><h2 id="confirmTitle"></h2></header>

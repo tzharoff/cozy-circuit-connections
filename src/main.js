@@ -3,7 +3,17 @@ import { route, findPair, breakShields, boardStatus } from './game/rules.js';
 import { make, makeStage, makeTutorial } from './game/generate.js';
 import { clone, valid } from './game/state.js';
 import { createStorage } from './platform/storage.js';
+import {
+  MAX_CHARGES,
+  RECHARGE_PRICE,
+  clock,
+  fullCharges,
+  settle,
+  spendCharge,
+  untilNext,
+} from './game/charges.js';
 import { componentIcon } from './ui/components.js';
+import { batteryIcon, chipCoinIcon } from './ui/currency.js';
 import { createEffects } from './ui/effects.js';
 import { boardMarkup } from './ui/view.js';
 /** Application controller: selection, stage navigation, UI events, and match commits. */
@@ -62,6 +72,82 @@ function tutorialWin() {
 }
 const storage = createStorage();
 let { completed, tutorialDone, endlessSave } = storage.loadProgress();
+let charges = storage.loadCharges(),
+  chipCoins = storage.loadChipCoins(),
+  /** Replaces the refill line on the Charges card until it closes (e.g. not enough coins). */
+  chargesNote = '';
+/** Restarting a campaign level after making matches spends a Charge; the tutorial,
+ * Endless, untouched boards, and the one-time layout upgrade are free. */
+function restartCosts() {
+  return !!(state.stage && !state.tutorial && !state.needsBoundaryRestart && midBoard());
+}
+/** Adds refilled Charges and redraws the battery wherever it shows. */
+function updateCharges() {
+  const now = Date.now(),
+    settled = settle(charges, now);
+  if (settled.count !== charges.count || settled.since !== charges.since) {
+    charges = settled;
+    storage.saveCharges(charges);
+  }
+  const wait = untilNext(charges, now),
+    status = charges.count >= MAX_CHARGES ? 'Full' : '+1 in ' + clock(wait),
+    empty = charges.count < 1;
+  $('homeBattery').innerHTML = batteryIcon(charges.count, MAX_CHARGES);
+  $('homeRefill').textContent = charges.count >= MAX_CHARGES ? 'Full' : clock(wait);
+  $('homeCoins').textContent = chipCoins;
+  $('chargesBattery').innerHTML = batteryIcon(charges.count, MAX_CHARGES);
+  $('chargesStatus').textContent = chargesNote || status;
+  $('chargesBastion').hidden = !empty;
+  $('chargesRecharge').hidden = !empty;
+  $('stuckRestartLabel').textContent = empty && restartCosts() ? 'Recharge' : 'Restart';
+  $('stuckRestartCost').hidden = empty || !restartCosts();
+}
+function openCharges() {
+  chargesNote = '';
+  updateCharges();
+  const card = $('chargesDialog');
+  if (card.open) return;
+  card.classList?.remove('arrive');
+  void card.offsetWidth;
+  card.classList?.add('arrive');
+  card.showModal();
+}
+function closeCharges() {
+  if ($('chargesDialog').open) $('chargesDialog').close();
+}
+/** Recharge is offered only at zero and always refills the battery to full. */
+function recharge() {
+  if (charges.count > 0) return;
+  if (chipCoins < RECHARGE_PRICE) {
+    chargesNote = 'Not enough Chip Coins';
+    updateCharges();
+    return;
+  }
+  chipCoins -= RECHARGE_PRICE;
+  storage.saveChipCoins(chipCoins);
+  charges = fullCharges();
+  storage.saveCharges(charges);
+  updateCharges();
+  closeCharges();
+  // Back on a stuck board, the failed card returns with Restart ready.
+  if (screen === 'play' && boardStatus(state.board, state.shields, state.walls) === 'stuck')
+    showStuck(true);
+}
+/** Restarts the board, spending a Charge when it costs one; at zero, opens the Charges card. */
+function paidRestart() {
+  if (restartCosts()) {
+    const spent = spendCharge(charges, Date.now());
+    if (!spent) {
+      closeStuck();
+      openCharges();
+      return;
+    }
+    charges = spent;
+    storage.saveCharges(charges);
+  }
+  restartBoard();
+  updateCharges();
+}
 let winKey = '';
 function unlocked(n) {
   return n === 0 || n === 1 || completed.includes(n - 1);
@@ -183,12 +269,14 @@ function showHome() {
   closeWin();
   closeMenu();
   closeStuck();
+  closeCharges();
   clearWire();
   selected = null;
   hints = [];
   const [kind, badge] = homeTarget();
   $('homeKind').textContent = kind;
   $('homeLevel').textContent = badge;
+  updateCharges();
   $('game').hidden = true;
   $('home').hidden = false;
 }
@@ -214,6 +302,7 @@ function showStuck(force = false) {
   const key = JSON.stringify([state.board, state.shields, state.walls]);
   $('stuckUndo').disabled = !state.history.length;
   if (!force && stuckKey === key) return;
+  updateCharges();
   stuckKey = key;
   if (!$('stuckDialog').open) $('stuckDialog').showModal();
 }
@@ -417,6 +506,9 @@ $('restart').onclick = () => {
       'Restart',
       relayout,
     );
+  else if (restartCosts() && charges.count < 1) openCharges();
+  else if (restartCosts())
+    ask('Restart?', 'Start this level over for one Charge.', 'Restart', paidRestart);
   else if (midBoard())
     ask('Restart?', 'Start this board over from the beginning.', 'Restart', restartBoard);
   else restartBoard();
@@ -481,7 +573,11 @@ $('winNext').onclick = showHome;
 // Closing the clear card moves on too; there is no going back to a finished board.
 $('winClose').onclick = showHome;
 $('homePlay').onclick = () => {
-  if (!busy) homeTarget()[2]();
+  if (busy) return;
+  const target = homeTarget();
+  // With an empty battery, a level can't be restarted, so Play opens the Charges card first.
+  if (target[0] === 'Level' && settle(charges, Date.now()).count < 1) openCharges();
+  else target[2]();
 };
 $('homeButton').onclick = showHome;
 $('homeHelp').onclick = () => $('manual').showModal();
@@ -499,8 +595,16 @@ $('stuckUndo').onclick = () => {
 $('stuckRestart').onclick = () => {
   if (busy) return;
   closeStuck();
-  restartBoard();
+  paidRestart();
 };
+$('homeCharges').onclick = openCharges;
+$('chargesClose').onclick = closeCharges;
+$('chargesRecharge').onclick = recharge;
+$('homeCoinIcon').innerHTML = $('rechargeCoin').innerHTML = chipCoinIcon(true);
+$('rechargePrice').textContent = RECHARGE_PRICE;
+$('chargesBastion').innerHTML = componentIcon(1, 'sleepy') + '<span class="zzz">z</span>';
+// Refills happen in real time, so the battery counts down while the game is open.
+if (typeof setInterval === 'function') setInterval(updateCharges, 1000);
 if (state) {
   if (
     state.stage &&

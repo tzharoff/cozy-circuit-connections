@@ -54,7 +54,7 @@ npm run format:check
 npm run format
 ```
 
-Checks cover the tutorial, 12 stage solutions, unlocks and save restoration, 300 wall layouts, wall-aware routing, undo, and spark/pop timing. Engine tests import real modules. UI integration checks use fake browser surfaces; visual testing is still needed on real devices.
+Checks cover the tutorial, 12 stage solutions, unlocks and save restoration, 300 wall layouts, wall-aware routing, undo, Charges and Recharge, and spark/pop timing. Engine tests import real modules. UI integration checks use fake browser surfaces; visual testing is still needed on real devices.
 
 ## Included
 
@@ -64,6 +64,7 @@ Checks cover the tutorial, 12 stage solutions, unlocks and save restoration, 300
 - Tutorial completion and Stage Clear screens.
 - A clear no-moves dialog and persistent board notice, with undo/restart recovery.
 - Endless mode and six board shapes.
+- Charges (lives) on a battery counter: restarting a level after making matches spends one, they refill every 30 minutes up to five, and at zero a Recharge refills them for Chip Coins.
 - Single-layer shields, walls, free hints, unlimited undo, and restart.
 - Cartoon SVG components, traveling sparks, glowing wires, and pop effects.
 - Browser saves, responsive layouts, and reduced-motion support.
@@ -78,4 +79,4 @@ See [ARCHITECTURE.md](ARCHITECTURE.md) for source boundaries, the match lifecycl
 
 The detailed gameplay, lives, currency, rotating challenges, and social-race notes are in [docs/GAME_DESIGN.md](docs/GAME_DESIGN.md). That document distinguishes decisions from implemented features and open questions.
 
-This is a playable prototype. Native saves, phone polish (safe areas, icons, splash, haptics), ads, payments, premium currency, and backend services are not implemented yet.
+This is a playable prototype. Native saves, phone polish (safe areas, icons, splash, haptics), ads, payments, a Chip Coin shop, and backend services are not implemented yet.

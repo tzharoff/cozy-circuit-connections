@@ -63,7 +63,10 @@ Decided November 11, 2026. Lives are **Charges**, shown as a battery instead of 
 - **Empty battery:** at zero Charges the battery shows the spark graphic in a different color (color not chosen), so it reads as drained rather than broken. The failed card's Restart button becomes **Recharge**, which asks to spend Chip Coins to refill.
 - **Numbers:** 5 Charges at most (and to start), refilling one Charge every 30 minutes.
 - **Recharge:** offered only at zero Charges, and always refills the battery to full. It costs Chip Coins.
+- **Which restarts cost a Charge:** restarting a campaign level after making at least one match, from the failed card or the Restart button. The tutorial, Endless (New board is free anyway), an untouched board, and the one-time layout upgrade for old saves are free.
 - Not chosen: the Chip Coin price of a Recharge.
+
+Implemented November 11, 2026: the battery counter and Chip Coin count at the top of home, the Charges card in all three states with the sleepy Bastion, real-time refills, Restart spending a Charge, and Recharge at zero (from the Restart button, the failed card, and Play). Logic is in `src/game/charges.js`; art is in `src/ui/currency.js` and the `'sleepy'` mood in `src/ui/components.js`. **Placeholders** in `src/game/charges.js`: `RECHARGE_PRICE` is 20 and `STARTING_CHIP_COINS` is 60, because there is no shop yet. The failed card itself is still the old stuck dialog; only its Restart button changed (it shows "−1" or becomes Recharge).
 
 ### Charges card
 
@@ -189,7 +192,6 @@ This is a dependency-based recommendation, not approval to implement all feature
 
 - Life balances, refill/earning/purchase rules, zero-life behavior, and restart confirmation.
 - Shield Breaker price, inventory/target selection, and what to offer when no shield can recover the board.
-- Whether restarts outside the dead-end pop-up also spend a life and whether tutorials are exempt.
 - First-try definition; stars earned per clear; chip, shield-layer, and freed-chip counting.
 - Daily reward qualification/streaks and final reward tables for all events.
 - Event/reset timezone, overlap, countdown rules, in-progress attempts, and unclaimed rewards.

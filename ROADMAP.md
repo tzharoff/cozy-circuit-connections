@@ -22,6 +22,6 @@ Dead ends are possible, but uncommon and unevenly distributed across the current
 - Groups and 60-minute races, including levels cleared and shields broken, with varying reward tiers.
 - Add backend accounts, authoritative event timing, balances, validated progress, reward claims, and leaderboards before real shared competitions or purchases.
 
-Lives, currency, purchases, double shields, events, groups, and race services are not implemented. Reward values, star scoring, refill rules, event boundaries, and matchmaking are still open; see the design record.
+Charges (lives), the Charges card, and Recharge for Chip Coins are implemented with placeholder prices. A Chip Coin shop, purchases, Shield Breakers, double shields, events, groups, and race services are not implemented. Reward values, star scoring, Chip Coin prices, event boundaries, and matchmaking are still open; see the design record.
 
 This game is now the next iOS/Android project. The Capacitor wrapper and native `android/` and `ios/` projects exist. Next: move saves to native storage with a migration from the existing localStorage keys, add safe areas, orientation, icons, splash, and Android back handling, then test on real devices before store submission. Doom Scrolling and the other cabinet prototypes are outside this repository.

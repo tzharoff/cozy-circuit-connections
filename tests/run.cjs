@@ -6,6 +6,7 @@ for (const file of [
   'boundary.mjs',
   'editor.mjs',
   'stuck.cjs',
+  'charges.cjs',
   'tutorial.cjs',
   'campaign.cjs',
   'walls.cjs',

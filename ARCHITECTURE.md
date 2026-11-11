@@ -12,9 +12,11 @@ The browser and future mobile app use the same web source. Native platform setup
 | `src/game/rules.js`       | Pure routing, pair lookup, shield breaking, and solvability checks        |
 | `src/game/generate.js`    | Seeded board generation and stage/tutorial factories                      |
 | `src/game/state.js`       | Save-shape validation and plain-data snapshots                            |
+| `src/game/charges.js`     | Charges refill/spend rules and Chip Coin placeholder numbers              |
 | `src/platform/storage.js` | Persistence and compatibility migrations                                  |
 | `src/ui/view.js`          | Board and level-selection markup                                          |
 | `src/ui/components.js`    | Inline SVG character artwork                                              |
+| `src/ui/currency.js`      | Battery counter and Chip Coin artwork                                     |
 | `src/ui/effects.js`       | Wires, spark, pop particles, and animation timing                         |
 | `src/styles/game.css`     | Responsive styles and reduced-motion behavior                             |
 
@@ -36,7 +38,7 @@ Routing version 2 uses only the inner 6×6 board, with a hard edge. The 8×8 arr
 
 Change content in `src/data/definitions.js`. Component IDs are one-based array positions stored in saves: do not reorder or remove existing components without a migration. Stage numbering, deterministic seeds, and shape keys also identify saved content.
 
-Existing localStorage keys are preserved: `circuitState`, `circuitCampaign`, `circuitWins`, `circuitEndlessState`, and `circuitShapeChoice`. A standalone export opened at the same previous local file path keeps using that browser's existing saves. Moving to another origin, browser, or native app needs a separate migration if progress must follow.
+Existing localStorage keys are preserved: `circuitState`, `circuitCampaign`, `circuitWins`, `circuitEndlessState`, and `circuitShapeChoice`. `circuitCharges` (`{ count, since }`, where `since` is when the current refill began) and `circuitChipCoins` (a whole number) were added for Charges; a missing or unreadable value means a full battery or the starting coin balance. A standalone export opened at the same previous local file path keeps using that browser's existing saves. Moving to another origin, browser, or native app needs a separate migration if progress must follow.
 
 ## Build and export
 
