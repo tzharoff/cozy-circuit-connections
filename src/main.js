@@ -107,6 +107,7 @@ function openCharges() {
   chargesNote = '';
   updateCharges();
   const card = $('chargesDialog');
+  land(card);
   if (card.open) return;
   card.classList?.remove('arrive');
   void card.offsetWidth;
@@ -114,7 +115,7 @@ function openCharges() {
   card.showModal();
 }
 function closeCharges() {
-  if ($('chargesDialog').open) $('chargesDialog').close();
+  closeCard($('chargesDialog'));
 }
 /** Recharge is offered only at zero and always refills the battery to full. */
 function recharge() {
@@ -129,7 +130,7 @@ function recharge() {
   charges = fullCharges();
   storage.saveCharges(charges);
   updateCharges();
-  closeCharges();
+  flyOut($('chargesDialog'));
   // Back on a stuck board, the failed card returns with Restart ready.
   if (screen === 'play' && boardStatus(state.board, state.shields, state.walls) === 'stuck')
     showStuck(true);
@@ -175,20 +176,32 @@ function ask(title, text, action, then) {
   $('confirmText').textContent = text;
   $('confirmOk').textContent = action;
   confirmed = then;
+  land($('confirmDialog'));
   if (!$('confirmDialog').open) $('confirmDialog').showModal();
 }
 /** Opens the clear card and replays its drop-in entrance and edge spark. */
 function openClearCard() {
   const card = $('stageWin');
+  land(card);
   if (card.open) return;
   card.classList?.remove('arrive');
   void card.offsetWidth;
   card.classList?.add('arrive');
   card.showModal();
 }
-function closeWin() {
-  const card = $('stageWin');
+/** Closes a card at once, unless it is already flying off. */
+function closeCard(card) {
   if (card.open && !card.leaving) card.close();
+}
+function closeWin() {
+  closeCard($('stageWin'));
+}
+/** Stops a card mid-flight so it can be shown again in place. */
+function land(card) {
+  if (!card.leaving) return;
+  card.leaving = false;
+  for (const a of card.flight || []) a.cancel();
+  card.flight = null;
 }
 /** Sends a card flying up off the top of the screen, then closes it. Closes at once with
  * reduced motion or where animations aren't available. */
@@ -213,8 +226,10 @@ function flyOut(card) {
     ...timing,
     pseudoElement: '::backdrop',
   });
+  card.flight = [fly, fade];
   fly.onfinish = () => {
     card.leaving = false;
+    card.flight = null;
     card.close();
     fly.cancel();
     fade.cancel();
@@ -334,8 +349,13 @@ function say(s) {
 let stuckKey = '';
 const sputter = createSputter({ head: $('sputterHead'), zap: $('sputterZap') });
 function closeStuck() {
-  if ($('stuckDialog').open) $('stuckDialog').close();
+  closeCard($('stuckDialog'));
   sputter.stop();
+}
+/** Undo, Look, and Restart send the failed card flying off. */
+function leaveStuck() {
+  sputter.stop();
+  flyOut($('stuckDialog'));
 }
 /** The failed card: a broken twin of the clear card that clunks in with a fried Chip’um. */
 function showStuck(force = false) {
@@ -346,6 +366,7 @@ function showStuck(force = false) {
   updateCharges();
   stuckKey = key;
   const card = $('stuckDialog');
+  land(card);
   if (card.open) return;
   $('stuckTitle').textContent = state.tutorial
     ? 'Tutorial'
@@ -570,12 +591,12 @@ $('restart').onclick = () => {
 $('confirmOk').onclick = () => {
   const then = confirmed;
   confirmed = null;
-  $('confirmDialog').close();
+  flyOut($('confirmDialog'));
   if (then) then();
 };
 $('confirmCancel').onclick = () => {
   confirmed = null;
-  $('confirmDialog').close();
+  flyOut($('confirmDialog'));
 };
 $('hint').onclick = () => {
   const p = findPair(state.board, state.shields, state.walls);
@@ -639,21 +660,21 @@ $('homeCrew').innerHTML = [0, 4, 2, 1, 5]
   .map((i) => '<span class="crew">' + componentIcon(i) + '</span>')
   .join('');
 $('stageWin').oncancel = (e) => e.preventDefault();
-$('stuckReview').onclick = closeStuck;
+$('stuckReview').onclick = leaveStuck;
 $('stuckDialog').onclose = sputter.stop;
 $('stuckOptions').onclick = () => showStuck(true);
 $('stuckUndo').onclick = () => {
   if (!state.history.length || busy) return;
-  closeStuck();
+  leaveStuck();
   $('undo').onclick();
 };
 $('stuckRestart').onclick = () => {
   if (busy) return;
-  closeStuck();
+  leaveStuck();
   paidRestart();
 };
 $('homeCharges').onclick = openCharges;
-$('chargesClose').onclick = closeCharges;
+$('chargesClose').onclick = () => flyOut($('chargesDialog'));
 $('chargesRecharge').onclick = recharge;
 $('homeCoinIcon').innerHTML = $('rechargeCoin').innerHTML = chipCoinIcon(true);
 $('rechargePrice').textContent = RECHARGE_PRICE;
