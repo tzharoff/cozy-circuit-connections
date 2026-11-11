@@ -1,4 +1,11 @@
 @import '@fontsource-variable/fredoka';
+
+/* Rapid taps are game input; suppress double-tap zoom while keeping scrolling
+   and pinch zoom available. Applied at the root for every game screen. */
+html {
+  touch-action: manipulation;
+}
+
 .board > .outside {
   display: none !important;
 }
@@ -2875,4 +2882,20 @@ button[hidden] {
   .puff {
     display: none;
   }
+}
+
+/* Keep the studio card visible after the OS launch screen hands off. */
+.studio-splash {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: grid;
+  place-items: center;
+  background: #0b153f;
+  touch-action: manipulation;
+}
+.studio-splash img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }

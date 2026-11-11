@@ -699,3 +699,17 @@ else {
   render();
   showHome();
 }
+
+// Start the hold after the artwork is decoded and the game has initialized.
+const studioSplash = document.getElementById('studioSplash');
+if (studioSplash) {
+  const artwork = studioSplash.querySelector('img');
+  artwork
+    .decode()
+    .catch(() => {})
+    .then(() => {
+      requestAnimationFrame(() => {
+        setTimeout(() => studioSplash.remove(), 1500);
+      });
+    });
+}

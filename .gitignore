@@ -4,3 +4,5 @@ exports/
 .DS_Store
 Thumbs.db
 *.log
+
+builds/

@@ -13,7 +13,10 @@
     "ios": "npm run cap:sync && cap open ios",
     "test": "node tests/run.cjs",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "icons:generate": "node scripts/generate-icons.mjs",
+    "revision": "node scripts/revision.mjs --bump",
+    "version:sync": "node scripts/revision.mjs"
   },
   "engines": {
     "node": ">=22.12.0"

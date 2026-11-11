@@ -36,6 +36,15 @@ async function exportPage({ shell, entry, styles, filename, name }) {
     .join('\n')
     .replace(/<\/script/gi, '<\\/script');
   let html = await readFile(shell, 'utf8');
+  if (html.includes('/branding/tony-splash.png')) {
+    const splash = (await readFile('public/branding/tony-splash.png')).toString('base64');
+    html = html.replaceAll('/branding/tony-splash.png', `data:image/png;base64,${splash}`);
+  }
+  // Keep standalone exports independent of the public asset directory.
+  for (const size of [32, 180]) {
+    const icon = (await readFile(`public/icons/icon-${size}.png`)).toString('base64');
+    html = html.replaceAll(`/icons/icon-${size}.png`, `data:image/png;base64,${icon}`);
+  }
   const css = await embedFonts(
     (await Promise.all(styles.map((f) => readFile(f, 'utf8')))).join('\n'),
   );

@@ -82,3 +82,13 @@ See [ARCHITECTURE.md](ARCHITECTURE.md) for source boundaries, the match lifecycl
 The detailed gameplay, lives, currency, rotating challenges, and social-race notes are in [docs/GAME_DESIGN.md](docs/GAME_DESIGN.md). That document distinguishes decisions from implemented features and open questions.
 
 This is a playable prototype. Native saves, phone polish (safe areas, icons, splash, haptics), ads, payments, a Chip Coin shop, and backend services are not implemented yet.
+
+## Version and build numbers
+
+`version.json` is the source of truth for the release version and build number.
+Run `npm run revision` before preparing each new device/TestFlight/App Store build;
+it increments the build number and synchronizes iOS (Debug and Release), Android,
+and package metadata. Build numbers continue increasing across release versions.
+To change the release version, edit `version.json` and run `npm run version:sync`.
+Then run `npm run cap:sync` and build in Xcode. Current baseline: 0.1.0 (2).
+The product title remains a working name; revision numbering does not rename the app.
