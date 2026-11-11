@@ -61,11 +61,27 @@ Decided November 11, 2026. Lives are **Charges**, shown as a battery instead of 
 - **Refill wording:** the battery "recharges" over time ("Recharging 12:30"; "Full" at the maximum). This fits Bastion the Battery, who stores the energy, and Carly the Capacitor, who keeps a little charge for later; either can appear on refill or out-of-Charges screens.
 - **Restart cost:** the failed card's Restart button shows its cost as one battery cell ("−1").
 - **Empty battery:** at zero Charges the battery shows the spark graphic in a different color (color not chosen), so it reads as drained rather than broken. The failed card's Restart button becomes **Recharge**, which asks to spend Chip Coins to refill.
-- Not chosen: starting amount, maximum, refill time, and the Chip Coin price of a Recharge.
+- **Numbers:** 5 Charges at most (and to start), refilling one Charge every 30 minutes.
+- **Recharge:** offered only at zero Charges, and always refills the battery to full. It costs Chip Coins.
+- Not chosen: the Chip Coin price of a Recharge.
+
+### Charges card
+
+Approved November 11, 2026. Same structure as the level clear card: heading **Charges**, cream body, close ✕.
+
+- **Opens** when the player taps the battery on home, automatically when they tap **Play** with zero Charges, and from the failed card's **Recharge** button.
+- **Body:** a big battery with the count printed on it and cells filled to match, then one line: "Full" or "+1 in 12:30".
+- **Full or recharging:** no button, only the close ✕.
+- **Empty:** the battery turns gray with the recolored spark, a sleepy Bastion sits beside it, and a warm orange **Recharge** button shows its Chip Coin price on a gold tag.
 
 ## Premium currency: Chip Coins
 
 Decided November 11, 2026. The premium currency is **Chip Coins**: our own small, cute take on bitcoin, a coin stamped like a little chip. On screen, "Chip Coins" (singular "Chip Coin"); in code, files, and URLs, `chipcoins`. Chip Coins pay for Recharges and Shield Breakers, and challenge rewards can award them.
+
+- **Look:** a gold coin with a darker gold edge, an inner ring, a small shine at the top left, and two short bars poking out at the top and at the bottom (the bitcoin nod). In the middle is a plain, rounded, medium-weight **C** in dark gold, with nothing through it.
+- **No face.** A face made the coin read as a seventh Chip’um, and spending them felt like giving away friends. Keep the coin an object.
+- **Small sizes:** at price-tag size, drop the inner ring and bars and thicken the C so it stays readable.
+- Mockup colors: coin `#f6c94a`, edge `#c98a1a`, ring `#e0a92e`, C and bars `#7a4c06`.
 
 ## Agreed gameplay and recovery direction
 
@@ -85,14 +101,14 @@ No currency, life, or item balance has been chosen. The current recovery screen 
 
 ## Economy and monetization direction
 
-| Item or system  | Decision                                                                                | Still to define                                                                                        |
-| --------------- | --------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
-| Lives (Charges) | Restarting a level spends one Charge; shown as a battery with the count on it           | Starting amount, maximum, refill timing, Recharge price, other ways to earn Charges, confirmation flow |
-| Chip Coins      | Buy Recharges and Shield Breakers; can be earned from challenge rewards                 | Prices, purchase packs, balances, caps, and other uses                                                 |
-| Shield Breakers | Remove one layer from a chosen shield; available through currency and challenge rewards | Shop/inventory flow, whether to buy-and-use or store items, behavior when no helpful target exists     |
-| Hints           | Part of the monetization plan, including optional rewarded ads for extra hints          | Free allowance, refill rules, prices, and rewards                                                      |
-| Cosmetics       | Sell component art, board themes, wire effects, and pop effects                         | Pack contents, unlock requirements, direct purchase versus currency pricing                            |
-| Ads             | Optional rewarded ads; no interruptions during a board                                  | Specific placements, rewards, availability, consent and store integration                              |
+| Item or system  | Decision                                                                                | Still to define                                                                                    |
+| --------------- | --------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| Lives (Charges) | Restarting a level spends one Charge; shown as a battery with the count on it           | Recharge price, other ways to earn Charges, confirmation flow                                      |
+| Chip Coins      | Buy Recharges and Shield Breakers; can be earned from challenge rewards                 | Prices, purchase packs, balances, caps, and other uses                                             |
+| Shield Breakers | Remove one layer from a chosen shield; available through currency and challenge rewards | Shop/inventory flow, whether to buy-and-use or store items, behavior when no helpful target exists |
+| Hints           | Part of the monetization plan, including optional rewarded ads for extra hints          | Free allowance, refill rules, prices, and rewards                                                  |
+| Cosmetics       | Sell component art, board themes, wire effects, and pop effects                         | Pack contents, unlock requirements, direct purchase versus currency pricing                        |
+| Ads             | Optional rewarded ads; no interruptions during a board                                  | Specific placements, rewards, availability, consent and store integration                          |
 
 No payment or ad integration is implemented. Premium currency is now an agreed part of the Shield Breaker plan, superseding the earlier idea to begin with direct cosmetic purchases only. Optional tools such as shuffle, demolition, and auto-connect were discussed but are not committed features.
 
