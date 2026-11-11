@@ -1717,89 +1717,254 @@ button[hidden] {
 .play .components {
   margin: 12px 0 18px;
 }
+/* Toy depth: gradient faces, top highlights, solid rims, bevel ledges, and soft drop shadows. */
+.play {
+  --rim: #0b2e23;
+  --toon-ink: #0d3a2b;
+}
+.toon-text,
+.play .card-head h2,
+.play .level-card #winNext {
+  color: #fff1c9;
+  -webkit-text-stroke: 7px var(--toon-ink);
+  paint-order: stroke fill;
+  text-shadow: 0 4px 0 #0a2c20;
+}
+.play .hud-button,
+.play .booster,
+.play .level-card .win-secondary button {
+  border: 3px solid var(--rim);
+  background: radial-gradient(circle at 40% 28%, #36735f, #22463f 72%);
+  box-shadow:
+    inset 0 2px 0 #ffffff26,
+    0 4px 0 #071713,
+    0 8px 12px #0006;
+}
+.play .hud-button:active,
+.play .booster:active:not(:disabled),
+.play .level-card .win-secondary button:active {
+  transform: translateY(3px);
+  box-shadow:
+    inset 0 2px 0 #ffffff26,
+    0 1px 0 #071713,
+    0 3px 6px #0006;
+}
+.play .booster-main {
+  border-color: #7a5106;
+  background: radial-gradient(circle at 40% 28%, #fff0a6, #ffcb3d 58%, #f0a51a);
+  box-shadow:
+    inset 0 3px 0 #fff9,
+    inset 0 -4px 0 #d98d16,
+    0 5px 0 #5f3e04,
+    0 10px 16px #0007;
+}
+.play .booster-main:active:not(:disabled) {
+  box-shadow:
+    inset 0 3px 0 #fff9,
+    inset 0 -4px 0 #d98d16,
+    0 2px 0 #5f3e04,
+    0 4px 8px #0007;
+}
+.play .hud-pill {
+  border: 3px solid var(--rim);
+  background: linear-gradient(#32594f, #213f3a);
+  box-shadow:
+    inset 0 2px 0 #ffffff20,
+    0 4px 0 #071713,
+    0 8px 12px #0005;
+}
+.play .hud strong {
+  color: #fff1c9;
+  -webkit-text-stroke: 5px var(--toon-ink);
+  paint-order: stroke fill;
+  text-shadow: 0 3px 0 #0a2c20;
+}
+.play .pcb {
+  border: 3px solid #10382a;
+  background: linear-gradient(#346b56, #25523f);
+  box-shadow:
+    inset 0 3px 0 #ffffff1c,
+    0 6px 0 #0d3125,
+    0 14px 24px #0007;
+}
+.play .empty.socket {
+  background: #2a5a4766;
+  box-shadow:
+    inset 0 3px 5px #0004,
+    0 1px 0 #ffffff12;
+}
+.play .tutorial-coach {
+  border: 3px solid #9fdcc0;
+  background: linear-gradient(#f2fff9, #d2f5e4);
+  box-shadow:
+    inset 0 3px 0 #fff,
+    0 4px 0 #5fa889,
+    0 10px 18px #0005;
+}
+.play .tutorial-buttons #lessonNext {
+  border: 2px solid #7a5106;
+  background: linear-gradient(#ffe68a, #ffc93c 60%, #f2a91c);
+  box-shadow:
+    inset 0 2px 0 #fff9,
+    0 3px 0 #5f3e04,
+    0 6px 10px #0004;
+}
+
 /* Between-screens card: the level is the heading, one big Play button. */
 .play .level-card {
   width: min(360px, 90vw);
-  padding: 0 0 18px;
+  padding: 0 0 22px;
   overflow: visible;
   text-align: center;
+  border: 3px solid var(--rim);
+  border-radius: 34px;
+  background: linear-gradient(#1f5a47, #143f31);
+  box-shadow:
+    inset 0 2px 0 #ffffff22,
+    0 16px 44px #000b;
 }
 .card-head {
   display: block;
   max-width: none;
   margin: 0;
-  border: 0;
   font: inherit;
   letter-spacing: 0;
   position: relative;
-  padding: 14px 52px;
-  border-radius: 24px 24px 0 0;
-  background: var(--panel);
+  padding: 16px 64px 14px;
+  border: 0;
+  border-bottom: 3px solid #0e3a2c;
+  border-radius: 31px 31px 0 0;
+  background: linear-gradient(#26664f, #1b4e3d);
+  box-shadow:
+    inset 0 2px 0 #ffffff26,
+    0 2px 0 #2c6b55;
 }
 .play .card-head h2 {
   margin: 0;
-  font-size: 30px;
+  font-size: 36px;
   font-weight: 600;
   letter-spacing: 0;
-  color: var(--cream);
 }
 .play .card-close {
   position: absolute;
   top: 50%;
-  right: 12px;
-  width: 34px;
-  height: 34px;
-  margin-top: -17px;
+  right: 14px;
+  width: 44px;
+  height: 44px;
+  margin-top: -22px;
   padding: 0;
+  border: 3px solid #7e1a14;
   border-radius: 50%;
-  background: #ff6b6b;
+  background: radial-gradient(circle at 38% 30%, #ff9d8f, #e8473b 58%, #b3261e);
   color: #fff;
-  font-size: 22px;
+  font-size: 28px;
   line-height: 1;
-  box-shadow: 0 3px 0 #b03e3e;
+  text-shadow: 0 2px 0 #7e1a14;
+  box-shadow:
+    inset 0 2px 0 #fff7,
+    0 4px 0 #5e130e,
+    0 7px 10px #0006;
 }
 .card-body {
-  margin: 16px 16px 18px;
-  padding: 14px 12px 12px;
-  border-radius: 18px;
-  background: var(--cream);
-  box-shadow: inset 0 -4px 0 #cfe9dc;
+  margin: 20px 18px 22px;
+  padding: 18px 14px 16px;
+  border: 3px solid #9fdcc0;
+  border-radius: 26px;
+  background: linear-gradient(#effff8, #c9f1df);
+  box-shadow:
+    inset 0 3px 0 #fff,
+    inset 0 -4px 0 #b1e5cd,
+    0 5px 0 #0e3a2c88,
+    0 9px 16px #0004;
 }
 .win-stars {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: start;
-  gap: 4px;
+  gap: 2px;
 }
-.win-stars svg {
-  width: 58px;
-  height: 58px;
-  margin-top: 10px;
+.art-defs {
+  position: absolute;
 }
-.win-stars svg:nth-child(2) {
-  width: 72px;
-  height: 72px;
+.win-stars .star {
+  width: 64px;
+  height: 64px;
+  margin-top: 14px;
+  overflow: visible;
+  filter: drop-shadow(0 3px 0 #b97708) drop-shadow(0 6px 5px #0003);
+}
+.win-stars .star-big {
+  width: 82px;
+  height: 82px;
   margin-top: 0;
 }
-.win-stars path {
-  fill: var(--sun);
-  stroke: var(--sun-edge);
-  stroke-width: 1.3;
+.star-body {
+  fill: url(#starFill);
+  stroke: #c4840c;
+  stroke-width: 2.3;
   stroke-linejoin: round;
 }
+.star-gloss {
+  fill: #fff;
+  opacity: 0.8;
+}
+.sparkle {
+  position: absolute;
+  fill: #ffd43b;
+  animation: twinkle 1.8s ease-in-out infinite alternate;
+}
+.sparkle-1 {
+  width: 18px;
+  top: 0;
+  left: 14%;
+}
+.sparkle-2 {
+  width: 12px;
+  top: 56%;
+  left: 9%;
+  animation-delay: 0.6s;
+}
+.sparkle-3 {
+  width: 18px;
+  top: 4%;
+  right: 13%;
+  animation-delay: 0.3s;
+}
+.sparkle-4 {
+  width: 12px;
+  top: 62%;
+  right: 9%;
+  animation-delay: 0.9s;
+}
+@keyframes twinkle {
+  from {
+    opacity: 0.35;
+    transform: scale(0.7);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sparkle {
+    animation: none;
+  }
+}
 .play .level-card #winSubtitle {
-  margin: 4px 0 10px;
-  font-size: 19px;
+  margin: 10px 0 12px;
+  font-size: 24px;
   font-weight: 600;
-  color: #2c5247;
+  color: #0f3d2e;
 }
 .play .level-card .win-stats {
   justify-content: center;
-  gap: 28px;
+  gap: 30px;
   margin: 0;
-  padding: 10px 0 0;
+  padding: 12px 0 0;
   border: 0;
-  border-top: 2px dashed #cfe9dc;
+  border-top: 3px dashed #8fd6b6;
 }
 .level-card .win-stats div {
   display: flex;
@@ -1809,44 +1974,73 @@ button[hidden] {
 .play .level-card .win-stats strong {
   display: inline;
   margin: 0;
-  font-size: 24px;
-  color: #14352c;
+  font-size: 28px;
+  color: #0f3d2e;
 }
 #winPairsIcon .component-art {
-  width: 34px;
-  height: 34px;
+  width: 40px;
+  height: 40px;
   display: block;
 }
 .win-shield {
-  font-size: 26px;
-  line-height: 1;
-  color: #c99e59;
+  width: 32px;
+  height: 32px;
+  overflow: visible;
+  filter: drop-shadow(0 2px 0 #b97708);
+}
+.win-shield path {
+  fill: url(#shieldFill);
+  stroke: #c98208;
+  stroke-width: 2;
+  stroke-linejoin: round;
 }
 .play .level-card #winNext {
-  width: calc(100% - 32px);
-  margin: 0 16px;
-  padding: 14px;
-  font-size: 24px;
+  width: calc(100% - 36px);
+  margin: 0 18px;
+  padding: 10px 14px 12px;
+  border: 3px solid #17704e;
+  border-radius: 24px;
+  background: linear-gradient(#94f6d0, #44d29d 55%, #2cb783);
+  font-size: 38px;
+  box-shadow:
+    inset 0 3px 0 #ffffff8c,
+    inset 0 -5px 0 #23a072,
+    0 6px 0 #0f5239,
+    0 12px 20px #0007;
+  transition:
+    transform 0.08s,
+    box-shadow 0.08s;
+}
+.play .level-card #winNext:active {
+  transform: translateY(4px);
+  box-shadow:
+    inset 0 3px 0 #ffffff8c,
+    inset 0 -5px 0 #23a072,
+    0 2px 0 #0f5239,
+    0 5px 10px #0007;
 }
 .play .level-card .win-secondary {
   justify-content: center;
-  gap: 16px;
-  margin-top: 16px;
+  gap: 18px;
+  margin-top: 20px;
 }
 .play .level-card .win-secondary button {
-  width: 48px;
-  height: 48px;
+  width: 58px;
+  height: 58px;
   flex: none;
   display: grid;
   place-items: center;
   padding: 0;
-  border: 0;
   border-radius: 50%;
-  background: var(--panel);
-  color: var(--mint);
-  box-shadow: 0 4px 0 var(--panel-edge);
+  color: #8ff5cd;
+  transition:
+    transform 0.08s,
+    box-shadow 0.08s;
 }
 .level-card .win-secondary svg {
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
+}
+.level-card .win-secondary path {
+  stroke-width: 2.8;
 }
