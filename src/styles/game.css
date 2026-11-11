@@ -2312,3 +2312,98 @@ button[hidden] {
     animation: none;
   }
 }
+/* Clear card entrance: falls in, squashes on landing, springs back; then a spark loops the frame. */
+.level-card.arrive {
+  transform-origin: 50% 100%;
+  animation: card-land 0.7s both;
+}
+.level-card.arrive::backdrop {
+  animation: backdrop-in 0.3s ease-out both;
+}
+@keyframes card-land {
+  0% {
+    transform: translateY(-110vh);
+    animation-timing-function: cubic-bezier(0.55, 0, 1, 0.6);
+  }
+  55% {
+    transform: translateY(0) scale(1);
+  }
+  68% {
+    transform: translateY(0) scale(1.06, 0.9);
+  }
+  82% {
+    transform: translateY(-8px) scale(0.98, 1.03);
+  }
+  100% {
+    transform: none;
+  }
+}
+@keyframes backdrop-in {
+  from {
+    opacity: 0;
+  }
+}
+/* Sits on the middle of the card's 3px border; user units are CSS pixels, so corners stay round. */
+.edge-spark {
+  position: absolute;
+  top: -1.5px;
+  left: -1.5px;
+  width: calc(100% + 3px);
+  height: calc(100% + 3px);
+  overflow: visible;
+  pointer-events: none;
+  z-index: 3;
+}
+.edge-spark rect {
+  fill: none;
+  stroke-linecap: round;
+  stroke-dashoffset: 0;
+  opacity: 0;
+}
+.edge-head {
+  stroke: #ffe46b;
+  stroke-width: 5;
+  stroke-dasharray: 1.2 98.8;
+  filter: drop-shadow(0 0 4px #ffd36b) drop-shadow(0 0 10px #ffb300);
+}
+.edge-tail {
+  stroke: #fff3b0;
+  stroke-width: 3;
+  /* A short trail sitting just behind the head as both travel forward. */
+  stroke-dasharray: 0 95 5 0;
+  filter: drop-shadow(0 0 4px #ffcf40);
+}
+.arrive .edge-spark rect {
+  animation:
+    spark-show 0.3s 0.7s both,
+    edge-loop 3.2s 0.7s linear infinite;
+}
+.arrive .edge-spark .edge-tail {
+  animation:
+    spark-tail-show 0.3s 0.7s both,
+    edge-loop 3.2s 0.7s linear infinite;
+}
+@keyframes spark-show {
+  to {
+    opacity: 1;
+  }
+}
+@keyframes spark-tail-show {
+  to {
+    opacity: 0.55;
+  }
+}
+@keyframes edge-loop {
+  to {
+    stroke-dashoffset: -100;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .level-card.arrive,
+  .level-card.arrive::backdrop {
+    animation: none;
+  }
+  .edge-spark {
+    display: none;
+  }
+}

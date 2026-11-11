@@ -58,7 +58,7 @@ function tutorialWin() {
   $('winPairs').textContent = state.tutorialTotal + state.score;
   $('winShields').textContent = 1;
   $('winNext').textContent = 'Continue';
-  if (!$('stageWin').open) $('stageWin').showModal();
+  openClearCard();
 }
 const storage = createStorage();
 let { completed, tutorialDone, endlessSave } = storage.loadProgress();
@@ -89,6 +89,15 @@ function ask(title, text, action, then) {
   $('confirmOk').textContent = action;
   confirmed = then;
   if (!$('confirmDialog').open) $('confirmDialog').showModal();
+}
+/** Opens the clear card and replays its drop-in entrance and edge spark. */
+function openClearCard() {
+  const card = $('stageWin');
+  if (card.open) return;
+  card.classList?.remove('arrive');
+  void card.offsetWidth;
+  card.classList?.add('arrive');
+  card.showModal();
 }
 function closeWin() {
   if ($('stageWin').open) $('stageWin').close();
@@ -124,7 +133,7 @@ function showWin() {
   $('winPairs').textContent = state.score;
   $('winShields').textContent = state.initialShields.filter(Boolean).length;
   $('winNext').textContent = 'Continue';
-  if (!$('stageWin').open) $('stageWin').showModal();
+  openClearCard();
 }
 function enterEndless() {
   if (busy) return;
