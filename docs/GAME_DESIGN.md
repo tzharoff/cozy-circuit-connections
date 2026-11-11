@@ -41,6 +41,20 @@ Decided November 11, 2026, following Toon Blast's model.
 
 Implemented: forward-only progression, the home screen with empty challenge columns, and the Continue/Play flow. Not implemented: earning, storing, or displaying a star total.
 
+## Failed card (approved, in progress)
+
+Approved November 11, 2026, to replace the old "No moves left" stuck dialog (whose Restart button text is currently unreadable). It is a broken version of the level clear card, so the two read as a pair:
+
+- **Same structure** as the clear card (`level-card` styles): heading "Level N" (or "Tutorial"/"Endless"), cream body, one big button, round icon buttons below. Keep the existing IDs `stuckDialog`, `stuckRestart`, `stuckUndo`, `stuckReview`, `stuckTitle` so tests and handlers carry over.
+- **Body:** a frazzled Chip’um instead of stars (`componentIcon(type, 'fried')` already exists: X eyes, wobbly mouth, soot), grayed slightly with a smoke puff; "Short circuit!" and "No pairs can connect."
+- **Buttons:** big **Restart** in warm orange (not the win card's mint); round **Undo** and **Look** (eye) icon buttons. Look closes the card to inspect the board.
+- **Burnt corner:** top-right corner scorched (dark radial burn), a jagged charred notch, and small smoke wisps rising.
+- **Sputtering spark:** instead of the smooth loop, the edge spark starts at a random point, runs a short way, flickers, dies, sometimes pops a small zigzag zap, then restarts elsewhere after 0.5–2s. Stop when the card closes.
+- **Clunk landing:** drops in like the clear card but with no springy squash: it thuds and wobbles side to side, like a dropped toy.
+- **Reduced motion:** keep the burn and fried Chip’um; skip the sputter, smoke, and wobble.
+
+Open: the life currency should be circuit-themed, not hearts. When lives exist, Restart shows its cost in that currency.
+
 ## Agreed gameplay and recovery direction
 
 - Keep the two-click pair-matching game, wire effects, and chip pop effects.
