@@ -14,7 +14,6 @@ Dead ends are possible, but uncommon and unevenly distributed across the current
 
 ## Held for later
 
-- Prepare the mobile wrapper with Capacitor when ready; the web source is already modular.
 - Define attempts and gameplay-stat counting, then record events consistently.
 - Tune layouts, add double shields, and introduce other hazards one at a time.
 - Finalize lives and Shield Breaker rules. Planned stuck pop-up: Restart (one life), Shield Breaker (premium currency or earned item), Cancel. Remove undo when implementing that system.
@@ -25,4 +24,4 @@ Dead ends are possible, but uncommon and unevenly distributed across the current
 
 Lives, currency, purchases, double shields, events, groups, and race services are not implemented. Reward values, star scoring, refill rules, event boundaries, and matchmaking are still open; see the design record.
 
-Finish Doom Scrolling first, then return to this game, then build a third game. Doom Scrolling and the other cabinet prototypes are outside this repository.
+This game is now the next iOS/Android project. The Capacitor wrapper and native `android/` and `ios/` projects exist. Next: move saves to native storage with a migration from the existing localStorage keys, add safe areas, orientation, icons, splash, and Android back handling, then test on real devices before store submission. Doom Scrolling and the other cabinet prototypes are outside this repository.

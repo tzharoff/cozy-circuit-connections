@@ -2,3 +2,5 @@ node_modules/
 dist/
 exports/
 package-lock.json
+android/
+ios/

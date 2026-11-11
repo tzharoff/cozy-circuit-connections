@@ -24,7 +24,17 @@ npm run build
 npm run preview
 ```
 
-`dist/` is the production web app, ready for static hosting or a future Capacitor wrapper.
+`dist/` is the production web app, ready for static hosting and used as the Capacitor web directory.
+
+## iOS and Android
+
+Capacitor wraps `dist/` in the native projects under `android/` and `ios/` (app ID `com.tonyinthegame.cozycircuit`, set in `capacitor.config.json`). After changing `src/`, rebuild and copy the web app into both projects:
+
+```sh
+npm run cap:sync
+```
+
+`npm run android` syncs and opens Android Studio, which supplies the JDK and runs the app on an emulator or device. `npm run ios` syncs and opens Xcode; it needs a Mac, so on Windows use a Mac or a cloud build service for iOS. Android needs JDK 21 and SDK Platform 36. Without Android Studio, set `JAVA_HOME` to the JDK and run `gradlew assembleDebug` in `android/`; the APK is `android/app/build/outputs/apk/debug/app-debug.apk`. Do not edit the copied web assets inside the native projects; edit `src/` and sync.
 
 For a standalone file you can double-click:
 
@@ -67,4 +77,4 @@ See [ARCHITECTURE.md](ARCHITECTURE.md) for source boundaries, the match lifecycl
 
 The detailed gameplay, lives, currency, rotating challenges, and social-race notes are in [docs/GAME_DESIGN.md](docs/GAME_DESIGN.md). That document distinguishes decisions from implemented features and open questions.
 
-This is a playable prototype. Capacitor, ads, payments, premium currency, and backend services are not implemented yet.
+This is a playable prototype. Native saves, phone polish (safe areas, icons, splash, haptics), ads, payments, premium currency, and backend services are not implemented yet.

@@ -42,7 +42,7 @@ Existing localStorage keys are preserved: `circuitState`, `circuitCampaign`, `ci
 
 `editor.html` and `src/editor/` provide the separate level workshop. The editor uses the same routing, shields, artwork, view helpers, and effects, with independent draft/test state and local storage keys. `src/game/level-format.js` validates versioned level JSON. `src/data/authored-levels.js` holds deliberate campaign overrides and contiguous appended stages.
 
-Vite serves ES modules during development and bundles them into `dist/` for production. The relative asset base supports static hosting and a future Capacitor web directory.
+Vite serves ES modules during development and bundles them into `dist/` for production. The relative asset base supports static hosting and the Capacitor web directory. `npm run cap:sync` builds and copies `dist/` into the generated `android/` and `ios/` projects; native code there is wrapper setup only, not game logic.
 
 `scripts/export.mjs` bundles each source entry independently through Vite into a standalone HTML file in `exports/`. This avoids external shared chunks when opening either export from disk. It does not maintain another copy of game logic. Edit `src/` and rebuild; do not edit generated output.
 
