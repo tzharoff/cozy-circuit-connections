@@ -455,7 +455,10 @@ $('menuClose').onclick = closeMenu;
 $('goalIcon').innerHTML = $('winPairsIcon').innerHTML = componentIcon(2);
 $('close').onclick = () => $('manual').close();
 $('components').innerHTML = types
-  .map((t, i) => `<div style="color:${t.color}">${componentIcon(i)}<small>${t.name}</small></div>`)
+  .map(
+    (t, i) =>
+      `<div style="color:${t.color}">${componentIcon(i)}<b>${t.character}</b><small>the ${t.name}</small></div>`,
+  )
   .join('');
 $('shape').innerHTML =
   '<option value="random">Surprise me</option>' +

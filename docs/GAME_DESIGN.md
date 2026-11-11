@@ -10,7 +10,20 @@ The prototype has Level 0, 12 campaign stages played strictly in order, Endless 
 
 ## Characters: the Chip’ums
 
-Decided November 11, 2026. The six component characters (Resistor, Power, Logic, Crystal, Signal, Capacitor) are called **Chip’ums**, as in "chip chums". The game itself does not have a final name yet.
+Decided November 11, 2026. The six component characters are called **Chip’ums**, as in "chip chums". The game itself does not have a final name yet.
+
+The working cast (names are shown in How to play; the type names are used in tips and labels):
+
+| Chip’um             | Look                        | Personality hook                          |
+| ------------------- | --------------------------- | ----------------------------------------- |
+| Ralph the Resistor  | Orange, striped "comb-over" | Dapper and serious about his job          |
+| Bastion the Battery | Green, with + and –         | Sturdy and dependable; stores the energy  |
+| Lulo the Logic      | Blue robot with an antenna  | The thinker                               |
+| Quinn the Quartz    | Purple cut gem              | Sparkly and a little mysterious           |
+| Sherry the Signal   | Pink, with an antenna       | Chatty; always broadcasting               |
+| Carly the Capacitor | Teal, with a round cap      | Friendly; keeps a little charge for later |
+
+The Battery and Quartz types were renamed from Power and Crystal so names and types alliterate. Saves store each type's position, not its name, so the renames do not affect progress; never reorder the types.
 
 - **Spelling:** on screen, "Chip’ums" with a curly apostrophe (singular "Chip’um"). In code, filenames, URLs, and asset names, `chipums` with no apostrophe. Store keywords should include Chip’ums, Chip'ums, and Chipums.
 - **Merchandise:** the Chip’ums are intended for plush toys and 3D-printed figures later. Keep each design merch-friendly: a simple, readable silhouette, flat color areas, the shared face (dot eyes, small smile, blush), and the fixed palette in `src/data/definitions.js`. Treat silhouette or palette changes as brand changes, not quick tweaks.
@@ -72,15 +85,15 @@ Permanent campaign progress, owned items, and claimed rewards should remain sepa
 
 ## Challenge examples to support
 
-| Challenge                    | Example target                           | Counting questions                                                                                              |
-| ---------------------------- | ---------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
-| Collect a component type     | 100 Power (POW) or 50 Signal (SIG) chips | Count individual chips, not pairs; decide whether only cleared boards qualify                                   |
-| Beat levels on the first try | 10 first-try clears                      | Define an attempt and whether using a Shield Breaker disqualifies it                                            |
-| Break shields                | 100 shields                              | Decide whether the objective counts layers removed, chips fully freed, or provides separate objectives for each |
-| Clear levels                 | An event-specific target                 | Decide eligibility for Endless, tutorial, and event boards (campaign replays no longer exist)                   |
-| Earn stars                   | An event-specific target                 | Stars are collected per clear, not graded; choose how many each clear awards                                    |
+| Challenge                    | Example target             | Counting questions                                                                                              |
+| ---------------------------- | -------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| Collect a component type     | 100 Bastions or 50 Sherrys | Count individual chips, not pairs; decide whether only cleared boards qualify                                   |
+| Beat levels on the first try | 10 first-try clears        | Define an attempt and whether using a Shield Breaker disqualifies it                                            |
+| Break shields                | 100 shields                | Decide whether the objective counts layers removed, chips fully freed, or provides separate objectives for each |
+| Clear levels                 | An event-specific target   | Decide eligibility for Endless, tutorial, and event boards (campaign replays no longer exist)                   |
+| Earn stars                   | An event-specific target   | Stars are collected per clear, not graded; choose how many each clear awards                                    |
 
-These are design examples, not final reward tables. Power is currently labeled **PWR** in the prototype, while the discussion used **POW**; settle the display code before adding event copy.
+These are design examples, not final reward tables. Event copy should use the Chip’um names (for example, "Collect 100 Bastions").
 
 ## Groups and races
 

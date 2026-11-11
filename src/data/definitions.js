@@ -1,12 +1,13 @@
 import { authoredLevels } from './authored-levels.js';
 /** Chip’um identities (the component characters), board shapes, campaign stages, and tutorial lessons. */
 export const types = [
-  { symbol: 'Ω', name: 'Resistor', color: '#e4c88d' },
-  { symbol: '⏻', name: 'Power', color: '#9ce5b8' },
-  { symbol: '⊕', name: 'Logic', color: '#a8c7ed' },
-  { symbol: '◇', name: 'Crystal', color: '#c8b1e5' },
-  { symbol: '∿', name: 'Signal', color: '#eeafa1' },
-  { symbol: 'Ⅱ', name: 'Capacitor', color: '#a6d8d3' },
+  // Order is the saved ID (1-based); never reorder. `character` is each Chip’um's own name.
+  { symbol: 'Ω', name: 'Resistor', character: 'Ralph', color: '#e4c88d' },
+  { symbol: '⏻', name: 'Battery', character: 'Bastion', color: '#9ce5b8' },
+  { symbol: '⊕', name: 'Logic', character: 'Lulo', color: '#a8c7ed' },
+  { symbol: '◇', name: 'Quartz', character: 'Quinn', color: '#c8b1e5' },
+  { symbol: '∿', name: 'Signal', character: 'Sherry', color: '#eeafa1' },
+  { symbol: 'Ⅱ', name: 'Capacitor', character: 'Carly', color: '#a6d8d3' },
 ];
 
 export const shapes = {
@@ -65,7 +66,7 @@ export const lessons = [
   },
   {
     name: 'Free a friend',
-    tip: 'Gold stripes mean a chip is shielded. First match the two crystals directly beside it to break the shield. Then match the freed logic chips.',
+    tip: 'Gold stripes mean a chip is shielded. First match the two quartz Chip’ums right beside it to break the shield. Then match the freed logic Chip’ums.',
     chips: [
       [18, 4],
       [19, 4],
