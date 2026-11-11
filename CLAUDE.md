@@ -8,6 +8,13 @@ The owner switches machines constantly (a Windows PC builds Android, a Mac build
 - **"Commit" means commit and push.** After committing, push to `origin` in the same step, unless the owner says otherwise ("just commit", "don't push").
 - Never force-push. Don't push work the owner hasn't asked to commit.
 
+## UI wording
+
+Screens use as little text as possible: the level goes in the card heading, and buttons are one word.
+
+- **Continue:** the main button on screens between levels (the level clear card).
+- **Play:** the main button going from the main menu or home screen into a level.
+
 ## Project pointers
 
 - Overview, commands, and mobile builds: [README.md](README.md)

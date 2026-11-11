@@ -75,7 +75,7 @@ assert.equal(els.winPairs.textContent, 5);
 assert.equal(run('wins'), 1);
 assert(run('tutorialDone'));
 assert.equal(run('completed.length'), 0);
-assert.equal(els.winNext.textContent, 'Play');
+assert.equal(els.winNext.textContent, 'Continue');
 const finished = boot(saved);
 assert(finished.run('tutorialDone'));
 assert(finished.els.stageWin.open);

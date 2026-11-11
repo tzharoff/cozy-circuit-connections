@@ -65,7 +65,7 @@ for (let n = 2; n <= 12; n++) {
 assert.equal(run('completed.length'), 12);
 assert.equal(els.winTitle.textContent, 'Level 12');
 assert.equal(els.winSubtitle.textContent, 'Power restored!');
-assert.equal(els.winNext.textContent, 'Play');
+assert.equal(els.winNext.textContent, 'Continue');
 const restored = boot(saved);
 assert.equal(restored.run('completed.length'), 12);
 assert.equal(restored.run('state.stage'), 12);

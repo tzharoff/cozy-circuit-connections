@@ -59,7 +59,7 @@ function tutorialWin() {
   $('winSubtitle').textContent = 'You’re connected!';
   $('winPairs').textContent = state.tutorialTotal + state.score;
   $('winShields').textContent = 1;
-  $('winNext').textContent = 'Play';
+  $('winNext').textContent = 'Continue';
   if (!$('stageWin').open) $('stageWin').showModal();
 }
 const storage = createStorage();
@@ -137,7 +137,7 @@ function showWin() {
   $('winSubtitle').textContent = final ? 'Power restored!' : 'Well done!';
   $('winPairs').textContent = state.score;
   $('winShields').textContent = state.initialShields.filter(Boolean).length;
-  $('winNext').textContent = 'Play';
+  $('winNext').textContent = 'Continue';
   if (!$('stageWin').open) $('stageWin').showModal();
 }
 function enterEndless(skipConfirm = false) {
