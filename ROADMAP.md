@@ -16,7 +16,7 @@ Dead ends are possible, but uncommon and unevenly distributed across the current
 
 - Define attempts and gameplay-stat counting, then record events consistently.
 - Tune layouts, add double shields, and introduce other hazards one at a time.
-- Finalize lives and Shield Breaker rules. Planned stuck pop-up: Restart (one life), Shield Breaker (premium currency or earned item), Cancel. Remove undo when implementing that system.
+- Finalize lives and Shield Breaker rules. Planned stuck pop-up: Restart (one Charge), Shield Breaker (Chip Coins or earned item), Cancel. At zero Charges, Restart becomes Recharge, paid in Chip Coins. Remove undo when implementing that system.
 - Cosmetic packs and optional rewarded ads for hints/rewards; no interruptions during a board.
 - Daily rewards, a timed ladder every three days, weekly challenges/competitions, and new campaign levels every two weeks with Endless numbering reset to 1.
 - Groups and 60-minute races, including levels cleared and shields broken, with varying reward tiers.

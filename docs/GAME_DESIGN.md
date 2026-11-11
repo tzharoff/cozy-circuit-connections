@@ -53,7 +53,19 @@ Approved November 11, 2026, to replace the old "No moves left" stuck dialog (who
 - **Clunk landing:** drops in like the clear card but with no springy squash: it thuds and wobbles side to side, like a dropped toy.
 - **Reduced motion:** keep the burn and fried Chip’um; skip the sputter, smoke, and wobble.
 
-Open: the life currency should be circuit-themed, not hearts. When lives exist, Restart shows its cost in that currency.
+## Lives: Charges
+
+Decided November 11, 2026. Lives are **Charges**, shown as a battery instead of hearts.
+
+- **Counter:** a battery icon whose number is printed on the battery itself, so the count is readable at a glance. The cells inside fill or empty to match how many Charges are left.
+- **Refill wording:** the battery "recharges" over time ("Recharging 12:30"; "Full" at the maximum). This fits Bastion the Battery, who stores the energy, and Carly the Capacitor, who keeps a little charge for later; either can appear on refill or out-of-Charges screens.
+- **Restart cost:** the failed card's Restart button shows its cost as one battery cell ("−1").
+- **Empty battery:** at zero Charges the battery shows the spark graphic in a different color (color not chosen), so it reads as drained rather than broken. The failed card's Restart button becomes **Recharge**, which asks to spend Chip Coins to refill.
+- Not chosen: starting amount, maximum, refill time, and the Chip Coin price of a Recharge.
+
+## Premium currency: Chip Coins
+
+Decided November 11, 2026. The premium currency is **Chip Coins**: our own small, cute take on bitcoin, a coin stamped like a little chip. On screen, "Chip Coins" (singular "Chip Coin"); in code, files, and URLs, `chipcoins`. Chip Coins pay for Recharges and Shield Breakers, and challenge rewards can award them.
 
 ## Agreed gameplay and recovery direction
 
@@ -66,21 +78,21 @@ Open: the life currency should be circuit-themed, not hearts. When lives exist, 
 - The stuck pop-up should offer **Restart**, **Shield Breaker**, and **Cancel**.
 - Choosing **Restart** costs one life. Reaching a dead end or choosing **Cancel** does not spend a life.
 - Cancel closes the pop-up so the player can inspect the board; the board remains stuck until recovered or restarted.
-- A Shield Breaker removes one shield layer from a selected chip. It is bought with premium currency, and challenge rewards can also award Shield Breakers.
+- A Shield Breaker removes one shield layer from a selected chip. It is bought with Chip Coins, and challenge rewards can also award Shield Breakers.
 - Do not use the previously proposed single-chip or row/column clear tools. Removing unmatched pieces can create orphaned partners.
 
 No currency, life, or item balance has been chosen. The current recovery screen has not yet been changed to enforce these new rules.
 
 ## Economy and monetization direction
 
-| Item or system   | Decision                                                                                | Still to define                                                                                        |
-| ---------------- | --------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
-| Lives            | Restarting a level spends one life                                                      | Starting amount, maximum, refill timing, ways to earn/buy lives, zero-life behavior, confirmation flow |
-| Premium currency | Can purchase Shield Breakers; can be earned from challenge rewards                      | Name, prices, purchase packs, balances, caps, and other uses                                           |
-| Shield Breakers  | Remove one layer from a chosen shield; available through currency and challenge rewards | Shop/inventory flow, whether to buy-and-use or store items, behavior when no helpful target exists     |
-| Hints            | Part of the monetization plan, including optional rewarded ads for extra hints          | Free allowance, refill rules, prices, and rewards                                                      |
-| Cosmetics        | Sell component art, board themes, wire effects, and pop effects                         | Pack contents, unlock requirements, direct purchase versus currency pricing                            |
-| Ads              | Optional rewarded ads; no interruptions during a board                                  | Specific placements, rewards, availability, consent and store integration                              |
+| Item or system  | Decision                                                                                | Still to define                                                                                        |
+| --------------- | --------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| Lives (Charges) | Restarting a level spends one Charge; shown as a battery with the count on it           | Starting amount, maximum, refill timing, Recharge price, other ways to earn Charges, confirmation flow |
+| Chip Coins      | Buy Recharges and Shield Breakers; can be earned from challenge rewards                 | Prices, purchase packs, balances, caps, and other uses                                                 |
+| Shield Breakers | Remove one layer from a chosen shield; available through currency and challenge rewards | Shop/inventory flow, whether to buy-and-use or store items, behavior when no helpful target exists     |
+| Hints           | Part of the monetization plan, including optional rewarded ads for extra hints          | Free allowance, refill rules, prices, and rewards                                                      |
+| Cosmetics       | Sell component art, board themes, wire effects, and pop effects                         | Pack contents, unlock requirements, direct purchase versus currency pricing                            |
+| Ads             | Optional rewarded ads; no interruptions during a board                                  | Specific placements, rewards, availability, consent and store integration                              |
 
 No payment or ad integration is implemented. Premium currency is now an agreed part of the Shield Breaker plan, superseding the earlier idea to begin with direct cosmetic purchases only. Optional tools such as shuffle, demolition, and auto-connect were discussed but are not committed features.
 
