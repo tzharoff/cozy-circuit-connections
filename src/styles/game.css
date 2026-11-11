@@ -852,7 +852,8 @@ dialog button {
   border-radius: 2px;
   background: var(--pop-color);
   box-shadow: 0 0 4px #edffc077;
-  animation: chip-confetti 0.46s cubic-bezier(0.12, 0.66, 0.34, 1) var(--delay) both;
+  animation: chip-confetti var(--pop-confetti-ms, 0.46s) cubic-bezier(0.12, 0.66, 0.34, 1)
+    var(--delay) both;
 }
 .pop-bit:nth-child(odd) {
   border-radius: 50%;
@@ -866,11 +867,11 @@ dialog button {
   top: -6px;
   border: 2px solid #ddffb8;
   border-radius: 50%;
-  animation: chip-ring 0.4s ease-out both;
+  animation: chip-ring var(--pop-ring-ms, 0.4s) ease-out both;
 }
 .chip.popping {
   pointer-events: none;
-  animation: chip-pop 0.2s cubic-bezier(0.25, 0.6, 0.4, 1) forwards;
+  animation: chip-pop var(--pop-chip-ms, 0.2s) cubic-bezier(0.25, 0.6, 0.4, 1) forwards;
   z-index: 5;
 }
 .chip.popping .component-art {

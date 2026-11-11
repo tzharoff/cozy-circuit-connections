@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+    <title>Cozy Circuit Play Room</title>
+    <link rel="stylesheet" href="/src/styles/game.css" />
+    <link rel="stylesheet" href="/src/playroom/playroom.css" />
+  </head>
+  <body class="play playroom">
+    <div class="room-head">
+      <a href="./index.html">← Game</a>
+      <h1>Play room</h1>
+    </div>
+    <main class="room">
+      <section class="pcb" aria-label="Test board">
+        <div class="board-wrap">
+          <div id="board" class="board"></div>
+          <svg
+            id="wires"
+            class="wires"
+            viewBox="0 0 100 100"
+            preserveAspectRatio="none"
+            aria-hidden="true"
+          ></svg>
+          <div id="pops" class="pop-layer" aria-hidden="true"></div>
+        </div>
+      </section>
+      <div class="room-actions">
+        <button id="zap" class="room-main">Zap</button
+        ><label class="room-loop"><input id="loop" type="checkbox" /> Loop</label
+        ><button id="newBoard">New board</button>
+      </div>
+      <p class="room-hint">Tap Zap, or tap two matching Chip’ums yourself.</p>
+      <section class="room-panel" aria-labelledby="wireTitle">
+        <h2 id="wireTitle">Zap line</h2>
+        <div id="wireSliders"></div>
+      </section>
+      <section class="room-panel" aria-labelledby="popTitle">
+        <h2 id="popTitle">Pop</h2>
+        <div id="popSliders"></div>
+      </section>
+      <div class="room-actions">
+        <button id="copyValues">Copy values</button><button id="resetValues">Reset</button>
+      </div>
+      <p id="roomStatus" class="room-hint" role="status">
+        Changes save in this browser and apply to the game here too.
+      </p>
+    </main>
+    <script type="module" src="/src/playroom/main.js"></script>
+  </body>
+</html>

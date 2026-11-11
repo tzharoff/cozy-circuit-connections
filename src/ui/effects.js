@@ -1,4 +1,5 @@
 import { types } from '../data/definitions.js';
+import { animTiming } from './timing.js';
 /** Visual effects own their timers; callbacks commit a match after arrival/pop. */
 export function createEffects({ getElement: $, getState }) {
   let wireFrame = null,
@@ -76,7 +77,13 @@ export function createEffects({ getElement: $, getState }) {
         lengths[i - 1] +
         Math.hypot(coords[i][0] - coords[i - 1][0], coords[i][1] - coords[i - 1][1]);
     const total = lengths.at(-1),
-      duration = Math.min(750, 350 + (path.length - 1) * 28);
+      duration = Math.min(
+        animTiming.wireMax,
+        animTiming.wireBase + (path.length - 1) * animTiming.wirePerCell,
+      ),
+      ringMs = animTiming.wireRing,
+      fadeAt = duration + animTiming.wireLinger,
+      gone = fadeAt + animTiming.wireFade;
     let started;
     function frame(now) {
       if (started === undefined) started = now;
@@ -93,26 +100,30 @@ export function createEffects({ getElement: $, getState }) {
       spark.setAttribute('transform', 'translate(' + x + ' ' + y + ')');
       spark.setAttribute('opacity', elapsed > duration ? '0' : '1');
       if (progress === 1) arrive();
-      const arrival = Math.max(0, Math.min(1, (elapsed - duration) / 280));
+      const arrival = ringMs ? Math.max(0, Math.min(1, (elapsed - duration) / ringMs)) : 1;
       ring.setAttribute('r', String(0.5 + arrival * 4));
       ring.setAttribute('opacity', elapsed >= duration ? String((1 - arrival) * 0.9) : '0');
       group.setAttribute(
         'opacity',
-        String(1 - Math.max(0, Math.min(1, (elapsed - duration - 200) / 300))),
+        String(1 - Math.max(0, Math.min(1, (elapsed - fadeAt) / (animTiming.wireFade || 1)))),
       );
-      if (elapsed < duration + 500) wireFrame = globalThis.requestAnimationFrame(frame);
+      if (elapsed < Math.max(gone, duration + ringMs))
+        wireFrame = globalThis.requestAnimationFrame(frame);
       else {
         wire.innerHTML = '';
         wireFrame = null;
       }
     }
     wireFrame = globalThis.requestAnimationFrame(frame);
-    wireTimer = setTimeout(() => {
-      arrive();
-      if (wireFrame !== null) globalThis.cancelAnimationFrame?.(wireFrame);
-      wireFrame = null;
-      wire.innerHTML = '';
-    }, duration + 1600);
+    wireTimer = setTimeout(
+      () => {
+        arrive();
+        if (wireFrame !== null) globalThis.cancelAnimationFrame?.(wireFrame);
+        wireFrame = null;
+        wire.innerHTML = '';
+      },
+      Math.max(gone, duration + ringMs) + 1100,
+    );
   }
   let burstTimer = null;
   function popPair(a, z, done) {
@@ -163,10 +174,14 @@ export function createEffects({ getElement: $, getState }) {
         bits +
         '</div>';
     }
-    setTimeout(done, 200);
-    burstTimer = setTimeout(() => {
-      layer.innerHTML = '';
-    }, 560);
+    setTimeout(done, animTiming.popChip);
+    // Confetti bits start up to 20ms late; leave a little room after the slowest part.
+    burstTimer = setTimeout(
+      () => {
+        layer.innerHTML = '';
+      },
+      Math.max(animTiming.popConfetti + 20, animTiming.popRing) + 80,
+    );
   }
 
   return { clearWire, draw, popPair };

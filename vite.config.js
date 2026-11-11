@@ -9,6 +9,7 @@ export default defineConfig({
       input: {
         game: fileURLToPath(new URL('./index.html', import.meta.url)),
         editor: fileURLToPath(new URL('./editor.html', import.meta.url)),
+        playroom: fileURLToPath(new URL('./playroom.html', import.meta.url)),
       },
     },
   },

@@ -12,6 +12,7 @@ for (const file of [
   'walls.cjs',
   'arrival.cjs',
   'pop.cjs',
+  'timing.mjs',
 ]) {
   const result = spawnSync(process.execPath, [path.join('tests', file)], { stdio: 'inherit' });
   if (result.error) throw result.error;

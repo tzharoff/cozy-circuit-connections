@@ -18,6 +18,8 @@ The browser and future mobile app use the same web source. Native platform setup
 | `src/ui/components.js`    | Inline SVG character artwork                                              |
 | `src/ui/currency.js`      | Battery counter and Chip Coin artwork                                     |
 | `src/ui/sputter.js`       | The failed card's sputtering edge spark                                   |
+| `src/ui/timing.js`        | Zap line and pop durations; play room tuning (`circuitTuning`)            |
+| `src/playroom/`           | Play room page (`playroom.html`) for tuning animation speeds              |
 | `src/ui/effects.js`       | Wires, spark, pop particles, and animation timing                         |
 | `src/styles/game.css`     | Responsive styles and reduced-motion behavior                             |
 
