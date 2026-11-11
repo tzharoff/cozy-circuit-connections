@@ -1682,6 +1682,9 @@ button[hidden] {
   font-size: 13px;
   letter-spacing: 0.5px;
 }
+.sheet-buttons:not(:has(button:not([hidden]))) {
+  display: none;
+}
 .sheet-buttons {
   display: flex;
   gap: 10px;

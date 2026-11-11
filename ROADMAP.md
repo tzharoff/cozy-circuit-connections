@@ -10,7 +10,7 @@ The detailed record is [docs/GAME_DESIGN.md](docs/GAME_DESIGN.md), including cur
 
 The guided Level 0, 12-stage campaign, tutorial completion screen, and Stage Clear screen work. Existing matching, shields, walls, shape selection, hints, undo, wire animation, and pop effects are included.
 
-Dead ends are possible, but uncommon and unevenly distributed across the current campaign. A dead end means chips remain with no legal pair. The implemented recovery dialog still offers undo, free restart, and level selection, plus a persistent board notice. Saved dead ends are detected on reload. This is the prototype behavior, not the new lives/economy design.
+Dead ends are possible, but uncommon and unevenly distributed across the current campaign. A dead end means chips remain with no legal pair. The implemented recovery dialog still offers undo and free restart, plus a persistent board notice. Saved dead ends are detected on reload. This is the prototype behavior, not the new lives/economy design.
 
 ## Held for later
 

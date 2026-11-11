@@ -59,7 +59,7 @@ Checks cover the tutorial, 12 stage solutions, unlocks and save restoration, 300
 ## Included
 
 - Guided Level 0: matching, bends, shields, and walls.
-- 12 deterministic stages, saved unlocks, level selection, and replays.
+- 12 deterministic stages played in order: progress only moves forward, Toon Blast style.
 - Tutorial completion and Stage Clear screens.
 - A clear no-moves dialog and persistent board notice, with undo/restart recovery.
 - Endless mode and six board shapes.

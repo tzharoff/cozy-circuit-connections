@@ -30,7 +30,7 @@ function boot(saved = {}) {
 }
 const t = boot(),
   { run, els, saved } = t;
-run('startStage(1,true)');
+run('startStage(1)');
 assert.equal(run('state.stage'), 1);
 assert.equal(run('state.board.filter(Boolean).length/2'), 4);
 assert(els.shapePicker.hidden);
@@ -38,7 +38,7 @@ assert(!run('unlocked(2)'));
 run(
   `for(let n=1;n<=12;n++){let s=makeStage(n),l=levels[n-1];if(s.board.filter(Boolean).length!==l.pairs*2)throw Error('pair count '+n);if(s.walls.filter(Boolean).length!==l.walls)throw Error('wall count '+n);if(s.shields.filter(Boolean).length!==l.shields)throw Error('shield count '+n);if(!solvable(s.board,s.shields,s.walls))throw Error('unsolvable stage '+n)}`,
 );
-run('startStage(3,true)');
+run('startStage(3)');
 assert.equal(run('state.stage'), 1);
 function clear() {
   run(
@@ -74,11 +74,11 @@ els.winNext.onclick();
 assert(!run('state.stage'));
 assert(!els.shapePicker.hidden);
 const endless = run('JSON.stringify(state)');
-run('startStage(1,true)');
+run('startStage(1)');
 assert.equal(run('state.stage'), 1);
-run('enterEndless(true)');
+run('enterEndless()');
 assert.equal(run('JSON.stringify(state)'), endless);
-run('startStage(5,true)');
+run('startStage(5)');
 const before = run('JSON.stringify(state.board)');
 run('var p=findPair(state.board,state.shields,state.walls);choose(p.a);choose(p.z)');
 els.undo.onclick();
@@ -86,7 +86,7 @@ assert.equal(run('JSON.stringify(state.board)'), before);
 els.restart.onclick();
 assert.equal(run('state.stage'), 5);
 assert.equal(run('state.score'), 0);
-// Restarting or leaving mid-board asks in-game; Cancel keeps the board.
+// Restarting mid-board asks in-game; Cancel keeps the board.
 run('var p=findPair(state.board,state.shields,state.walls);choose(p.a);choose(p.z)');
 assert.equal(run('state.score'), 1);
 els.restart.onclick();
@@ -98,22 +98,22 @@ assert.equal(run('state.score'), 1);
 els.restart.onclick();
 els.confirmOk.onclick();
 assert.equal(run('state.score'), 0);
-run('var p=findPair(state.board,state.shields,state.walls);choose(p.a);choose(p.z)');
-run('startStage(1)');
-assert.equal(els.confirmTitle.textContent, 'Leave level?');
-assert.equal(run('state.stage'), 5);
-els.confirmOk.onclick();
-assert.equal(run('state.stage'), 1);
-run('startStage(5,true)');
+// Forward only: with every stage cleared, Continue goes to Endless and nothing is left to replay.
 clear();
-els.winReplay.onclick();
-assert.equal(run('state.stage'), 5);
-assert.equal(run('state.score'), 0);
+els.winNext.onclick();
+assert(!run('state.stage'));
 assert(!els.stageWin.open);
 assert.equal(run('completed.length'), 12);
-els.campaignButton.onclick();
-assert(els.levelPicker.open);
-assert(els.levelGrid.innerHTML.includes('data-level="12"'));
+assert(els.campaignButton.hidden);
+// Continue always picks the first uncleared stage, even after a stray older board.
+run('completed=[1,2,3];startStage(2)');
+clear();
+els.winNext.onclick();
+assert.equal(run('state.stage'), 4);
+// Closing the clear card also moves on.
+clear();
+els.winClose.onclick();
+assert.equal(run('state.stage'), 5);
 // An existing endless board is preserved on upgrade.
 const oldState = run('make(256,"ring")');
 const legacy = boot({ circuitState: JSON.stringify(oldState), circuitWins: '7' });
@@ -123,7 +123,7 @@ assert.equal(legacy.run('wins'), 7);
 assert.equal(legacy.run('completed.length'), 0);
 const animated = boot(),
   timers = [];
-animated.run('startStage(1,true)');
+animated.run('startStage(1)');
 animated.ctx.document.getElementById('stageWin');
 animated.run(
   'while(state.board.filter(Boolean).length>2){const p=findPair(state.board,state.shields,state.walls);choose(p.a);choose(p.z)}',

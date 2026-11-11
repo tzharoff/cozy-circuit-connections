@@ -5,7 +5,7 @@ import { clone, valid } from './game/state.js';
 import { createStorage } from './platform/storage.js';
 import { componentIcon } from './ui/components.js';
 import { createEffects } from './ui/effects.js';
-import { boardMarkup, levelMarkup } from './ui/view.js';
+import { boardMarkup } from './ui/view.js';
 /** Application controller: selection, stage navigation, UI events, and match commits. */
 
 const $ = (id) => document.getElementById(id);
@@ -32,8 +32,6 @@ function tutorialGuide() {
   $('stageTitle').textContent = 'A friendly first circuit';
   $('stageTip').textContent = 'Four tiny lessons. No pressure. Follow the glowing chips.';
   $('shapePicker').hidden = true;
-  $('new').textContent = 'Levels ↗';
-  $('endlessButton').hidden = false;
   $('undo').disabled = busy || !state.history.length;
 }
 function nextLesson() {
@@ -68,6 +66,11 @@ let winKey = '';
 function unlocked(n) {
   return n === 0 || n === 1 || completed.includes(n - 1);
 }
+/** Progress only moves forward: the next level is the first stage not yet cleared (0 when all are). */
+function nextLevel() {
+  for (let n = 1; n <= levels.length; n++) if (!completed.includes(n)) return n;
+  return 0;
+}
 function keepEndless() {
   if (state && !state.stage && !state.tutorial) {
     endlessSave = clone(state);
@@ -87,25 +90,17 @@ function ask(title, text, action, then) {
   confirmed = then;
   if (!$('confirmDialog').open) $('confirmDialog').showModal();
 }
-function askLeave(then) {
-  ask('Leave level?', 'Your matches on this board will be lost.', 'Leave', then);
-}
 function closeWin() {
   if ($('stageWin').open) $('stageWin').close();
 }
 function closeMenu() {
   if ($('menu').open) $('menu').close();
 }
-function startStage(n, skipConfirm = false) {
+function startStage(n) {
   if (!Number.isInteger(n) || n < 0 || n > levels.length || !unlocked(n) || busy) return;
-  if (!skipConfirm && midBoard()) {
-    askLeave(() => startStage(n, true));
-    return;
-  }
   keepEndless();
   closeWin();
   closeMenu();
-  if ($('levelPicker').open) $('levelPicker').close();
   clearWire();
   state = n === 0 ? makeTutorial() : makeStage(n);
   selected = null;
@@ -113,15 +108,6 @@ function startStage(n, skipConfirm = false) {
   winKey = '';
   say(n === 0 ? lessons[0].tip : levels[n - 1].tip);
   render();
-}
-function openLevels() {
-  closeStuck();
-  if (busy) return;
-  closeWin();
-  closeMenu();
-  $('levelGrid').innerHTML = levelMarkup({ state, completed, tutorialDone, isUnlocked: unlocked });
-  $('campaignCount').textContent = completed.length + ' / ' + levels.length + ' stages cleared';
-  if (!$('levelPicker').open) $('levelPicker').showModal();
 }
 function showWin() {
   if (state.tutorial) {
@@ -140,19 +126,14 @@ function showWin() {
   $('winNext').textContent = 'Continue';
   if (!$('stageWin').open) $('stageWin').showModal();
 }
-function enterEndless(skipConfirm = false) {
+function enterEndless() {
   if (busy) return;
-  if (!skipConfirm && midBoard() && (state.stage || state.tutorial)) {
-    askLeave(() => enterEndless(true));
-    return;
-  }
   closeMenu();
   if (!state?.stage && !state?.tutorial) {
     closeWin();
     return;
   }
   closeWin();
-  if ($('levelPicker').open) $('levelPicker').close();
   clearWire();
   state =
     endlessSave && valid(endlessSave)
@@ -211,10 +192,11 @@ function render() {
     ? spec.tip
     : 'Choose a shape and play as many boards as you like.';
   $('shapePicker').hidden = !!stage;
-  $('new').textContent = stage ? 'Levels ↗' : 'New board ↗';
+  // Endless is off the main path; from it, the menu offers the next campaign level if one exists.
+  const next = nextLevel();
+  $('campaignButton').hidden = !!(stage || state.tutorial || !next);
+  $('campaignButton').textContent = 'Level ' + next;
   $('campaignButton').disabled = busy;
-  $('endlessButton').disabled = busy;
-  $('endlessButton').hidden = !stage;
   const left = state.board.filter(Boolean).length / 2;
   $('shapeName').textContent = shapes[state.shape].name;
   $('shapeNote').textContent = shapes[state.shape].note;
@@ -328,10 +310,7 @@ function fresh() {
   render();
 }
 $('new').onclick = () => {
-  if (state.stage || state.tutorial) {
-    openLevels();
-    return;
-  }
+  if (state.stage || state.tutorial) return;
   if (midBoard()) {
     ask('New board?', 'Your matches on this board will be lost.', 'Deal', fresh);
     return;
@@ -369,7 +348,7 @@ function restartBoard() {
     return;
   }
   if (state.tutorial) {
-    startStage(0, true);
+    startStage(0);
     return;
   }
   winKey = '';
@@ -447,45 +426,20 @@ $('shape').onchange = () => {
       : 'Next board: ' + shapes[$('shape').value].name + '.';
 };
 $('lessonNext').onclick = nextLesson;
-$('tutorialSkip').onclick = () => startStage(1);
-$('campaignButton').onclick = openLevels;
-$('endlessButton').onclick = () => enterEndless();
-$('levelClose').onclick = () => $('levelPicker').close();
-$('levelGrid').onclick = (e) => {
-  const b = e.target.closest('[data-level]');
-  if (b && !b.disabled) startStage(Number(b.dataset.level));
-};
-$('winNext').onclick = () => {
-  if (state.tutorial) {
-    startStage(1, true);
-    return;
-  }
-  if (state.stage && state.stage < levels.length) startStage(state.stage + 1, true);
-  else if (state.stage) enterEndless(true);
-  else fresh();
-};
-$('winReplay').onclick = () => {
-  if (state.tutorial) {
-    startStage(0, true);
-    return;
-  }
-  if (state.stage) startStage(state.stage, true);
-  else {
-    closeWin();
-    winKey = '';
-    clearWire();
-    state.board = state.initial.slice();
-    state.shields = state.initialShields.slice();
-    state.history = [];
-    state.score = 0;
-    state.claimed = false;
-    selected = null;
-    hints = [];
-    render();
-  }
-};
-$('winLevels').onclick = openLevels;
-$('winClose').onclick = closeWin;
+$('tutorialSkip').onclick = () => startStage(nextLevel() || 1);
+$('campaignButton').onclick = () => startStage(nextLevel());
+/** Continue always moves forward: the next uncleared level, Endless once all are cleared. */
+function continueOn() {
+  if (state.stage || state.tutorial) {
+    const next = nextLevel();
+    if (next) startStage(next);
+    else enterEndless();
+  } else fresh();
+}
+$('winNext').onclick = continueOn;
+// Closing the clear card moves on too; there is no going back to a finished board.
+$('winClose').onclick = continueOn;
+$('stageWin').oncancel = (e) => e.preventDefault();
 $('stuckReview').onclick = closeStuck;
 $('stuckOptions').onclick = () => showStuck(true);
 $('stuckUndo').onclick = () => {
@@ -498,7 +452,6 @@ $('stuckRestart').onclick = () => {
   closeStuck();
   restartBoard();
 };
-$('stuckLevels').onclick = openLevels;
 if (state) {
   if (
     state.stage &&

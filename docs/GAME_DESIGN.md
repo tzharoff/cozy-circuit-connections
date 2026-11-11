@@ -6,7 +6,18 @@ This is the working design record for Cozy Circuit Connections. It distinguishes
 
 ## What exists today
 
-The prototype has Level 0, 12 campaign stages, Endless mode, six board shapes, single shields, walls, hints, undo, restart, saved local progress, win screens, and a no-moves recovery screen. It has no lives, economy, purchases, timed events, accounts, groups, or race services. Undo and free restarts are still in the code; the decisions below describe changes to make later.
+The prototype has Level 0, 12 campaign stages played strictly in order, Endless mode (reached after the last stage), six board shapes, single shields, walls, hints, undo, restart, saved local progress, win screens, and a no-moves recovery screen. It has no lives, economy, purchases, timed events, accounts, groups, or race services. Undo and free restarts are still in the code; the decisions below describe changes to make later.
+
+## Progression and stars
+
+Decided November 11, 2026, following Toon Blast's model.
+
+- **Forward only.** Players never choose or replay old levels. The next level is always the first uncleared stage, so the main screen only needs to show that level and a **Play** button. There is no level select, no replay, and no tutorial replay; the How to play sheet covers the rules.
+- **Continue** on the clear card (and its close button) moves to the next uncleared stage, or to Endless once every stage is cleared. Endless is off the main path; from it, the menu offers the next level when new stages exist.
+- **Stars are a collectible, not a rating.** Clearing a level earns stars toward collection goals such as "Earn stars" challenges. There is no per-level star grade and no reason to replay for more. The clear card shows three stars as celebration; the number earned per clear is not chosen yet.
+- Forward-only progress also protects first-try and collection events from farming easy, already-cleared boards.
+
+Implemented: forward-only progression and the Continue flow. Not implemented: earning, storing, or displaying a star total.
 
 ## Agreed gameplay and recovery direction
 
@@ -57,8 +68,8 @@ Permanent campaign progress, owned items, and claimed rewards should remain sepa
 | Collect a component type     | 100 Power (POW) or 50 Signal (SIG) chips | Count individual chips, not pairs; decide whether only cleared boards qualify                                   |
 | Beat levels on the first try | 10 first-try clears                      | Define an attempt and whether using a Shield Breaker disqualifies it                                            |
 | Break shields                | 100 shields                              | Decide whether the objective counts layers removed, chips fully freed, or provides separate objectives for each |
-| Clear levels                 | An event-specific target                 | Decide eligibility for campaign replays, Endless, tutorial, and event boards                                    |
-| Earn stars                   | An event-specific target                 | Star grading is not designed yet                                                                                |
+| Clear levels                 | An event-specific target                 | Decide eligibility for Endless, tutorial, and event boards (campaign replays no longer exist)                   |
+| Earn stars                   | An event-specific target                 | Stars are collected per clear, not graded; choose how many each clear awards                                    |
 
 These are design examples, not final reward tables. Power is currently labeled **PWR** in the prototype, while the discussion used **POW**; settle the display code before adding event copy.
 
@@ -115,7 +126,7 @@ This is a dependency-based recommendation, not approval to implement all feature
 - Life balances, refill/earning/purchase rules, zero-life behavior, and restart confirmation.
 - Shield Breaker price, inventory/target selection, and what to offer when no shield can recover the board.
 - Whether restarts outside the dead-end pop-up also spend a life and whether tutorials are exempt.
-- First-try and star definitions; replay eligibility; chip, shield-layer, and freed-chip counting.
+- First-try definition; stars earned per clear; chip, shield-layer, and freed-chip counting.
 - Daily reward qualification/streaks and final reward tables for all events.
 - Event/reset timezone, overlap, countdown rules, in-progress attempts, and unclaimed rewards.
 - Number and difficulty of new levels each two-week release; seasonal content versioning.

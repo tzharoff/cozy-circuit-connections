@@ -79,27 +79,32 @@ assert.equal(els.winNext.textContent, 'Continue');
 const finished = boot(saved);
 assert(finished.run('tutorialDone'));
 assert(finished.els.stageWin.open);
-els.winReplay.onclick();
-assert(run('state.tutorial&&state.tutorialStep===0'));
-assert(!els.stageWin.open);
-els.tutorialSkip.onclick();
+// Forward only: Continue after the tutorial starts Stage 1; there is no replay.
+els.winNext.onclick();
 assert.equal(run('state.stage'), 1);
 assert.equal(run('completed.length'), 0);
+assert(!els.stageWin.open);
 assert(els.tutorialCoach.hidden);
-els.campaignButton.onclick();
-assert(els.levelGrid.innerHTML.includes('data-level="0"'));
-assert(els.levelGrid.innerHTML.includes('TUTORIAL COMPLETE'));
-run('startStage(0,true);enterEndless(true)');
+const skipper = boot();
+skipper.els.tutorialSkip.onclick();
+assert.equal(skipper.run('state.stage'), 1);
+assert.equal(skipper.run('completed.length'), 0);
+run('enterEndless()');
 assert(!run('state.tutorial'));
 assert(!els.shapePicker.hidden);
+// From Endless, the menu offers the way back to the next level.
+assert(!els.campaignButton.hidden);
+assert.equal(els.campaignButton.textContent, 'Level 1');
+els.campaignButton.onclick();
+assert.equal(run('state.stage'), 1);
 // Existing campaign players keep their stage and unlocks when upgrading.
 run('state=makeStage(7);completed=[1,2,3,4,5,6];save()');
 const veteran = boot(saved);
 assert.equal(veteran.run('state.stage'), 7);
 assert.equal(veteran.run('completed.length'), 6);
-veteran.run('startStage(0,true)');
+veteran.run('startStage(0)');
 assert(veteran.run('state.tutorial'));
 assert.equal(veteran.run('completed.length'), 6);
 console.log(
-  'PASS: four lessons, guidance, shield/wall teaching, undo, lesson resume, tutorial win/replay/skip, Stage 1 handoff, endless, existing campaign saves',
+  'PASS: four lessons, guidance, shield/wall teaching, undo, lesson resume, tutorial win/continue/skip, Stage 1 handoff, endless, existing campaign saves',
 );
