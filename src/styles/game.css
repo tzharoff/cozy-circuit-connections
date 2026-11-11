@@ -1331,3 +1331,61 @@ button[hidden] {
     font-size: 8px;
   }
 }
+/* Phone play: keep the board on the first screen. The header already names the game. */
+@media (max-width: 500px) {
+  header {
+    padding: 10px 15px;
+  }
+  main {
+    margin-top: 10px;
+  }
+  .hero > div:first-child {
+    display: none;
+  }
+  .stats strong {
+    font-size: 18px;
+  }
+  .campaign-bar {
+    margin-top: 10px;
+    padding: 10px 12px;
+    align-items: center;
+  }
+  .campaign-bar h2 {
+    font-size: 16px;
+    margin: 3px 0;
+  }
+  .campaign-bar p {
+    line-height: 1.5;
+  }
+  .mode-buttons button {
+    padding: 8px 10px;
+  }
+  main:has(.tutorial-coach:not([hidden])) #stageTip {
+    display: none;
+  }
+  .tutorial-coach {
+    margin-top: 10px;
+    padding: 12px 14px;
+    gap: 8px;
+  }
+  .tutorial-mascot {
+    display: none;
+  }
+  .tutorial-copy h2 {
+    font-size: 16px;
+    margin: 4px 0;
+  }
+  .tutorial-copy p {
+    line-height: 1.5;
+  }
+  .tutorial-buttons button {
+    padding: 8px 12px;
+  }
+  .layout {
+    margin-top: 10px;
+  }
+  .status {
+    min-height: 0;
+    padding: 8px 0 4px;
+  }
+}
