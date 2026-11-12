@@ -17,6 +17,7 @@ for (const file of [
   'sound.mjs',
   'idle.mjs',
   'covers.mjs',
+  'native-store.mjs',
   'version.mjs',
 ]) {
   const result = spawnSync(process.execPath, [path.join('tests', file)], { stdio: 'inherit' });

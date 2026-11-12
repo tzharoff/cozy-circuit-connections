@@ -4,28 +4,30 @@ The browser and future mobile app use the same web source. Native platform setup
 
 ## Source boundaries
 
-| Location                  | Responsibility                                                            |
-| ------------------------- | ------------------------------------------------------------------------- |
-| `index.html`              | Home and play screens, dialogs, and module/style entry points             |
-| `src/main.js`             | Application controller: selection, navigation, screens, and event binding |
-| `src/data/covers.js`      | Themed covers: messages, sounds, and burst colors per theme               |
-| `src/data/definitions.js` | Component identities, shapes, tutorial lessons, and campaign stages       |
-| `src/game/rules.js`       | Pure routing, pair lookup, shield breaking, and solvability checks        |
-| `src/game/generate.js`    | Seeded board generation and stage/tutorial factories                      |
-| `src/game/state.js`       | Save-shape validation and plain-data snapshots                            |
-| `src/game/bedtime.js`     | Bedtime sleep rules: dozing candidates, lights out, waking neighbors      |
-| `src/game/charges.js`     | Charges refill/spend rules and Chip Coin placeholder numbers              |
-| `src/platform/storage.js` | Persistence and compatibility migrations                                  |
-| `src/ui/view.js`          | Board and level-selection markup                                          |
-| `src/ui/components.js`    | Inline SVG character artwork                                              |
-| `src/ui/currency.js`      | Battery counter and Chip Coin artwork                                     |
-| `src/ui/sputter.js`       | The failed card's sputtering edge spark                                   |
-| `src/ui/idle.js`          | Idle life: random blinks, yawns, bounces, and wiggles                     |
-| `src/ui/sound.js`         | Synthesized sound effects (Web Audio) and the sound on/off setting        |
-| `src/ui/timing.js`        | Zap line and pop durations; play room tuning (`circuitTuning`)            |
-| `src/playroom/`           | Play room page (`playroom.html`) for tuning animation speeds              |
-| `src/ui/effects.js`       | Wires, spark, pop particles, and animation timing                         |
-| `src/styles/game.css`     | Responsive styles and reduced-motion behavior                             |
+| Location                       | Responsibility                                                            |
+| ------------------------------ | ------------------------------------------------------------------------- |
+| `index.html`                   | Home and play screens, dialogs, and module/style entry points             |
+| `src/main.js`                  | Application controller: selection, navigation, screens, and event binding |
+| `src/data/covers.js`           | Themed covers: messages, sounds, and burst colors per theme               |
+| `src/data/definitions.js`      | Component identities, shapes, tutorial lessons, and campaign stages       |
+| `src/game/rules.js`            | Pure routing, pair lookup, shield breaking, and solvability checks        |
+| `src/game/generate.js`         | Seeded board generation and stage/tutorial factories                      |
+| `src/game/state.js`            | Save-shape validation and plain-data snapshots                            |
+| `src/game/bedtime.js`          | Bedtime sleep rules: dozing candidates, lights out, waking neighbors      |
+| `src/game/charges.js`          | Charges refill/spend rules and Chip Coin placeholder numbers              |
+| `src/boot.js`                  | App entry: loads native saves on iOS/Android, then starts `main.js`       |
+| `src/platform/native-store.js` | Native saves (Capacitor Preferences) with a one-time localStorage copy    |
+| `src/platform/storage.js`      | Persistence and compatibility migrations                                  |
+| `src/ui/view.js`               | Board and level-selection markup                                          |
+| `src/ui/components.js`         | Inline SVG character artwork                                              |
+| `src/ui/currency.js`           | Battery counter and Chip Coin artwork                                     |
+| `src/ui/sputter.js`            | The failed card's sputtering edge spark                                   |
+| `src/ui/idle.js`               | Idle life: random blinks, yawns, bounces, and wiggles                     |
+| `src/ui/sound.js`              | Synthesized sound effects (Web Audio) and the sound on/off setting        |
+| `src/ui/timing.js`             | Zap line and pop durations; play room tuning (`circuitTuning`)            |
+| `src/playroom/`                | Play room page (`playroom.html`) for tuning animation speeds              |
+| `src/ui/effects.js`            | Wires, spark, pop particles, and animation timing                         |
+| `src/styles/game.css`          | Responsive styles and reduced-motion behavior                             |
 
 The engine has no DOM or storage dependencies. UI modules may depend on the engine, but the engine does not import UI code. Storage is created through an adapter so it can later be replaced for native persistence or cloud saves.
 
@@ -45,7 +47,9 @@ Routing version 2 uses only the inner 6×6 board, with a hard edge. The 8×8 arr
 
 Change content in `src/data/definitions.js`. Component IDs are one-based array positions stored in saves: do not reorder or remove existing components without a migration. Stage numbering, deterministic seeds, and shape keys also identify saved content.
 
-Existing localStorage keys are preserved: `circuitState`, `circuitCampaign`, `circuitWins`, `circuitEndlessState`, and `circuitShapeChoice`. `circuitCharges` (`{ count, since }`, where `since` is when the current refill began) and `circuitChipCoins` (a whole number) were added for Charges; `circuitSound` (`on` or `off`) remembers the sound setting; a missing or unreadable value means a full battery or the starting coin balance. A standalone export opened at the same previous local file path keeps using that browser's existing saves. Moving to another origin, browser, or native app needs a separate migration if progress must follow.
+Existing localStorage keys are preserved: `circuitState`, `circuitCampaign`, `circuitWins`, `circuitEndlessState`, and `circuitShapeChoice`. `circuitCharges` (`{ count, since }`, where `since` is when the current refill began) and `circuitChipCoins` (a whole number) were added for Charges; `circuitSound` (`on` or `off`) remembers the sound setting; a missing or unreadable value means a full battery or the starting coin balance. A standalone export opened at the same previous local file path keeps using that browser's existing saves.
+
+**Native saves.** On iOS and Android the app starts at `src/boot.js`, which loads every save from native storage (Capacitor Preferences: iOS UserDefaults, Android SharedPreferences) into memory before `src/main.js` runs, through `src/platform/native-store.js`. The game still reads synchronously; every write goes straight through to native storage, which iOS doesn't clear the way it can clear the web view's localStorage. The first launch copies every existing `circuit…` localStorage key across once and records `circuitNativeSaves`; native values always win afterward. `storage.js`, the sound setting, and play room tuning use `globalThis.circuitStore` when it exists and localStorage otherwise, so the browser, the play room, the editor, and standalone exports keep using localStorage.
 
 ## Build and export
 

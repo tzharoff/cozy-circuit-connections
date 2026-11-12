@@ -73,7 +73,7 @@ Checks cover the tutorial, every stage solution (including double shields), unlo
 - Charges (lives) on a battery counter: restarting a level after making matches spends one, they refill every 30 minutes up to five, and at zero a Recharge refills them for Chip Coins.
 - Single-layer shields, walls, one free hint per level (more for Chip Coins), unlimited undo, and restart.
 - Cartoon SVG components, traveling sparks, glowing wires, and pop effects.
-- Browser saves, responsive layouts, and reduced-motion support.
+- Native saves on iOS and Android (with existing progress carried over), browser saves on the web, responsive layouts, and reduced-motion support.
 
 Progress is saved locally, not in GitHub or an account. Changing browser or origin, or clearing browser data, can reset progress. Existing save keys are preserved by this refactor.
 
@@ -85,7 +85,7 @@ See [ARCHITECTURE.md](ARCHITECTURE.md) for source boundaries, the match lifecycl
 
 The detailed gameplay, lives, currency, rotating challenges, and social-race notes are in [docs/GAME_DESIGN.md](docs/GAME_DESIGN.md). That document distinguishes decisions from implemented features and open questions.
 
-This is a playable prototype. Native saves, phone polish (safe areas, icons, splash, haptics), ads, payments, a Chip Coin shop, and backend services are not implemented yet.
+This is a playable prototype. Some phone polish (safe areas, haptics, Android back handling), ads, payments, a Chip Coin shop, and backend services are not implemented yet.
 
 ## Version and build numbers
 

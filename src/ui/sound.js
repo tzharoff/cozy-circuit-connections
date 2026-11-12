@@ -6,7 +6,7 @@
 /** A cozy pentatonic scale; each Chip’um type pops on its own note. */
 const POP_NOTES = [523.25, 587.33, 659.25, 783.99, 880, 1046.5];
 
-export function createSound(storage = globalThis.localStorage) {
+export function createSound(storage = globalThis.circuitStore || globalThis.localStorage) {
   let ctx = null,
     master = null,
     noise = null,

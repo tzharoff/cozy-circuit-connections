@@ -58,6 +58,8 @@ export const timingRanges = {
 };
 
 const TUNING_KEY = 'circuitTuning';
+/** Native saves on iOS and Android (boot.js); localStorage in the browser and play room. */
+const tuningStore = () => globalThis.circuitStore || globalThis.localStorage;
 
 /** Keeps only known keys with numbers inside their slider range. */
 export function cleanTiming(raw) {
@@ -73,7 +75,7 @@ export function cleanTiming(raw) {
 
 function readTuning() {
   try {
-    return cleanTiming(JSON.parse(globalThis.localStorage.getItem(TUNING_KEY)));
+    return cleanTiming(JSON.parse(tuningStore().getItem(TUNING_KEY)));
   } catch {
     return { ...timingDefaults };
   }
@@ -97,7 +99,7 @@ export function applyTimingCss(root = globalThis.document?.documentElement) {
 export function setTiming(values) {
   Object.assign(animTiming, cleanTiming({ ...animTiming, ...values }));
   try {
-    globalThis.localStorage.setItem(TUNING_KEY, JSON.stringify(animTiming));
+    tuningStore().setItem(TUNING_KEY, JSON.stringify(animTiming));
   } catch {}
   applyTimingCss();
 }
@@ -106,7 +108,7 @@ export function setTiming(values) {
 export function resetTiming() {
   Object.assign(animTiming, timingDefaults);
   try {
-    globalThis.localStorage.removeItem(TUNING_KEY);
+    tuningStore().removeItem(TUNING_KEY);
   } catch {}
   applyTimingCss();
 }

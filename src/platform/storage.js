@@ -9,7 +9,8 @@ import { STARTING_CHIP_COINS, validCharges } from '../game/charges.js';
 export function createStorage(storage) {
   if (!storage) {
     try {
-      storage = globalThis.localStorage;
+      // Native saves on iOS and Android (set up in boot.js); localStorage in the browser.
+      storage = globalThis.circuitStore || globalThis.localStorage;
     } catch {
       storage = null;
     }
