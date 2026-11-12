@@ -16,6 +16,10 @@ Screens use as little text as possible: the level goes in the card heading, and 
 - **Play:** the main button going from the main menu or home screen into a level.
 - **Chip’ums:** the characters' name. On screen use "Chip’ums" with a curly apostrophe; in code, files, and URLs use `chipums`. They are planned as plush toys and 3D prints, so keep their designs simple and on-palette (see docs/GAME_DESIGN.md).
 
+## Builds: always bump the build number
+
+Whenever you prepare a build the owner will install or upload (an iOS build to run on a phone, TestFlight, or the App Store; an Android APK or bundle), run `npm run revision` first, without being asked. It bumps the build number in `version.json`, iOS, and Android together. Then run `npm run cap:sync`, build, and commit and push the bumped version files with the build. Quick simulator builds made only to check your own work don't need a bump.
+
 ## Project pointers
 
 - Overview, commands, and mobile builds: [README.md](README.md)
