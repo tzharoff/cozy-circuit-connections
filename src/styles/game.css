@@ -3011,3 +3011,33 @@ dialog:focus {
   justify-content: center;
   gap: 10px;
 }
+/* Chip highlights are drawn inside the chip (an inset ring plus a colored border), so they
+   never spill over neighboring cells; the gap between cells is only 5px. */
+.play .chip.selected,
+.play .chip.hint,
+.play .chip.connecting {
+  outline: none;
+  transform: none;
+}
+.play .chip.selected {
+  border-color: #2f9a5c;
+  box-shadow:
+    inset 0 0 0 3px #5fd08a,
+    0 4px 0 #142e25;
+}
+.play .chip.hint {
+  border-color: #c98a1a;
+  box-shadow:
+    inset 0 0 0 3px #f5c242,
+    0 4px 0 #142e25;
+}
+.play .chip.connecting {
+  border-color: #3fa85a;
+  box-shadow:
+    inset 0 0 0 3px #9be27e,
+    0 4px 0 #142e25;
+}
+.play .chip:focus-visible {
+  outline: 3px solid #b9efd4;
+  outline-offset: -3px;
+}
