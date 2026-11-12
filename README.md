@@ -2,6 +2,8 @@
 
 A relaxed browser puzzle about connecting cheerful little circuit components.
 
+**[Build journal](https://tzharoff.github.io/cozy-circuit-connections/)**: a visual timeline of how the game was made, with before-and-after screenshots and the lesson from each change. Its source is [docs/index.html](docs/index.html), with screenshots in `docs/images/journal/`.
+
 Match identical chips along an empty horizontal/vertical path with at most two bends. Cables must stay inside the compact 6×6 board; there are no outside wire lanes. Clear adjacent pairs to free shielded chips; hazard-striped walls block wires permanently.
 
 ## Develop
