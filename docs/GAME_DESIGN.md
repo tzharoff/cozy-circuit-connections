@@ -138,6 +138,68 @@ Decided November 11, 2026. Special levels add a twist on top of the normal rules
 
 - Reuses the jitter code: rearranges a stuck board into a solvable one. Offered on the failed card next to Restart, paid with Chip Coins, so a dead end doesn't have to cost a Charge.
 
+## Seasonal rotation (draft)
+
+Drafted November 12, 2026; a starting point to react to, not final. A new season every two weeks gives 26 a year, matching the two-week campaign release in the schedule below. A season is three layers, so it doesn't need a brand-new rule every time:
+
+1. **Theme:** board palette and backdrop, small ambient effects (snow, stars, petals, leaves), a seasonal idle touch, and a simple accessory on the Chip’ums (scarf, sunhat, party hat). Mostly art, fast to make; accessories stay merch-friendly and on-palette.
+2. **Featured mechanic:** one mechanic from the toolbox in the spotlight, often remixed with an older one.
+3. **Content and rewards:** about 10 new levels, a season quest line or ladder, and one collectible or cosmetic only earnable that season.
+
+Holiday seasons use inclusive names ("Gift Wrap", "Spooky Night", "Gathering Feast"). Slots follow calendar weeks, so whichever slot lines up with launch is the first one shipped.
+
+### Mechanic toolbox
+
+| Mechanic       | Status  | Rule in one line                                                                                                 |
+| -------------- | ------- | ---------------------------------------------------------------------------------------------------------------- |
+| Shields        | Done    | A shielded chip can't be tapped until a match beside it breaks the shield                                        |
+| Double shields | Done    | Two nearby matches: the first cracks, the second breaks                                                          |
+| Walls          | Done    | Permanent blocks wires can't cross                                                                               |
+| Bedtime        | Done    | Chip’ums doze over time; a sleeper must be the first tap; all asleep is Lights out                               |
+| Frost          | Planned | Icy empty cells block wires; a match beside one melts it; a harder variant lets frost creep every few matches    |
+| Fog            | Planned | Some chips start hidden (fog, leaves, wrapping); a match beside one reveals its type; hidden chips can't be used |
+| Jitter         | Planned | Unshielded chips shake, then hop to new spots (every few matches, or on a countdown); always re-checked solvable |
+| Shuffle (item) | Planned | Rearranges a stuck board into a solvable one for Chip Coins, offered on the failed card                          |
+| Rain           | Planned | Puddle cells: wires may cross water only in a straight line, never turn on it                                    |
+| Wind           | Planned | Every few matches a gust slides one row or column over by one; always re-checked solvable                        |
+| Relay lights   | Planned | Lantern cells a wire must pass through to light; light every lantern as part of the goal                         |
+| Cages and keys | Planned | A caged chip opens when a matching key pair elsewhere is cleared                                                 |
+
+Suggested build order for the planned ones: Frost, Fog, Jitter with Shuffle, Rain, Wind, Relay lights, Cages and keys. Fog also covers the gift, egg, and leaf-pile skins.
+
+### The 26 slots
+
+| Slot | Weeks | When      | Season           | Theme notes                                        | Featured mechanic          |
+| ---- | ----- | --------- | ---------------- | -------------------------------------------------- | -------------------------- |
+| 1    | 1–2   | early Jan | New Year Sparkle | Midnight blue, confetti, party hats                | Jitter (fireworks)         |
+| 2    | 3–4   | late Jan  | Deep Freeze      | Icy board, drifting snow, scarves, shivering idles | Frost (debut)              |
+| 3    | 5–6   | early Feb | Snow Day         | Snowdrifts, mittens                                | Frost, creeping variant    |
+| 4    | 7–8   | mid Feb   | Sweethearts      | Pink and red, little hearts                        | Fog as heart-wrapped chips |
+| 5    | 9–10  | early Mar | Thaw             | Melting icicles, first sprouts                     | Frost plus Rain            |
+| 6    | 11–12 | mid Mar   | Lucky Clover     | Greens and rainbows                                | Relay lights (rainbows)    |
+| 7    | 13–14 | late Mar  | Spring Showers   | Rain streaks, umbrellas                            | Rain (debut)               |
+| 8    | 15–16 | Apr       | Egg Hunt         | Pastels, patterned eggs                            | Fog as eggs                |
+| 9    | 17–18 | late Apr  | Blossom Breeze   | Petals drifting                                    | Wind (debut)               |
+| 10   | 19–20 | May       | Garden Party     | Flowers, bees, sunhats                             | Shields remix              |
+| 11   | 21–22 | late May  | Bug Buddies      | Ladybugs and fireflies                             | Cages and keys (debut)     |
+| 12   | 23–24 | early Jun | Sunny Days       | Bright sky, sunglasses                             | Double shields remix       |
+| 13   | 25–26 | late Jun  | Solstice         | Golden light, long days                            | Relay lights (sunbeams)    |
+| 14   | 27–28 | early Jul | Fireworks Night  | Night sky, bursts                                  | Bedtime plus Jitter        |
+| 15   | 29–30 | late Jul  | Heat Wave        | Shimmering haze, ice pops                          | Fog as heat haze           |
+| 16   | 31–32 | early Aug | Beach Day        | Sand, tide pools                                   | Rain as tide pools         |
+| 17   | 33–34 | mid Aug   | Starry Camp-out  | Tents, fireflies                                   | Bedtime plus Relay lights  |
+| 18   | 35–36 | early Sep | Back to School   | Pencils, lockers                                   | Cages and keys (lockers)   |
+| 19   | 37–38 | mid Sep   | Harvest Moon     | Big orange moon                                    | Bedtime remix              |
+| 20   | 39–40 | early Oct | Autumn Winds     | Swirling leaves                                    | Wind                       |
+| 21   | 41–42 | mid Oct   | Leaf Pile        | Leaf-covered chips                                 | Fog as leaves              |
+| 22   | 43–44 | late Oct  | Spooky Night     | Pumpkins, friendly ghosts, costumes                | Bedtime plus Fog           |
+| 23   | 45–46 | early Nov | Stormy Days      | Rain and gusts                                     | Rain plus Wind             |
+| 24   | 47–48 | late Nov  | Gathering Feast  | Warm kitchen colors                                | Shields and double remix   |
+| 25   | 49–50 | early Dec | First Snow       | Snowfall, cozy lights                              | Frost plus Relay lights    |
+| 26   | 51–52 | late Dec  | Gift Wrap        | Wrapping paper, bows, a year-end celebration       | Fog as gifts, all remix    |
+
+Open: which slot is the launch season, how long each season's levels stay playable after it ends (stay in the campaign, or archive), whether seasons reset Endless numbering, and the per-season reward.
+
 ## Agreed gameplay and recovery direction
 
 - Keep the two-click pair-matching game, wire effects, and chip pop effects.
