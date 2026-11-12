@@ -147,6 +147,62 @@ export function createEffects({ getElement: $, getState }) {
     );
   }
   let burstTimer = null;
+  /** A ring and eight confetti bits flying out from the middle of a chip. */
+  function burstMarkup(chip, bounds, color, extra = '') {
+    const rect = chip.getBoundingClientRect(),
+      x = ((rect.left + rect.width / 2 - bounds.left) / bounds.width) * 100,
+      y = ((rect.top + rect.height / 2 - bounds.top) / bounds.height) * 100;
+    let bits = '';
+    for (let n = 0; n < 8; n++) {
+      const angle = (n * Math.PI) / 4,
+        distance = Math.max(17, rect.width * 0.55) + (n % 2) * 6;
+      bits +=
+        '<i class="pop-bit" style="--dx:' +
+        Math.cos(angle) * distance +
+        'px;--dy:' +
+        Math.sin(angle) * distance +
+        'px;--spin:' +
+        n * 57 +
+        'deg;--delay:' +
+        (n % 2) * 20 +
+        'ms"></i>';
+    }
+    return (
+      '<div class="pop-burst ' +
+      extra +
+      '" style="left:' +
+      x +
+      '%;top:' +
+      y +
+      '%;--pop-color:' +
+      color +
+      '"><span class="pop-ring"></span>' +
+      bits +
+      '</div>'
+    );
+  }
+  /** When covers break, burst themed bits (ice shards, paper, shell) from those chips. */
+  function coverBurst(cells, color) {
+    const board = $('board'),
+      layer = $('pops');
+    if (
+      !cells.length ||
+      globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches ||
+      !board.querySelector ||
+      !layer?.insertAdjacentHTML
+    )
+      return;
+    const bounds = layer.getBoundingClientRect();
+    let html = '';
+    for (const p of cells) {
+      const chip = board.querySelector('[data-chip="' + p + '"]');
+      if (chip) html += burstMarkup(chip, bounds, color, 'cover-burst');
+    }
+    layer.insertAdjacentHTML('beforeend', html);
+    setTimeout(() => {
+      for (const el of layer.querySelectorAll('.cover-burst')) el.remove();
+    }, animTiming.popConfetti + 120);
+  }
   function popPair(a, z, done) {
     const board = $('board'),
       layer = $('pops');
@@ -165,35 +221,7 @@ export function createEffects({ getElement: $, getState }) {
       const chip = board.querySelector('[data-chip="' + p + '"]');
       if (!chip) continue;
       chip.classList.add('popping');
-      const rect = chip.getBoundingClientRect(),
-        x = ((rect.left + rect.width / 2 - bounds.left) / bounds.width) * 100,
-        y = ((rect.top + rect.height / 2 - bounds.top) / bounds.height) * 100,
-        color = types[getState().board[p] - 1].color;
-      let bits = '';
-      for (let n = 0; n < 8; n++) {
-        const angle = (n * Math.PI) / 4,
-          distance = Math.max(17, rect.width * 0.55) + (n % 2) * 6;
-        bits +=
-          '<i class="pop-bit" style="--dx:' +
-          Math.cos(angle) * distance +
-          'px;--dy:' +
-          Math.sin(angle) * distance +
-          'px;--spin:' +
-          n * 57 +
-          'deg;--delay:' +
-          (n % 2) * 20 +
-          'ms"></i>';
-      }
-      layer.innerHTML +=
-        '<div class="pop-burst" style="left:' +
-        x +
-        '%;top:' +
-        y +
-        '%;--pop-color:' +
-        color +
-        '"><span class="pop-ring"></span>' +
-        bits +
-        '</div>';
+      layer.innerHTML += burstMarkup(chip, bounds, types[getState().board[p] - 1].color);
     }
     setTimeout(done, animTiming.popChip);
     // Confetti bits start up to 20ms late; leave a little room after the slowest part.
@@ -205,5 +233,5 @@ export function createEffects({ getElement: $, getState }) {
     );
   }
 
-  return { clearWire, draw, popPair };
+  return { clearWire, draw, popPair, coverBurst };
 }

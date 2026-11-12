@@ -3371,3 +3371,124 @@ dialog:focus {
     animation: none;
   }
 }
+/* Themed covers: the shield mechanic in seasonal outfits, picked by data-cover on the board's
+   screen (src/data/covers.js). Same rule; only the look changes. */
+[data-cover='ice'] .chip.shielded {
+  background:
+    linear-gradient(
+      135deg,
+      #ffffffcc 0 18%,
+      transparent 19% 62%,
+      #ffffff55 63% 70%,
+      transparent 71%
+    ),
+    linear-gradient(160deg, #e8fbff, #b3e2f5);
+  border: 2px solid #7cc3e6;
+  box-shadow:
+    0 4px 0 #142e25,
+    inset 0 0 0 2px #ffffffaa,
+    inset 0 -6px 10px #7cc3e655;
+}
+[data-cover='ice'] .chip.shielded .component-art {
+  opacity: 0.6;
+  filter: saturate(0.6) hue-rotate(-10deg);
+}
+[data-cover='ice'] .chip.shielded.double {
+  border: 3px solid #4f9fcb;
+  background:
+    linear-gradient(
+      135deg,
+      #ffffffdd 0 20%,
+      transparent 21% 60%,
+      #ffffff66 61% 70%,
+      transparent 71%
+    ),
+    linear-gradient(160deg, #d6f3ff, #8ccbea);
+  box-shadow:
+    0 4px 0 #142e25,
+    inset 0 0 0 3px #ffffffcc,
+    inset 0 0 0 5px #7cc3e6;
+}
+[data-cover='ice'] .chip.shielded.double .component-art {
+  opacity: 0.45;
+}
+[data-cover='ice'] .shield-crack path {
+  stroke: #3f86b0;
+}
+[data-cover='ice'] .chip.shielded.double .shield-mark {
+  background: #bfeaff;
+  border-color: #3f86b0;
+  color: #1f4e6b;
+}
+[data-cover='gift'] .chip.shielded {
+  background:
+    linear-gradient(90deg, transparent 42%, #f6c94a 42% 58%, transparent 58%),
+    linear-gradient(transparent 42%, #f6c94a 42% 58%, transparent 58%),
+    repeating-linear-gradient(135deg, #ffb3c8 0 6px, #ffe3ec 6px 12px);
+  border: 2px solid #d9668a;
+  box-shadow:
+    0 4px 0 #142e25,
+    inset 0 0 0 2px #fff7;
+}
+[data-cover='gift'] .chip.shielded .component-art {
+  opacity: 0.55;
+  filter: saturate(0.6);
+}
+[data-cover='gift'] .chip.shielded.double {
+  border: 3px solid #b8456a;
+  background:
+    radial-gradient(circle at 50% 50%, #f6c94a 0 12%, transparent 13%),
+    linear-gradient(90deg, transparent 40%, #f6c94a 40% 60%, transparent 60%),
+    linear-gradient(transparent 40%, #f6c94a 40% 60%, transparent 60%),
+    repeating-linear-gradient(135deg, #ff8fb0 0 6px, #ffd0de 6px 12px);
+}
+[data-cover='gift'] .chip.shielded.double .component-art {
+  opacity: 0.4;
+}
+[data-cover='gift'] .shield-crack path {
+  stroke: #b8456a;
+  stroke-dasharray: 3 2;
+}
+[data-cover='gift'] .chip.shielded.double .shield-mark {
+  background: #ffd0de;
+  border-color: #b8456a;
+  color: #6b1f36;
+}
+[data-cover='egg'] .chip.shielded {
+  border-radius: 50% 50% 44% 44% / 58% 58% 42% 42%;
+  background:
+    linear-gradient(transparent 46%, #a7e6a0 46% 50%, transparent 50%),
+    repeating-linear-gradient(90deg, transparent 0 5px, #ffd28e 5px 7px, transparent 7px 12px),
+    linear-gradient(#fffaf0, #f6e6c8);
+  border: 2px solid #e0b878;
+  box-shadow:
+    0 4px 0 #142e25,
+    inset 0 0 0 2px #fff9;
+}
+[data-cover='egg'] .chip.shielded .component-art {
+  opacity: 0.55;
+  filter: saturate(0.6);
+}
+[data-cover='egg'] .chip.shielded.double {
+  border: 3px solid #c99a4f;
+  background:
+    linear-gradient(
+      transparent 30%,
+      #d6b6ff 30% 34%,
+      transparent 34% 62%,
+      #a5d7ff 62% 66%,
+      transparent 66%
+    ),
+    linear-gradient(#fff6e2, #efd9ad);
+}
+[data-cover='egg'] .chip.shielded.double .component-art {
+  opacity: 0.4;
+}
+[data-cover='egg'] .shield-crack path {
+  stroke: #8a6a3a;
+}
+[data-cover='egg'] .chip.shielded.double .shield-mark {
+  background: #fff1c9;
+  border-color: #8a6a3a;
+  color: #5a4220;
+}

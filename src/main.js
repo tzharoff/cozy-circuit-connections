@@ -1,4 +1,5 @@
 import { types, shapes, lessons, levels } from './data/definitions.js';
+import { coverThemes, coverOf } from './data/covers.js';
 import { route, findPair, breakShields, boardStatus, shieldLayers } from './game/rules.js';
 import { make, makeStage, makeTutorial } from './game/generate.js';
 import { clone, valid } from './game/state.js';
@@ -420,12 +421,17 @@ function showStuck(force = false) {
 function save() {
   storage.saveGame({ state, wins, completed, tutorialDone });
 }
-const { clearWire, draw, popPair } = createEffects({ getElement: $, getState: () => state });
+const { clearWire, draw, popPair, coverBurst } = createEffects({
+  getElement: $,
+  getState: () => state,
+});
 function render() {
   const out = !busy && isBedtime(state) && lightsOut(state);
   const stuck = !busy && (out || boardStatus(state.board, state.shields, state.walls) === 'stuck');
   // Bedtime levels get a night-blue board and a moon on the level pill.
   $('game').classList?.toggle('bedtime', isBedtime(state));
+  // The board's cover theme (shield, ice, gift, egg) picks how covered chips look.
+  $('game').setAttribute?.('data-cover', coverOf(state));
   $('levelMoon').hidden = !isBedtime(state);
   if (stuck) {
     selected = null;
@@ -556,11 +562,16 @@ function choose(i) {
           shields: state.shields.slice(),
           score: state.score,
         });
-        const layersBefore = shieldLayers(state.shields),
+        const cover = coverThemes[coverOf(state)],
+          shieldsBefore = state.shields.slice(),
+          layersBefore = shieldLayers(state.shields),
           freed = breakShields(state.shields, first, i),
-          cracked = layersBefore - shieldLayers(state.shields) - freed;
-        if (freed) sound.play('shield');
-        else if (cracked) sound.play('crack');
+          cracked = layersBefore - shieldLayers(state.shields) - freed,
+          freedCells = shieldsBefore
+            .map((v, n) => (v && !state.shields[n] ? n : -1))
+            .filter((n) => n >= 0);
+        if (freed) sound.play(cover.breakSound);
+        else if (cracked) sound.play(cover.crackSound);
         if (state.asleep) {
           state.asleep[first] = state.asleep[i] = 0;
           if (wakeNeighbors(state.asleep, first, i)) sound.play('wake');
@@ -573,12 +584,16 @@ function choose(i) {
         busy = false;
         say(
           freed
-            ? 'Connection made. ' + freed + ' shield' + (freed === 1 ? '' : 's') + ' broken!'
+            ? 'Connection made. ' + cover.broken(freed)
             : cracked
-              ? 'Connection made. Double shield cracked!'
+              ? 'Connection made. ' + cover.crack
               : 'Connection made. One less pair in the machine.',
         );
         render();
+        // Broken covers burst in their theme's colors, and the freed Chip’ums hop out.
+        coverBurst(freedCells, cover.burst);
+        for (const n of freedCells)
+          playIdle(document.querySelector?.('[data-chip="' + n + '"]'), 'bounce');
       });
     }
   } else {

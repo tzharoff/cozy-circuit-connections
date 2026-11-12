@@ -164,6 +164,7 @@ export function makeStage(n) {
   s.walls = wallsFor(s.board, seed, [], spec.walls);
   s.shields = shieldsFor(s.board, seed, s.walls, spec.shields, spec.doubleShields || 0);
   s.initialShields = s.shields.slice();
+  if (spec.cover) s.cover = spec.cover;
   if (spec.bedtime) {
     s.bedtime = { dozeScale: spec.dozeScale || 1 };
     s.asleep = noSleep();

@@ -116,6 +116,54 @@ export function createSound(storage = globalThis.localStorage) {
         attack: 0.002,
       });
     },
+    /** Ice cover cracking: a sharp, glassy tick. */
+    iceCrack(t) {
+      tone({
+        type: 'triangle',
+        from: 2400,
+        to: 1800,
+        at: t,
+        length: 0.08,
+        peak: 0.1,
+        attack: 0.001,
+      });
+      hiss({ from: 6000, to: 3000, at: t, length: 0.08, peak: 0.08, q: 3, attack: 0.001 });
+    },
+    /** Ice cover shattering: a tinkling cascade of shards. */
+    iceBreak(t) {
+      [2637, 3136, 2349, 3520, 2794].forEach((f, n) =>
+        tone({
+          type: 'triangle',
+          from: f,
+          at: t + n * 0.035,
+          length: 0.18,
+          peak: 0.07,
+          attack: 0.001,
+        }),
+      );
+      hiss({ from: 7000, to: 4000, at: t, length: 0.2, peak: 0.08, q: 2, attack: 0.001 });
+    },
+    /** Gift cover tearing: a short paper rip. */
+    paperTear(t) {
+      hiss({ from: 1800, to: 3200, at: t, length: 0.14, peak: 0.16, q: 0.7, attack: 0.005 });
+    },
+    /** Gift cover unwrapping: a longer rip and a little bow-pop ding. */
+    unwrap(t) {
+      hiss({ from: 1500, to: 3600, at: t, length: 0.22, peak: 0.16, q: 0.7, attack: 0.005 });
+      tone({ from: 880, to: 1320, at: t + 0.2, length: 0.12, peak: 0.12 });
+      tone({ from: 1760, at: t + 0.28, length: 0.2, peak: 0.08 });
+    },
+    /** Egg cover cracking: a soft, hollow tock. */
+    eggCrack(t) {
+      tone({ from: 700, to: 420, at: t, length: 0.07, peak: 0.16, attack: 0.001 });
+      hiss({ from: 2200, at: t, length: 0.04, peak: 0.08, q: 1.5, attack: 0.001 });
+    },
+    /** Egg cover hatching: a crack and a happy little peep. */
+    hatch(t) {
+      tone({ from: 650, to: 380, at: t, length: 0.07, peak: 0.16, attack: 0.001 });
+      tone({ from: 1400, to: 2100, at: t + 0.12, length: 0.1, peak: 0.12 });
+      tone({ from: 1600, to: 2400, at: t + 0.24, length: 0.12, peak: 0.1 });
+    },
     /** Level clear: a rising bell arpeggio with a sparkle on top. */
     clear(t) {
       [523.25, 659.25, 783.99, 1046.5].forEach((f, i) => {

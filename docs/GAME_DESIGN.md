@@ -159,53 +159,69 @@ Holiday seasons use inclusive names ("Gift Wrap", "Spooky Night", "Gathering Fea
 
 ### Mechanic toolbox
 
-| Mechanic       | Status  | Rule in one line                                                                                                 |
-| -------------- | ------- | ---------------------------------------------------------------------------------------------------------------- |
-| Shields        | Done    | A shielded chip can't be tapped until a match beside it breaks the shield                                        |
-| Double shields | Done    | Two nearby matches: the first cracks, the second breaks                                                          |
-| Walls          | Done    | Permanent blocks wires can't cross                                                                               |
-| Bedtime        | Done    | Chip’ums doze over time; a sleeper must be the first tap; all asleep is Lights out                               |
-| Frost          | Planned | Icy empty cells block wires; a match beside one melts it; a harder variant lets frost creep every few matches    |
-| Fog            | Planned | Some chips start hidden (fog, leaves, wrapping); a match beside one reveals its type; hidden chips can't be used |
-| Jitter         | Planned | Unshielded chips shake, then hop to new spots (every few matches, or on a countdown); always re-checked solvable |
-| Shuffle (item) | Planned | Rearranges a stuck board into a solvable one for Chip Coins, offered on the failed card                          |
-| Rain           | Planned | Puddle cells: wires may cross water only in a straight line, never turn on it                                    |
-| Wind           | Planned | Every few matches a gust slides one row or column over by one; always re-checked solvable                        |
-| Relay lights   | Planned | Lantern cells a wire must pass through to light; light every lantern as part of the goal                         |
-| Cages and keys | Planned | A caged chip opens when a matching key pair elsewhere is cleared                                                 |
+| Mechanic       | Status  | Rule in one line                                                                                                    |
+| -------------- | ------- | ------------------------------------------------------------------------------------------------------------------- |
+| Shields        | Done    | A shielded chip can't be tapped until a match beside it breaks the shield                                           |
+| Double shields | Done    | Two nearby matches: the first cracks, the second breaks                                                             |
+| Walls          | Done    | Permanent blocks wires can't cross                                                                                  |
+| Bedtime        | Done    | Chip’ums doze over time; a sleeper must be the first tap; all asleep is Lights out                                  |
+| Frost          | Planned | Icy empty cells block wires; a match beside one melts it; a harder variant lets frost creep every few matches       |
+| Fog            | Planned | Some chips start hidden (cloud, haze, ghost sheet); a match beside one reveals its type; hidden chips can't be used |
+| Jitter         | Planned | Unshielded chips shake, then hop to new spots (every few matches, or on a countdown); always re-checked solvable    |
+| Shuffle (item) | Planned | Rearranges a stuck board into a solvable one for Chip Coins, offered on the failed card                             |
+| Rain           | Planned | Puddle cells: wires may cross water only in a straight line, never turn on it                                       |
+| Wind           | Planned | Every few matches a gust slides one row or column over by one; always re-checked solvable                           |
+| Relay lights   | Planned | Lantern cells a wire must pass through to light; light every lantern as part of the goal                            |
+| Cages and keys | Planned | A caged chip opens when a matching key pair elsewhere is cleared                                                    |
 
-Suggested build order for the planned ones: Frost, Fog, Jitter with Shuffle, Rain, Wind, Relay lights, Cages and keys. Fog also covers the gift, egg, and leaf-pile skins.
+Suggested build order for the planned ones: Frost, Fog, Jitter with Shuffle, Rain, Wind, Relay lights, Cages and keys. Gift, egg, and leaf-pile looks are themed covers (below), not Fog: covers lock a chip you can still see; Fog hides which Chip’um it is.
+
+### Themed covers
+
+Decided and started November 12, 2026. Shields are the first **cover**: the rule never changes (a covered Chip’um can't be tapped until a match beside it breaks the cover; a double cover takes two), but each theme dresses it differently, with its own art, crack look, break burst, sounds, and messages. A level picks one with `cover` (themes live in `src/data/covers.js`); the gold shield is the `default`. Themed covers drop the single-cover badge because the cover itself is obvious; doubles keep the "2".
+
+| Theme                                       | Status  | Look                                                   | Crack / break messages                  |
+| ------------------------------------------- | ------- | ------------------------------------------------------ | --------------------------------------- |
+| Default                                     | Done    | Gold-striped shield                                    | Double shield cracked! / shield broken! |
+| Ice                                         | Done    | Glassy blue block, frostier when double                | Ice cracked! / Ice shattered!           |
+| Gift                                        | Done    | Pink striped paper with a gold ribbon (bow on doubles) | Wrapping torn! / Unwrapped!             |
+| Egg                                         | Done    | Cream egg with pastel bands; the Chip’um hops out      | Shell cracked! / Hatched!               |
+| Heart locket                                | Planned | For Sweethearts                                        |                                         |
+| Leaf pile                                   | Planned | For Leaf Pile                                          |                                         |
+| Cocoon, sandcastle, flower bud, ghost sheet | Planned | For Bug Buddies, Beach Day, Garden Party, Spooky Night |                                         |
+
+When a cover breaks, bits burst out in the theme's color and the freed Chip’um hops. The play room's Covers panel switches the test board between themes.
 
 ### The 26 slots
 
-| Slot | Weeks | When      | Season           | Theme notes                                        | Featured mechanic          |
-| ---- | ----- | --------- | ---------------- | -------------------------------------------------- | -------------------------- |
-| 1    | 1–2   | early Jan | New Year Sparkle | Midnight blue, confetti, party hats                | Jitter (fireworks)         |
-| 2    | 3–4   | late Jan  | Deep Freeze      | Icy board, drifting snow, scarves, shivering idles | Frost (debut)              |
-| 3    | 5–6   | early Feb | Snow Day         | Snowdrifts, mittens                                | Frost, creeping variant    |
-| 4    | 7–8   | mid Feb   | Sweethearts      | Pink and red, little hearts                        | Fog as heart-wrapped chips |
-| 5    | 9–10  | early Mar | Thaw             | Melting icicles, first sprouts                     | Frost plus Rain            |
-| 6    | 11–12 | mid Mar   | Lucky Clover     | Greens and rainbows                                | Relay lights (rainbows)    |
-| 7    | 13–14 | late Mar  | Spring Showers   | Rain streaks, umbrellas                            | Rain (debut)               |
-| 8    | 15–16 | Apr       | Egg Hunt         | Pastels, patterned eggs                            | Fog as eggs                |
-| 9    | 17–18 | late Apr  | Blossom Breeze   | Petals drifting                                    | Wind (debut)               |
-| 10   | 19–20 | May       | Garden Party     | Flowers, bees, sunhats                             | Shields remix              |
-| 11   | 21–22 | late May  | Bug Buddies      | Ladybugs and fireflies                             | Cages and keys (debut)     |
-| 12   | 23–24 | early Jun | Sunny Days       | Bright sky, sunglasses                             | Double shields remix       |
-| 13   | 25–26 | late Jun  | Solstice         | Golden light, long days                            | Relay lights (sunbeams)    |
-| 14   | 27–28 | early Jul | Fireworks Night  | Night sky, bursts                                  | Bedtime plus Jitter        |
-| 15   | 29–30 | late Jul  | Heat Wave        | Shimmering haze, ice pops                          | Fog as heat haze           |
-| 16   | 31–32 | early Aug | Beach Day        | Sand, tide pools                                   | Rain as tide pools         |
-| 17   | 33–34 | mid Aug   | Starry Camp-out  | Tents, fireflies                                   | Bedtime plus Relay lights  |
-| 18   | 35–36 | early Sep | Back to School   | Pencils, lockers                                   | Cages and keys (lockers)   |
-| 19   | 37–38 | mid Sep   | Harvest Moon     | Big orange moon                                    | Bedtime remix              |
-| 20   | 39–40 | early Oct | Autumn Winds     | Swirling leaves                                    | Wind                       |
-| 21   | 41–42 | mid Oct   | Leaf Pile        | Leaf-covered chips                                 | Fog as leaves              |
-| 22   | 43–44 | late Oct  | Spooky Night     | Pumpkins, friendly ghosts, costumes                | Bedtime plus Fog           |
-| 23   | 45–46 | early Nov | Stormy Days      | Rain and gusts                                     | Rain plus Wind             |
-| 24   | 47–48 | late Nov  | Gathering Feast  | Warm kitchen colors                                | Shields and double remix   |
-| 25   | 49–50 | early Dec | First Snow       | Snowfall, cozy lights                              | Frost plus Relay lights    |
-| 26   | 51–52 | late Dec  | Gift Wrap        | Wrapping paper, bows, a year-end celebration       | Fog as gifts, all remix    |
+| Slot | Weeks | When      | Season           | Theme notes                                        | Featured mechanic         |
+| ---- | ----- | --------- | ---------------- | -------------------------------------------------- | ------------------------- |
+| 1    | 1–2   | early Jan | New Year Sparkle | Midnight blue, confetti, party hats                | Jitter (fireworks)        |
+| 2    | 3–4   | late Jan  | Deep Freeze      | Icy board, drifting snow, scarves, shivering idles | Frost (debut)             |
+| 3    | 5–6   | early Feb | Snow Day         | Snowdrifts, mittens                                | Frost, creeping variant   |
+| 4    | 7–8   | mid Feb   | Sweethearts      | Pink and red, little hearts                        | Heart-locket covers       |
+| 5    | 9–10  | early Mar | Thaw             | Melting icicles, first sprouts                     | Frost plus Rain           |
+| 6    | 11–12 | mid Mar   | Lucky Clover     | Greens and rainbows                                | Relay lights (rainbows)   |
+| 7    | 13–14 | late Mar  | Spring Showers   | Rain streaks, umbrellas                            | Rain (debut)              |
+| 8    | 15–16 | Apr       | Egg Hunt         | Pastels, patterned eggs                            | Egg covers (they hatch)   |
+| 9    | 17–18 | late Apr  | Blossom Breeze   | Petals drifting                                    | Wind (debut)              |
+| 10   | 19–20 | May       | Garden Party     | Flowers, bees, sunhats                             | Shields remix             |
+| 11   | 21–22 | late May  | Bug Buddies      | Ladybugs and fireflies                             | Cages and keys (debut)    |
+| 12   | 23–24 | early Jun | Sunny Days       | Bright sky, sunglasses                             | Double shields remix      |
+| 13   | 25–26 | late Jun  | Solstice         | Golden light, long days                            | Relay lights (sunbeams)   |
+| 14   | 27–28 | early Jul | Fireworks Night  | Night sky, bursts                                  | Bedtime plus Jitter       |
+| 15   | 29–30 | late Jul  | Heat Wave        | Shimmering haze, ice pops                          | Fog as heat haze          |
+| 16   | 31–32 | early Aug | Beach Day        | Sand, tide pools                                   | Rain as tide pools        |
+| 17   | 33–34 | mid Aug   | Starry Camp-out  | Tents, fireflies                                   | Bedtime plus Relay lights |
+| 18   | 35–36 | early Sep | Back to School   | Pencils, lockers                                   | Cages and keys (lockers)  |
+| 19   | 37–38 | mid Sep   | Harvest Moon     | Big orange moon                                    | Bedtime remix             |
+| 20   | 39–40 | early Oct | Autumn Winds     | Swirling leaves                                    | Wind                      |
+| 21   | 41–42 | mid Oct   | Leaf Pile        | Leaf-covered chips                                 | Leaf-pile covers          |
+| 22   | 43–44 | late Oct  | Spooky Night     | Pumpkins, friendly ghosts, costumes                | Bedtime plus Fog          |
+| 23   | 45–46 | early Nov | Stormy Days      | Rain and gusts                                     | Rain plus Wind            |
+| 24   | 47–48 | late Nov  | Gathering Feast  | Warm kitchen colors                                | Shields and double remix  |
+| 25   | 49–50 | early Dec | First Snow       | Snowfall, cozy lights                              | Frost plus Relay lights   |
+| 26   | 51–52 | late Dec  | Gift Wrap        | Wrapping paper, bows, a year-end celebration       | Gift covers, all remix    |
 
 Open: which slot is the launch season, how long each season's levels stay playable after it ends (stay in the campaign, or archive), whether seasons reset Endless numbering, and the per-season reward.
 

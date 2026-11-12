@@ -8,6 +8,7 @@ The browser and future mobile app use the same web source. Native platform setup
 | ------------------------- | ------------------------------------------------------------------------- |
 | `index.html`              | Home and play screens, dialogs, and module/style entry points             |
 | `src/main.js`             | Application controller: selection, navigation, screens, and event binding |
+| `src/data/covers.js`      | Themed covers: messages, sounds, and burst colors per theme               |
 | `src/data/definitions.js` | Component identities, shapes, tutorial lessons, and campaign stages       |
 | `src/game/rules.js`       | Pure routing, pair lookup, shield breaking, and solvability checks        |
 | `src/game/generate.js`    | Seeded board generation and stage/tutorial factories                      |

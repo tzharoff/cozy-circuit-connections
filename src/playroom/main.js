@@ -3,6 +3,7 @@ import { route, findPair, breakShields, shieldLayers } from '../game/rules.js';
 import { createEffects } from '../ui/effects.js';
 import { boardMarkup } from '../ui/view.js';
 import { createSound } from '../ui/sound.js';
+import { coverThemes } from '../data/covers.js';
 import { createIdle, playIdle, IDLE_MS } from '../ui/idle.js';
 import { noSleep, dozeCandidates, lightsOut, wakeNeighbors } from '../game/bedtime.js';
 import {
@@ -42,8 +43,11 @@ function testBoard() {
   s.shields = shieldsFor(s.board, seed, s.walls, 6, 3);
   s.initialShields = s.shields.slice();
   s.asleep = noSleep();
+  s.cover = coverName;
   return s;
 }
+/** The cover theme the picker is showing. */
+let coverName = 'default';
 let state = testBoard(),
   selected = null,
   lit = [],
@@ -60,6 +64,12 @@ const soundLabels = {
   pop: 'Pop',
   shield: 'Shield break',
   crack: 'Shield crack',
+  iceCrack: 'Ice crack',
+  iceBreak: 'Ice shatter',
+  paperTear: 'Paper tear',
+  unwrap: 'Unwrap',
+  eggCrack: 'Egg crack',
+  hatch: 'Hatch',
   doze: 'Doze off',
   wake: 'Wake up',
   lightsOut: 'Lights out',
@@ -100,10 +110,20 @@ function connect(a, z, path) {
     setTimeout(() => {
       sound.play('pop', { type: state.board[a] - 1 });
       effects.popPair(a, z, () => {
-        const before = shieldLayers(state.shields),
-          freed = breakShields(state.shields, a, z);
-        if (freed) sound.play('shield');
-        else if (before > shieldLayers(state.shields)) sound.play('crack');
+        const cover = coverThemes[coverName],
+          shieldsBefore = state.shields.slice(),
+          before = shieldLayers(state.shields),
+          freed = breakShields(state.shields, a, z),
+          freedCells = shieldsBefore
+            .map((v, n) => (v && !state.shields[n] ? n : -1))
+            .filter((n) => n >= 0);
+        if (freed) sound.play(cover.breakSound);
+        else if (before > shieldLayers(state.shields)) sound.play(cover.crackSound);
+        setTimeout(() => {
+          effects.coverBurst(freedCells, cover.burst);
+          for (const n of freedCells)
+            playIdle(document.querySelector('[data-chip="' + n + '"]'), 'bounce');
+        });
         state.board[a] = state.board[z] = 0;
         state.asleep[a] = state.asleep[z] = 0;
         if (wakeNeighbors(state.asleep, a, z)) sound.play('wake');
@@ -265,5 +285,14 @@ $('bedtime').onchange = () => {
     render();
   }
 };
+for (const button of document.querySelectorAll('[data-cover-pick]'))
+  button.onclick = () => {
+    coverName = button.dataset.coverPick;
+    state.cover = coverName;
+    $('playroomBoard').dataset.cover = coverName;
+    for (const b of document.querySelectorAll('[data-cover-pick]'))
+      b.setAttribute('aria-pressed', String(b === button));
+    render();
+  };
 syncSliders();
 render();
