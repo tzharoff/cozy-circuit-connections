@@ -148,7 +148,7 @@ function editMarkup(l) {
           : l.mask[i]
             ? '+'
             : '·';
-      return `<button class="editor-cell ${cls} ${l.shields[i] ? 'shielded' : ''}" data-cell="${i}" aria-label="Row ${(i / 8) | 0}, column ${i % 8}: ${l.walls[i] ? 'wall' : v ? (l.shields[i] ? 'shielded ' : '') + types[v - 1].name : l.mask[i] ? 'empty floor' : 'open lane'}">${content}${l.shields[i] ? '<span class="shield-mark" aria-hidden="true">⬡</span>' : ''}</button>`;
+      return `<button class="editor-cell ${cls} ${l.shields[i] ? 'shielded' : ''} ${l.shields[i] > 1 ? 'double' : ''}" data-cell="${i}" aria-label="Row ${(i / 8) | 0}, column ${i % 8}: ${l.walls[i] ? 'wall' : v ? (l.shields[i] > 1 ? 'double-shielded ' : l.shields[i] ? 'shielded ' : '') + types[v - 1].name : l.mask[i] ? 'empty floor' : 'open lane'}">${content}${l.shields[i] ? '<span class="shield-mark" aria-hidden="true">' + (l.shields[i] > 1 ? '2' : '⬡') + '</span>' : ''}</button>`;
     })
     .join('');
 }
@@ -223,7 +223,7 @@ function paintCell(i) {
     change(paint(draft.value, i, brush));
     message(
       brush.type === 'shield'
-        ? 'Shield toggled. Each shield currently takes one nearby match.'
+        ? 'Shield changed. Tap again to cycle: shield, double shield (two nearby matches), none.'
         : 'Cell painted. Odd component counts must be paired before testing.',
     );
   } catch (e) {

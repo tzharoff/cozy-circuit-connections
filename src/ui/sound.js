@@ -103,6 +103,19 @@ export function createSound(storage = globalThis.localStorage) {
       tone({ type: 'sine', from: 2637, at: t + 0.02, length: 0.22, peak: 0.08, attack: 0.002 });
       hiss({ from: 7000, at: t, length: 0.05, peak: 0.06, q: 2, attack: 0.002 });
     },
+    /** A double shield cracking (one layer left): a dull crunch and a low clink. */
+    crack(t) {
+      hiss({ from: 2600, to: 900, at: t, length: 0.12, peak: 0.16, q: 1, attack: 0.002 });
+      tone({
+        type: 'triangle',
+        from: 980,
+        to: 620,
+        at: t,
+        length: 0.12,
+        peak: 0.08,
+        attack: 0.002,
+      });
+    },
     /** Level clear: a rising bell arpeggio with a sparkle on top. */
     clear(t) {
       [523.25, 659.25, 783.99, 1046.5].forEach((f, i) => {

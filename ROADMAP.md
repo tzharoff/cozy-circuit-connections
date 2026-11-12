@@ -8,14 +8,14 @@ The detailed record is [docs/GAME_DESIGN.md](docs/GAME_DESIGN.md), including cur
 
 ## Current milestone
 
-The guided Level 0, 12-stage campaign, tutorial completion screen, and Stage Clear screen work. Existing matching, shields, walls, shape selection, hints, undo, wire animation, and pop effects are included.
+The guided Level 0, 14-stage campaign (stages 13 and 14 add double shields), tutorial completion screen, and Stage Clear screen work. Existing matching, shields, walls, shape selection, hints, undo, wire animation, and pop effects are included.
 
 Dead ends are possible, but uncommon and unevenly distributed across the current campaign. A dead end means chips remain with no legal pair. The implemented recovery dialog still offers undo and free restart, plus a persistent board notice. Saved dead ends are detected on reload. This is the prototype behavior, not the new lives/economy design.
 
 ## Held for later
 
 - Define attempts and gameplay-stat counting, then record events consistently.
-- Tune layouts, add double shields, and introduce other hazards one at a time.
+- Tune layouts and introduce other hazards one at a time (double shields are in).
 - Finalize lives and Shield Breaker rules. Planned stuck pop-up: Restart (one Charge), Shield Breaker (Chip Coins or earned item), Cancel. At zero Charges, Restart becomes Recharge, paid in Chip Coins. Remove undo when implementing that system.
 - Cosmetic packs and optional rewarded ads for hints/rewards; no interruptions during a board.
 - Daily rewards, a timed ladder every three days, weekly challenges/competitions, and new campaign levels every two weeks with Endless numbering reset to 1.

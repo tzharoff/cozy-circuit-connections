@@ -56,12 +56,12 @@ npm run format:check
 npm run format
 ```
 
-Checks cover the tutorial, 12 stage solutions, unlocks and save restoration, 300 wall layouts, wall-aware routing, undo, Charges and Recharge, and spark/pop timing. Engine tests import real modules. UI integration checks use fake browser surfaces; visual testing is still needed on real devices.
+Checks cover the tutorial, every stage solution (including double shields), unlocks and save restoration, 300 wall layouts, wall-aware routing, undo, Charges and Recharge, and spark/pop timing. Engine tests import real modules. UI integration checks use fake browser surfaces; visual testing is still needed on real devices.
 
 ## Included
 
 - Guided Level 0: matching, bends, shields, and walls.
-- 12 deterministic stages played in order: progress only moves forward, Toon Blast style.
+- 14 deterministic stages played in order (13 and 14 introduce double shields): progress only moves forward, Toon Blast style.
 - A home screen with the chip crew and a Play button for the next level; side columns are reserved for challenge icons.
 - Tutorial completion and Stage Clear screens.
 - A burnt "Short circuit!" failed card and persistent board notice when no pairs can connect, with undo/restart recovery.

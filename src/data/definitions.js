@@ -183,7 +183,25 @@ export const levels = [
     pairs: 14,
     shields: 6,
     walls: 4,
-    tip: 'One final full board. Bring the whole machine back online.',
+    tip: 'A full board. Bring the whole machine back online.',
+  },
+  {
+    name: 'Tough shell',
+    shape: 'classic',
+    pairs: 10,
+    shields: 4,
+    doubleShields: 2,
+    walls: 0,
+    tip: 'Double shields take two nearby matches: the first cracks them, the second breaks them.',
+  },
+  {
+    name: 'Double trouble',
+    shape: 'bridge',
+    pairs: 14,
+    shields: 6,
+    doubleShields: 3,
+    walls: 2,
+    tip: 'Crack the double shields early so their chips are free when you need them.',
   },
 ].map((spec, index) => {
   const authored = authoredLevels[index + 1];

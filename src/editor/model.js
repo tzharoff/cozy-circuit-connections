@@ -42,7 +42,8 @@ export function paint(level, index, brush) {
     next.board[index] = brush.value;
   } else if (brush.type === 'shield') {
     if (!next.board[index]) throw Error('Paint a chip before adding its shield.');
-    next.shields[index] = next.shields[index] ? 0 : 1;
+    // The shield brush cycles: none, shield, double shield, none.
+    next.shields[index] = ((next.shields[index] || 0) + 1) % 3;
   } else if (brush.type === 'wall') {
     if (!inside) throw Error('Walls must be inside the 6×6 board. Outside cells are not playable.');
     next.board[index] = 0;

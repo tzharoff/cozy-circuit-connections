@@ -1,5 +1,5 @@
-import { make } from '../game/generate.js';
-import { route, findPair, breakShields } from '../game/rules.js';
+import { make, shieldsFor } from '../game/generate.js';
+import { route, findPair, breakShields, shieldLayers } from '../game/rules.js';
 import { createEffects } from '../ui/effects.js';
 import { boardMarkup } from '../ui/view.js';
 import { createSound } from '../ui/sound.js';
@@ -31,7 +31,15 @@ const sliders = {
   ],
   zapSliders: [['zapLap', 'Spark lap']],
 };
-let state = make(Math.floor(Math.random() * 2147483647), 'classic'),
+/** A random board with up to six shields, three of them double, to try both kinds. */
+function testBoard() {
+  const seed = Math.floor(Math.random() * 2147483647),
+    s = make(seed, 'classic');
+  s.shields = shieldsFor(s.board, seed, s.walls, 6, 3);
+  s.initialShields = s.shields.slice();
+  return s;
+}
+let state = testBoard(),
   selected = null,
   lit = [],
   busy = false,
@@ -46,6 +54,7 @@ const soundLabels = {
   zap: 'Zap line',
   pop: 'Pop',
   shield: 'Shield break',
+  crack: 'Shield crack',
   clear: 'Level clear',
   shortCircuit: 'Short circuit',
   land: 'Card land',
@@ -64,7 +73,7 @@ function render() {
 function freshBoard() {
   if (busy) return;
   effects.clearWire();
-  state = make(Math.floor(Math.random() * 2147483647), 'classic');
+  state = testBoard();
   selected = null;
   render();
 }
@@ -83,7 +92,10 @@ function connect(a, z, path) {
     setTimeout(() => {
       sound.play('pop', { type: state.board[a] - 1 });
       effects.popPair(a, z, () => {
-        breakShields(state.shields, a, z);
+        const before = shieldLayers(state.shields),
+          freed = breakShields(state.shields, a, z);
+        if (freed) sound.play('shield');
+        else if (before > shieldLayers(state.shields)) sound.play('crack');
         state.board[a] = state.board[z] = 0;
         lit = [];
         busy = false;

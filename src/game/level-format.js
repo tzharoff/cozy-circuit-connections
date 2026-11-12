@@ -17,10 +17,8 @@ export function parseLevel(value) {
     throw Error('The tip must be at most 500 characters.');
   if (!arrayOf(value.board, (v) => Number.isInteger(v) && v >= 0 && v <= types.length))
     throw Error('board must contain 64 component IDs (0–6).');
-  if (!arrayOf(value.shields, (v) => v === 0 || v === 1))
-    throw Error(
-      'shields must contain 64 values of 0 or 1. Double shields are not implemented yet.',
-    );
+  if (!arrayOf(value.shields, (v) => v === 0 || v === 1 || v === 2))
+    throw Error('shields must contain 64 values: 0 (none), 1 (shield), or 2 (double shield).');
   if (!arrayOf(value.walls, (v) => v === 0 || v === 1))
     throw Error('walls must contain 64 values of 0 or 1.');
   if (!arrayOf(value.mask, (v) => typeof v === 'boolean'))

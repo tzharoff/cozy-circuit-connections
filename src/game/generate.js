@@ -3,7 +3,9 @@ import { rng, route, findPair, neighbors, breakShields, solvable, insideBoard } 
 import { authoredLevels } from '../data/authored-levels.js';
 import { levelState } from './level-format.js';
 /** Deterministic factories for endless boards, stages, and tutorial lessons. */
-export function shieldsFor(board, seed, walls = [], limit = 6) {
+/** Picks up to `limit` shielded chips, then upgrades up to `doubles` of them to double shields,
+ * keeping every choice solvable. */
+export function shieldsFor(board, seed, walls = [], limit = 6, doubles = 0) {
   if (!limit) return Array(64).fill(0);
   let b = board.slice(),
     order = Array(64).fill(Infinity),
@@ -27,6 +29,14 @@ export function shieldsFor(board, seed, walls = [], limit = 6) {
     s[i] = 1;
     if (!solvable(board, s, walls)) s[i] = 0;
     if (s.filter(Boolean).length >= limit) break;
+  }
+  let upgraded = 0;
+  for (const i of candidates) {
+    if (upgraded >= doubles) break;
+    if (!s[i]) continue;
+    s[i] = 2;
+    if (solvable(board, s, walls)) upgraded++;
+    else s[i] = 1;
   }
   return s;
 }
@@ -151,7 +161,7 @@ export function makeStage(n) {
   }
   s.initial = s.board.slice();
   s.walls = wallsFor(s.board, seed, [], spec.walls);
-  s.shields = shieldsFor(s.board, seed, s.walls, spec.shields);
+  s.shields = shieldsFor(s.board, seed, s.walls, spec.shields, spec.doubleShields || 0);
   s.initialShields = s.shields.slice();
   s.stage = n;
   return s;

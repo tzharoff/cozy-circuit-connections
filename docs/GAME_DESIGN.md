@@ -116,7 +116,7 @@ A speaker button on home and in the menu turns sound on or off (remembered on th
 
 - Keep the two-click pair-matching game, wire effects, and chip pop effects.
 - Use shields, walls, board layouts, and future level modifiers to create challenge. Add mechanics one at a time.
-- Add double shields as progression increases. The proposed visual treatment is cracked armor and a remaining-hit badge.
+- Add double shields as progression increases. Implemented November 11, 2026: a shield's value is its layer count (2 = double). Each match beside it removes one layer (once per match, even if it touches both matched chips). A double shield is deeper gold with a thick rim and a "2" badge; after the first hit it cracks (a normal shield with crack lines, a crunch sound, and "Double shield cracked!"), and the second hit breaks it. Introduced in Level 13 "Tough shell" (2 of 4 shields double) and Level 14 "Double trouble" (3 of 6, on the Bridge shape with 2 walls). Stage specs take `doubleShields`; the Level Workshop's shield brush cycles none → shield → double.
 - No general move limit. Successful moves remove pairs, so a move budget would not provide a meaningful challenge.
 - A dead end means chips remain and there is no legal, unshielded matching pair with a valid route.
 - Remove undo from normal gameplay. This replaces the earlier unlimited-undo plan.

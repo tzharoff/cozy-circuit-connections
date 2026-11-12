@@ -30,13 +30,15 @@ function boot(saved = {}) {
 }
 const t = boot(),
   { run, els, saved } = t;
+// The campaign's length (12 original stages plus the double-shield stages).
+const LAST = run('levels.length');
 run('startStage(1)');
 assert.equal(run('state.stage'), 1);
 assert.equal(run('state.board.filter(Boolean).length/2'), 4);
 assert(els.shapePicker.hidden);
 assert(!run('unlocked(2)'));
 run(
-  `for(let n=1;n<=12;n++){let s=makeStage(n),l=levels[n-1];if(s.board.filter(Boolean).length!==l.pairs*2)throw Error('pair count '+n);if(s.walls.filter(Boolean).length!==l.walls)throw Error('wall count '+n);if(s.shields.filter(Boolean).length!==l.shields)throw Error('shield count '+n);if(!solvable(s.board,s.shields,s.walls))throw Error('unsolvable stage '+n)}`,
+  `for(let n=1;n<=levels.length;n++){let s=makeStage(n),l=levels[n-1];if(s.board.filter(Boolean).length!==l.pairs*2)throw Error('pair count '+n);if(s.walls.filter(Boolean).length!==l.walls)throw Error('wall count '+n);if(s.shields.filter(Boolean).length!==l.shields)throw Error('shield count '+n);if(!solvable(s.board,s.shields,s.walls))throw Error('unsolvable stage '+n)}`,
 );
 run('startStage(3)');
 assert.equal(run('state.stage'), 1);
@@ -60,21 +62,21 @@ assert.equal(els.homeLevel.textContent, 2);
 els.homePlay.onclick();
 assert.equal(run('state.stage'), 2);
 assert(!els.stageWin.open);
-for (let n = 2; n <= 12; n++) {
+for (let n = 2; n <= LAST; n++) {
   assert.equal(run('state.stage'), n);
   clear();
-  if (n < 12) {
+  if (n < LAST) {
     els.winNext.onclick();
     els.homePlay.onclick();
   }
 }
-assert.equal(run('completed.length'), 12);
-assert.equal(els.winTitle.textContent, 'Level 12');
+assert.equal(run('completed.length'), LAST);
+assert.equal(els.winTitle.textContent, 'Level ' + LAST);
 assert.equal(els.winSubtitle.textContent, 'Power restored!');
 assert.equal(els.winNext.textContent, 'Continue');
 const restored = boot(saved);
-assert.equal(restored.run('completed.length'), 12);
-assert.equal(restored.run('state.stage'), 12);
+assert.equal(restored.run('completed.length'), LAST);
+assert.equal(restored.run('state.stage'), LAST);
 assert(!restored.els.home.hidden);
 assert(!restored.els.stageWin.open);
 els.winNext.onclick();
@@ -110,7 +112,7 @@ assert.equal(run('state.score'), 0);
 clear();
 els.winNext.onclick();
 assert(!els.stageWin.open);
-assert.equal(run('completed.length'), 12);
+assert.equal(run('completed.length'), LAST);
 assert.equal(els.homeKind.textContent, 'Endless');
 els.homePlay.onclick();
 assert(!run('state.stage'));
@@ -170,5 +172,5 @@ timers.find((t) => t.ms === animated.run('animTiming.popChip')).f();
 assert(animated.els.stageWin.open);
 assert(animated.run('!busy&&state.board.every(v=>!v)'));
 console.log(
-  'PASS: 12 stage solutions, unlocks, win/home/finale, reload, endless saves, undo/restart, migration, win screen after spark and pop',
+  'PASS: all stage solutions (including double shields), unlocks, win/home/finale, reload, endless saves, undo/restart, migration, win screen after spark and pop',
 );

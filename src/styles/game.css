@@ -3119,3 +3119,53 @@ dialog:focus {
   stroke: #6fe39a;
   stroke-width: 6;
 }
+/* Double shields: heavier armor in a deeper gold with a "2" badge. After the first hit they
+   drop to a normal shield with crack lines until the second hit breaks them. */
+.chip.shielded.double {
+  background: repeating-linear-gradient(135deg, #f0cf7c 0 7px, #d9b25c 7px 14px);
+  border: 3px solid #a8741f;
+  box-shadow:
+    0 4px 0 #142e25,
+    inset 0 0 0 3px #fff3c4,
+    inset 0 0 0 5px #b8862c;
+}
+.chip.shielded.double .component-art {
+  opacity: 0.62;
+  filter: saturate(0.5);
+}
+.chip.shielded.double .shield-mark {
+  background: #f5b93a;
+  border-color: #7a5106;
+  color: #4a2f00;
+  font: 700 13px var(--ui, sans-serif);
+}
+.shield-crack {
+  position: absolute;
+  inset: 8%;
+  width: 84%;
+  height: 84%;
+  pointer-events: none;
+  overflow: visible;
+}
+.shield-crack path {
+  fill: none;
+  stroke: #6b4a14;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.75;
+}
+.chip.cracked .shield-crack {
+  animation: crack-in 0.35s ease-out both;
+}
+@keyframes crack-in {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .chip.cracked .shield-crack {
+    animation: none;
+  }
+}

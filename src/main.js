@@ -1,5 +1,5 @@
 import { types, shapes, lessons, levels } from './data/definitions.js';
-import { route, findPair, breakShields, boardStatus } from './game/rules.js';
+import { route, findPair, breakShields, boardStatus, shieldLayers } from './game/rules.js';
 import { make, makeStage, makeTutorial } from './game/generate.js';
 import { clone, valid } from './game/state.js';
 import { createStorage } from './platform/storage.js';
@@ -522,8 +522,11 @@ function choose(i) {
           shields: state.shields.slice(),
           score: state.score,
         });
-        const freed = breakShields(state.shields, first, i);
+        const layersBefore = shieldLayers(state.shields),
+          freed = breakShields(state.shields, first, i),
+          cracked = layersBefore - shieldLayers(state.shields) - freed;
         if (freed) sound.play('shield');
+        else if (cracked) sound.play('crack');
         state.board[first] = state.board[i] = 0;
         state.score++;
         selected = null;
@@ -533,7 +536,9 @@ function choose(i) {
         say(
           freed
             ? 'Connection made. ' + freed + ' shield' + (freed === 1 ? '' : 's') + ' broken!'
-            : 'Connection made. One less pair in the machine.',
+            : cracked
+              ? 'Connection made. Double shield cracked!'
+              : 'Connection made. One less pair in the machine.',
         );
         render();
       });

@@ -72,14 +72,21 @@ export function boardStatus(board, shields = [], walls = []) {
   if (!board.some(Boolean)) return 'cleared';
   return findPair(board, shields, walls) ? 'playing' : 'stuck';
 }
+/** A shield value is its number of layers: 1 is a shield, 2 a double shield. A match removes
+ * one layer from each shielded chip directly beside either matched chip (once per match, even
+ * if it touches both). Returns how many chips were fully freed. */
 export function breakShields(shields, a, z) {
   let freed = 0;
   for (let i = 0; i < 64; i++)
     if (shields[i] && (neighbors(i, a) || neighbors(i, z))) {
-      shields[i] = 0;
-      freed++;
+      shields[i]--;
+      if (!shields[i]) freed++;
     }
   return freed;
+}
+/** Total shield layers left on the board. */
+export function shieldLayers(shields) {
+  return shields.reduce((sum, v) => sum + (v || 0), 0);
 }
 export function solvable(board, shields = [], walls = []) {
   let b = board.slice(),
