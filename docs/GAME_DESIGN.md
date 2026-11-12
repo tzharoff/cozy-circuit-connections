@@ -192,6 +192,12 @@ Decided and started November 12, 2026. Shields are the first **cover**: the rule
 
 Campaign levels 17 "Ice box", 18 "Gift wrapped", and 19 "Egg hunt" show the three themed covers. When a cover breaks, bits burst out in the theme's color and the freed Chip’um hops. The play room's Covers panel switches the test board between themes.
 
+**Art pass needed (noted November 12, 2026):** the ice, gift, and egg skins are placeholders drawn with CSS gradients: representative, not final. Before seasons ship, each needs:
+
+- **Illustrated cover art:** faceted ice cubes, crinkled paper with a real bow, speckled eggs with a jagged crack line.
+- **Drawn break animations:** the shell splitting in two, paper peeling back, ice shattering into shards, instead of only the shared burst.
+- **Seasonal color swaps** so the whole screen feels like the season, not just the covers: board tray and socket colors, the screen background and glow, the home scene, card headers, and the HUD pills. Bedtime's night-blue board is the first example. Each season should define one palette that all of these read from.
+
 ### The 26 slots
 
 | Slot | Weeks | When      | Season           | Theme notes                                        | Featured mechanic         |
