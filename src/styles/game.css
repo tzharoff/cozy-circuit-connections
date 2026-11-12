@@ -2917,3 +2917,8 @@ button[hidden] {
   height: 100%;
   object-fit: contain;
 }
+/* Cards and sheets take focus themselves when they open (the autofocus attribute), so no
+   button inside starts out highlighted; keyboard users still tab straight to the buttons. */
+dialog:focus {
+  outline: none;
+}

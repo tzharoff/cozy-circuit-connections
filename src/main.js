@@ -23,6 +23,12 @@ import { boardMarkup } from './ui/view.js';
 
 const $ = (id) => document.getElementById(id);
 const sound = createSound();
+/** Opens a card or sheet with focus on the card itself, so no button inside starts out
+ * highlighted (browsers otherwise focus the first button, often the ✕). */
+function showCard(card) {
+  card.showModal();
+  card.focus?.({ preventScroll: true });
+}
 function tutorialGuide() {
   const l = lessons[state.tutorialStep],
     empty = state.board.every((v) => !v);
@@ -119,7 +125,7 @@ function openCharges() {
   card.classList?.remove('arrive');
   void card.offsetWidth;
   card.classList?.add('arrive');
-  card.showModal();
+  showCard(card);
 }
 function closeCharges() {
   closeCard($('chargesDialog'));
@@ -188,7 +194,7 @@ function ask(title, text, action, then) {
   $('confirmOk').textContent = action;
   confirmed = then;
   land($('confirmDialog'));
-  if (!$('confirmDialog').open) $('confirmDialog').showModal();
+  if (!$('confirmDialog').open) showCard($('confirmDialog'));
 }
 /** Opens the clear card and replays its drop-in entrance and edge spark. */
 function openClearCard() {
@@ -199,7 +205,7 @@ function openClearCard() {
   card.classList?.remove('arrive');
   void card.offsetWidth;
   card.classList?.add('arrive');
-  card.showModal();
+  showCard(card);
 }
 /** Closes a card at once, unless it is already flying off. */
 function closeCard(card) {
@@ -391,7 +397,7 @@ function showStuck(force = false) {
   card.classList?.remove('clunk');
   void card.offsetWidth;
   card.classList?.add('clunk');
-  card.showModal();
+  showCard(card);
   sound.play('shortCircuit');
   sputter.start(800);
 }
@@ -633,10 +639,10 @@ $('hint').onclick = () => {
 };
 $('help').onclick = () => {
   closeMenu();
-  $('manual').showModal();
+  showCard($('manual'));
 };
 $('menuButton').onclick = () => {
-  if (!busy && !$('menu').open) $('menu').showModal();
+  if (!busy && !$('menu').open) showCard($('menu'));
 };
 $('menuClose').onclick = closeMenu;
 $('goalIcon').innerHTML = $('winPairsIcon').innerHTML = componentIcon(2);
@@ -691,7 +697,7 @@ document.addEventListener?.('click', (e) => {
   const button = e.target.closest?.('button');
   if (button && !button.matches('[data-chip], .sound-button')) sound.play('tap');
 });
-$('homeHelp').onclick = () => $('manual').showModal();
+$('homeHelp').onclick = () => showCard($('manual'));
 $('homeCrew').innerHTML = [0, 4, 2, 1, 5]
   .map((i) => '<span class="crew">' + componentIcon(i) + '</span>')
   .join('');

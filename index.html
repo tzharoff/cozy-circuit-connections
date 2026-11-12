@@ -119,7 +119,7 @@
         </button>
       </nav>
     </main>
-    <dialog id="menu" class="sheet" aria-labelledby="stageTitle">
+    <dialog tabindex="-1" id="menu" class="sheet" aria-labelledby="stageTitle">
       <button id="menuClose" class="dialog-x" aria-label="Close menu">×</button>
       <span id="modeLabel" class="eyebrow"></span>
       <h2 id="stageTitle"></h2>
@@ -156,6 +156,7 @@
       <button id="help" class="help">How to play</button>
     </dialog>
     <dialog
+      tabindex="-1"
       id="stuckDialog"
       class="win-dialog level-card stuck-dialog"
       aria-labelledby="stuckTitle"
@@ -219,7 +220,7 @@
         </button>
       </div>
     </dialog>
-    <dialog id="manual">
+    <dialog tabindex="-1" id="manual">
       <div class="eyebrow">QUICK START // 30 SECONDS</div>
       <h2>Two Chip’ums. One clear path.</h2>
       <p>
@@ -250,7 +251,7 @@
       <div class="components" id="components"></div>
       <button id="close">Power on ⏻</button>
     </dialog>
-    <dialog id="stageWin" class="win-dialog level-card" aria-labelledby="winTitle">
+    <dialog tabindex="-1" id="stageWin" class="win-dialog level-card" aria-labelledby="winTitle">
       <svg class="edge-spark" aria-hidden="true">
         <rect class="edge-tail" width="100%" height="100%" rx="32.5" pathLength="100" />
         <rect class="edge-head" width="100%" height="100%" rx="32.5" pathLength="100" />
@@ -326,7 +327,12 @@
       </div>
       <button id="winNext" class="primary">Continue</button>
     </dialog>
-    <dialog id="chargesDialog" class="level-card charges-card" aria-labelledby="chargesTitle">
+    <dialog
+      tabindex="-1"
+      id="chargesDialog"
+      class="level-card charges-card"
+      aria-labelledby="chargesTitle"
+    >
       <header class="card-head">
         <h2 id="chargesTitle">Charges</h2>
         <button id="chargesClose" class="card-close" aria-label="Close">×</button>
@@ -345,7 +351,12 @@
         >
       </button>
     </dialog>
-    <dialog id="confirmDialog" class="level-card confirm-card" aria-labelledby="confirmTitle">
+    <dialog
+      tabindex="-1"
+      id="confirmDialog"
+      class="level-card confirm-card"
+      aria-labelledby="confirmTitle"
+    >
       <header class="card-head"><h2 id="confirmTitle"></h2></header>
       <div class="card-body"><p id="confirmText"></p></div>
       <div class="confirm-buttons">
