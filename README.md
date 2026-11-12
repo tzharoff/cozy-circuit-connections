@@ -88,10 +88,13 @@ This is a playable prototype. Native saves, phone polish (safe areas, icons, spl
 
 ## Version and build numbers
 
-`version.json` is the source of truth for the release version and build number.
+`version.json` is the source of truth for the release version and build number, and iOS,
+Android, and `version.json` always share the same build number (a test checks this).
 Run `npm run revision` before preparing each new device/TestFlight/App Store build;
 it increments the build number and synchronizes iOS (Debug and Release), Android,
-and package metadata. Build numbers continue increasing across release versions.
-To change the release version, edit `version.json` and run `npm run version:sync`.
-Then run `npm run cap:sync` and build in Xcode. Current baseline: 0.1.0 (2).
+and package metadata. It starts from the highest build number it finds, so a build
+bumped by hand in Xcode or Android Studio is never moved backwards. Build numbers
+continue increasing across release versions. To change the release version, edit
+`version.json` and run `npm run version:sync`. Then run `npm run cap:sync` and build in
+Xcode.
 The product title remains a working name; revision numbering does not rename the app.
