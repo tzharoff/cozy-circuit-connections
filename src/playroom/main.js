@@ -3,7 +3,8 @@ import { route, findPair, breakShields, shieldLayers } from '../game/rules.js';
 import { createEffects } from '../ui/effects.js';
 import { boardMarkup } from '../ui/view.js';
 import { createSound } from '../ui/sound.js';
-import { createIdle, playIdle } from '../ui/idle.js';
+import { createIdle, playIdle, IDLE_MS } from '../ui/idle.js';
+import { noSleep, dozeCandidates, lightsOut, wakeNeighbors } from '../game/bedtime.js';
 import {
   animTiming,
   timingDefaults,
@@ -32,6 +33,7 @@ const sliders = {
   ],
   zapSliders: [['zapLap', 'Spark lap']],
   idleSliders: [['idleGap', 'Time between']],
+  bedSliders: [['dozeMs', 'Doze every']],
 };
 /** A random board with up to six shields, three of them double, to try both kinds. */
 function testBoard() {
@@ -39,6 +41,7 @@ function testBoard() {
     s = make(seed, 'classic');
   s.shields = shieldsFor(s.board, seed, s.walls, 6, 3);
   s.initialShields = s.shields.slice();
+  s.asleep = noSleep();
   return s;
 }
 let state = testBoard(),
@@ -57,6 +60,9 @@ const soundLabels = {
   pop: 'Pop',
   shield: 'Shield break',
   crack: 'Shield crack',
+  doze: 'Doze off',
+  wake: 'Wake up',
+  lightsOut: 'Lights out',
   clear: 'Level clear',
   shortCircuit: 'Short circuit',
   land: 'Card land',
@@ -99,6 +105,8 @@ function connect(a, z, path) {
         if (freed) sound.play('shield');
         else if (before > shieldLayers(state.shields)) sound.play('crack');
         state.board[a] = state.board[z] = 0;
+        state.asleep[a] = state.asleep[z] = 0;
+        if (wakeNeighbors(state.asleep, a, z)) sound.play('wake');
         lit = [];
         busy = false;
         render();
@@ -124,6 +132,15 @@ $('board').onclick = (e) => {
   if (!chip || busy) return;
   const i = Number(chip.dataset.chip);
   if (state.shields[i]) return;
+  // Bedtime rule: a sleeper can only be the first tap; tapping it wakes and selects it.
+  if (state.asleep[i]) {
+    state.asleep[i] = 0;
+    sound.play('wake');
+    selected = i;
+    render();
+    playIdle(document.querySelector('[data-chip="' + i + '"]'), 'bounce');
+    return;
+  }
   if (selected === null || selected === i) {
     sound.play(selected === i ? 'deselect' : 'select');
     selected = selected === i ? null : i;
@@ -217,6 +234,36 @@ $('idleBoard').onclick = (e) => {
   if (action)
     for (const chip of document.querySelectorAll('#board .chip:not(.selected):not(.popping)'))
       playIdle(chip, action);
+};
+/** Bedtime board: with the box ticked, Chip’ums doze off at the Doze every pace. */
+function playroomDoze() {
+  setTimeout(playroomDoze, animTiming.dozeMs * (0.75 + Math.random() * 0.5));
+  if (!$('bedtime').checked || busy || lightsOut(state)) return;
+  const pool = dozeCandidates(
+    state,
+    [selected, ...lit].filter((v) => v !== null),
+  );
+  if (!pool.length) return;
+  const i = pool[Math.floor(Math.random() * pool.length)];
+  playIdle(document.querySelector('[data-chip="' + i + '"]'), 'yawn');
+  setTimeout(() => {
+    if (busy || !state.board[i] || selected === i || lit.includes(i)) return;
+    state.asleep[i] = 1;
+    sound.play('doze');
+    render();
+    if (lightsOut(state)) {
+      sound.play('lightsOut');
+      $('roomStatus').textContent = 'Lights out! Everyone fell asleep. Press New board.';
+    }
+  }, IDLE_MS.yawn * 0.8);
+}
+playroomDoze();
+$('bedtime').onchange = () => {
+  $('playroomBoard').classList.toggle('bedtime', $('bedtime').checked);
+  if (!$('bedtime').checked) {
+    state.asleep = noSleep();
+    render();
+  }
 };
 syncSliders();
 render();

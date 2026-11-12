@@ -14,7 +14,7 @@
       <a href="./index.html">← Game</a>
       <h1>Play room</h1>
     </div>
-    <main class="room">
+    <main id="playroomBoard" class="room">
       <section class="pcb" aria-label="Test board">
         <div class="board-wrap">
           <div id="board" class="board"></div>
@@ -51,6 +51,11 @@
           ><button id="zapSubtle" aria-pressed="false">Subtle ring</button>
         </div>
         <div id="zapSliders"></div>
+      </section>
+      <section class="room-panel" aria-labelledby="bedTitle">
+        <h2 id="bedTitle">Bedtime</h2>
+        <label class="room-loop"><input id="bedtime" type="checkbox" /> Bedtime board</label>
+        <div id="bedSliders"></div>
       </section>
       <section class="room-panel" aria-labelledby="idleTitle">
         <h2 id="idleTitle">Idle</h2>

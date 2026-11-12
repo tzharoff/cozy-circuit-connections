@@ -2,6 +2,7 @@ import { types, shapes, lessons, levels } from './data/definitions.js';
 import { route, findPair, breakShields, boardStatus, shieldLayers } from './game/rules.js';
 import { make, makeStage, makeTutorial } from './game/generate.js';
 import { clone, valid } from './game/state.js';
+import { isBedtime, noSleep, dozeCandidates, lightsOut, wakeNeighbors } from './game/bedtime.js';
 import { createStorage } from './platform/storage.js';
 import {
   HINT_PRICE,
@@ -17,7 +18,7 @@ import { componentIcon } from './ui/components.js';
 import { batteryIcon, chipCoinIcon } from './ui/currency.js';
 import { createSputter } from './ui/sputter.js';
 import { createSound } from './ui/sound.js';
-import { createIdle } from './ui/idle.js';
+import { createIdle, playIdle, IDLE_MS } from './ui/idle.js';
 import { animTiming, wireTravelMs } from './ui/timing.js';
 import { createEffects } from './ui/effects.js';
 import { boardMarkup } from './ui/view.js';
@@ -350,6 +351,8 @@ function showHome() {
   const [kind, badge] = homeTarget();
   $('homeKind').textContent = kind;
   $('homeLevel').textContent = badge;
+  // A moon on Play marks a Bedtime level coming up.
+  $('homeMoon').hidden = !(kind === 'Level' && levels[badge - 1]?.bedtime);
   updateCharges();
   $('game').hidden = true;
   $('home').hidden = false;
@@ -383,7 +386,8 @@ function leaveStuck() {
 /** The failed card: a broken twin of the clear card that clunks in with a fried Chip’um. */
 function showStuck(force = false) {
   if (busy) return;
-  const key = JSON.stringify([state.board, state.shields, state.walls]);
+  const out = isBedtime(state) && lightsOut(state);
+  const key = JSON.stringify([state.board, state.shields, state.walls, out]);
   $('stuckUndo').disabled = !state.history.length;
   if (!force && stuckKey === key) return;
   updateCharges();
@@ -396,21 +400,33 @@ function showStuck(force = false) {
     : state.stage
       ? 'Level ' + state.stage
       : 'Endless';
-  // The frazzled Chip’um is one of the types still stuck on the board.
-  $('stuckChipum').innerHTML = componentIcon((state.board.find(Boolean) || 1) - 1, 'fried');
+  // The frazzled Chip’um is one of the types still stuck on the board. On a Bedtime level that
+  // ends with everyone asleep, the card is its sleepy twin: Lights out.
+  const type = (state.board.find(Boolean) || 1) - 1;
+  $('stuckChipum').innerHTML = out
+    ? componentIcon(type, 'sleepy') + '<span class="chip-zz" aria-hidden="true">z</span>'
+    : componentIcon(type, 'fried');
+  $('stuckHeadline').textContent = out ? 'Lights out!' : 'Short circuit!';
+  $('stuckText').textContent = out ? 'Everyone fell asleep.' : 'No pairs can connect.';
+  $('stuckUndo').hidden = out;
+  card.classList?.toggle('lights-out', out);
   card.classList?.remove('clunk');
   void card.offsetWidth;
   card.classList?.add('clunk');
   showCard(card);
-  sound.play('shortCircuit');
-  sputter.start(800);
+  sound.play(out ? 'lightsOut' : 'shortCircuit');
+  if (!out) sputter.start(800);
 }
 function save() {
   storage.saveGame({ state, wins, completed, tutorialDone });
 }
 const { clearWire, draw, popPair } = createEffects({ getElement: $, getState: () => state });
 function render() {
-  const stuck = !busy && boardStatus(state.board, state.shields, state.walls) === 'stuck';
+  const out = !busy && isBedtime(state) && lightsOut(state);
+  const stuck = !busy && (out || boardStatus(state.board, state.shields, state.walls) === 'stuck');
+  // Bedtime levels get a night-blue board and a moon on the level pill.
+  $('game').classList?.toggle('bedtime', isBedtime(state));
+  $('levelMoon').hidden = !isBedtime(state);
   if (stuck) {
     selected = null;
     hints = [];
@@ -459,8 +475,13 @@ function render() {
   $('wins').textContent = wins;
   save();
   $('stuckNotice').hidden = !stuck;
+  $('stuckNoticeText').textContent = out ? 'Lights out.' : 'No moves left.';
   if (stuck) {
-    say('No moves left. Undo a pair or restart this board.');
+    say(
+      out
+        ? 'Everyone fell asleep. Restart to try again.'
+        : 'No moves left. Undo a pair or restart this board.',
+    );
     if (screen === 'play') showStuck();
   } else {
     stuckKey = '';
@@ -478,6 +499,18 @@ function choose(i) {
   }
   if (state.shields[i]) {
     say('Shielded. Clear a pair right beside it (not diagonal) to free it.');
+    return;
+  }
+  // A sleeping Chip’um can only be the first tap: tapping it wakes it and selects it (even as a
+  // second tap, where the old selection simply stays awake).
+  if (state.asleep?.[i]) {
+    state.asleep[i] = 0;
+    sound.play('wake');
+    selected = i;
+    hints = [];
+    say('Awake! Now tap its partner.');
+    render();
+    playIdle(document.querySelector?.('[data-chip="' + i + '"]'), 'bounce');
     return;
   }
   if (selected === null) {
@@ -528,6 +561,10 @@ function choose(i) {
           cracked = layersBefore - shieldLayers(state.shields) - freed;
         if (freed) sound.play('shield');
         else if (cracked) sound.play('crack');
+        if (state.asleep) {
+          state.asleep[first] = state.asleep[i] = 0;
+          if (wakeNeighbors(state.asleep, first, i)) sound.play('wake');
+        }
         state.board[first] = state.board[i] = 0;
         state.score++;
         selected = null;
@@ -615,6 +652,7 @@ function restartBoard() {
   state.shields = state.initialShields.slice();
   state.history = [];
   state.score = 0;
+  if (state.asleep) state.asleep = noSleep();
   selected = null;
   hints = [];
   clearWire();
@@ -815,11 +853,38 @@ $('chargesRecharge').onclick = recharge;
 $('homeCoinIcon').innerHTML = $('rechargeCoin').innerHTML = chipCoinIcon(true);
 $('rechargePrice').textContent = RECHARGE_PRICE;
 $('chargesBastion').innerHTML = componentIcon(1, 'sleepy') + '<span class="zzz">z</span>';
+/** Bedtime: every so often one awake Chip’um yawns as a warning, then falls asleep. The clock
+ * pauses while a wire runs, a card or menu is open, the app is hidden, or off the board. */
+function scheduleDoze() {
+  const scale = state?.bedtime?.dozeScale || 1;
+  setTimeout(doze, animTiming.dozeMs * scale * (0.75 + Math.random() * 0.5));
+}
+function doze() {
+  scheduleDoze();
+  if (!isBedtime(state) || busy || screen !== 'play' || document.hidden) return;
+  if (document.querySelector?.('dialog[open]') || !state.board.some(Boolean)) return;
+  if (lightsOut(state)) return;
+  const pool = dozeCandidates(
+    state,
+    [selected, ...lit, ...hints].filter((v) => v !== null),
+  );
+  if (!pool.length) return;
+  const i = pool[Math.floor(Math.random() * pool.length)];
+  playIdle(document.querySelector?.('[data-chip="' + i + '"]'), 'yawn');
+  setTimeout(() => {
+    if (!isBedtime(state) || busy || !state.board[i] || state.asleep[i]) return;
+    if (selected === i || lit.includes(i) || state.shields[i]) return;
+    state.asleep[i] = 1;
+    sound.play('doze');
+    render();
+  }, IDLE_MS.yawn * 0.8);
+}
+scheduleDoze();
 // Idle life: calm, visible Chip’ums on the board and the home crew blink, yawn, bounce, wiggle.
 createIdle(() =>
   [
     ...(document.querySelectorAll?.(
-      '#board .chip:not(.selected):not(.popping):not(.shielded), #homeCrew .crew',
+      '#board .chip:not(.selected):not(.popping):not(.shielded):not(.asleep), #homeCrew .crew',
     ) || []),
   ].filter((el) => el.offsetParent !== null),
 ).start();

@@ -113,6 +113,31 @@ Added November 11, 2026. Every sound is synthesized in code with Web Audio (`src
 
 A speaker button on home and in the menu turns sound on or off (remembered on the device). The play room has a Sounds board to audition each one, and its Zap button plays the zap and pop sounds with the animations.
 
+## Special level types
+
+Decided November 11, 2026. Special levels add a twist on top of the normal rules. Each is marked with its own icon on the **Play** button and the level pill, and is used now and then through the campaign, like double shields. Normal levels stay cozy: no clock, no move limit. Add one type at a time.
+
+### Bedtime levels (moon icon)
+
+- **Look:** a moon icon on the Play button and the level pill, and the board turns night blue (an indigo tray with dim blue sockets and a few twinkling stars) so a Bedtime level reads at a glance.
+- **Dozing:** every so often (the doze interval, tunable per level and in the play room) one awake Chip’um yawns as a warning, then falls asleep: closed eyes, a floating "z", slightly dimmed. The selected chip, the chips in a wire, and shielded chips never doze. Dozing pauses while a wire runs, while a card or menu is open, and while the app is in the background.
+- **First tap only:** a sleeping Chip’um can only be the _first_ tap of a pair. Tapping it wakes it (a startled hop) and selects it. Tapping a sleeper as the second tap does the same: it wakes and becomes the new selection, and the old one stays awake; it never errors.
+- **Startled awake:** a match right next to a sleeper wakes it.
+- **Lights out:** when every unshielded Chip’um left is asleep, the level is lost. The failed card's sleepy twin says **Lights out!** / "Everyone fell asleep." with a sleeping Chip’um; **Restart** costs a Charge as usual.
+- Sleep never changes routes, so boards stay checkably solvable; the pressure comes only from the doze clock.
+- First levels: Level 15 "Bedtime" (8 pairs, slower dozing) and Level 16 "Night shift" (Ring shape, 12 pairs, 2 shields).
+- Implemented November 11, 2026: rules in `src/game/bedtime.js` (`state.asleep`, saved with the board), the doze clock in `src/main.js`, the night look and sleepers in `src/styles/game.css`. Doze pace is `dozeMs` (4.5s average) times the level's `dozeScale`, tunable in the play room's Bedtime panel (with a Bedtime board toggle). Sounds: doze, wake, and a lullaby for Lights out.
+
+### Jitter levels (planned)
+
+- Chips without shields jitter (an electric shake as warning), then hop to new spots; shielded chips and walls stay put. Each chip slides to its new place so you can follow your pair.
+- Trigger per level: every few matches (cozy) or on a countdown (harder levels and timed events).
+- Every jitter picks a new layout that is checked solvable before it is shown.
+
+### Shuffle item (planned)
+
+- Reuses the jitter code: rearranges a stuck board into a solvable one. Offered on the failed card next to Restart, paid with Chip Coins, so a dead end doesn't have to cost a Charge.
+
 ## Agreed gameplay and recovery direction
 
 - Keep the two-click pair-matching game, wire effects, and chip pop effects.

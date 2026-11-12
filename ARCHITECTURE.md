@@ -12,6 +12,7 @@ The browser and future mobile app use the same web source. Native platform setup
 | `src/game/rules.js`       | Pure routing, pair lookup, shield breaking, and solvability checks        |
 | `src/game/generate.js`    | Seeded board generation and stage/tutorial factories                      |
 | `src/game/state.js`       | Save-shape validation and plain-data snapshots                            |
+| `src/game/bedtime.js`     | Bedtime sleep rules: dozing candidates, lights out, waking neighbors      |
 | `src/game/charges.js`     | Charges refill/spend rules and Chip Coin placeholder numbers              |
 | `src/platform/storage.js` | Persistence and compatibility migrations                                  |
 | `src/ui/view.js`          | Board and level-selection markup                                          |

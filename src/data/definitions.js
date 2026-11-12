@@ -203,6 +203,26 @@ export const levels = [
     walls: 2,
     tip: 'Crack the double shields early so their chips are free when you need them.',
   },
+  {
+    name: 'Bedtime',
+    shape: 'classic',
+    pairs: 8,
+    shields: 0,
+    walls: 0,
+    bedtime: true,
+    dozeScale: 1.25,
+    tip: 'Bedtime! Chip’ums doze off. Tap a sleepy one first to wake it.',
+  },
+  {
+    name: 'Night shift',
+    shape: 'ring',
+    pairs: 12,
+    shields: 2,
+    walls: 0,
+    bedtime: true,
+    dozeScale: 1,
+    tip: 'Matches wake the sleepers right beside them. Keep the crew busy!',
+  },
 ].map((spec, index) => {
   const authored = authoredLevels[index + 1];
   return authored ? { ...spec, name: authored.name, tip: authored.tip } : spec;

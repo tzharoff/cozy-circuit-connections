@@ -61,11 +61,12 @@ Checks cover the tutorial, every stage solution (including double shields), unlo
 ## Included
 
 - Guided Level 0: matching, bends, shields, and walls.
-- 14 deterministic stages played in order (13 and 14 introduce double shields): progress only moves forward, Toon Blast style.
+- 16 deterministic stages played in order (13 and 14 introduce double shields; 15 and 16 are Bedtime levels): progress only moves forward, Toon Blast style.
 - A home screen with the chip crew and a Play button for the next level; side columns are reserved for challenge icons.
 - Tutorial completion and Stage Clear screens.
 - A burnt "Short circuit!" failed card and persistent board notice when no pairs can connect, with undo/restart recovery.
 - Endless mode and six board shapes.
+- Bedtime levels: a night-blue board where Chip’ums doze off over time; a sleeper can only be the first tap, and if everyone falls asleep it’s Lights out.
 - Idle life: Chip’ums randomly blink, yawn, bounce, and wiggle on the board and home screen.
 - Synthesized sound effects (no audio files) for selecting, the zap line, pops, shields, cards, Charges, and Chip Coins, with a sound on/off button on home and in the menu.
 - Charges (lives) on a battery counter: restarting a level after making matches spends one, they refill every 30 minutes up to five, and at zero a Recharge refills them for Chip Coins.

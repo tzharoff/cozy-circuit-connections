@@ -3274,3 +3274,100 @@ dialog:focus {
     animation: none;
   }
 }
+/* Bedtime levels: a night-blue board with twinkling stars, sleeping Chip’ums, and moons. */
+.play .bedtime .pcb {
+  border-color: #1b1f4a;
+  background:
+    radial-gradient(circle at 12% 18%, #fff8 0 1px, transparent 1.5px),
+    radial-gradient(circle at 78% 9%, #fff6 0 1px, transparent 1.5px),
+    radial-gradient(circle at 92% 64%, #fff7 0 1px, transparent 1.5px),
+    radial-gradient(circle at 34% 94%, #fff5 0 1px, transparent 1.5px),
+    linear-gradient(#34407e, #232a5a);
+  box-shadow:
+    inset 0 3px 0 #ffffff1c,
+    0 6px 0 #141842,
+    0 14px 24px #0007;
+}
+.play .bedtime .empty.socket {
+  background: #1d2350aa;
+}
+.bedtime .pcb::after {
+  content: '';
+  display: block;
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background:
+    radial-gradient(circle at 56% 4%, #fffbe0 0 1.2px, transparent 2px),
+    radial-gradient(circle at 4% 70%, #fffbe0 0 1.2px, transparent 2px);
+  animation: twinkle 2.4s ease-in-out infinite alternate;
+}
+.play .bedtime .pcb {
+  position: relative;
+}
+.moon-badge {
+  display: inline-grid;
+  place-items: center;
+  margin-left: 4px;
+  vertical-align: middle;
+}
+.moon-badge[hidden] {
+  display: none;
+}
+.moon-icon {
+  width: 20px;
+  height: 20px;
+  fill: #ffe9a6;
+  stroke: #b8862c;
+  stroke-width: 1.4;
+  filter: drop-shadow(0 0 4px #ffe58a88);
+}
+.home-play .moon-icon {
+  width: 30px;
+  height: 30px;
+}
+.play .chip.asleep {
+  background: linear-gradient(145deg, #e8e7ff, #cfd2f3);
+  border-color: #7c84c9;
+}
+.chip.asleep .component-art {
+  filter: saturate(0.75);
+}
+.chip-zz {
+  position: absolute;
+  top: -2px;
+  right: 3px;
+  font: 800 17px var(--ui, sans-serif);
+  color: #3a46a8;
+  -webkit-text-stroke: 3px #fff;
+  paint-order: stroke fill;
+  pointer-events: none;
+  animation: snooze 2.4s ease-in-out infinite;
+}
+.fried-chipum .chip-zz {
+  top: -6px;
+  right: -8px;
+  font-size: 22px;
+}
+/* Lights out: the failed card's sleepy twin, with no burn or sparks. */
+.stuck-dialog.lights-out .burn,
+.stuck-dialog.lights-out .sputter-spark {
+  display: none;
+}
+.play .stuck-dialog.lights-out .card-head {
+  background: linear-gradient(#3a4686, #283066);
+  border-bottom-color: #1b1f4a;
+}
+.play .stuck-dialog.lights-out .fried-title {
+  color: #283066;
+}
+.stuck-dialog.lights-out .fried-chipum .component-art {
+  filter: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .chip-zz,
+  .bedtime .pcb::after {
+    animation: none;
+  }
+}

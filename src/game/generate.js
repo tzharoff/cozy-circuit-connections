@@ -2,6 +2,7 @@ import { shapes, lessons, levels } from '../data/definitions.js';
 import { rng, route, findPair, neighbors, breakShields, solvable, insideBoard } from './rules.js';
 import { authoredLevels } from '../data/authored-levels.js';
 import { levelState } from './level-format.js';
+import { noSleep } from './bedtime.js';
 /** Deterministic factories for endless boards, stages, and tutorial lessons. */
 /** Picks up to `limit` shielded chips, then upgrades up to `doubles` of them to double shields,
  * keeping every choice solvable. */
@@ -163,6 +164,10 @@ export function makeStage(n) {
   s.walls = wallsFor(s.board, seed, [], spec.walls);
   s.shields = shieldsFor(s.board, seed, s.walls, spec.shields, spec.doubleShields || 0);
   s.initialShields = s.shields.slice();
+  if (spec.bedtime) {
+    s.bedtime = { dozeScale: spec.dozeScale || 1 };
+    s.asleep = noSleep();
+  }
   s.stage = n;
   return s;
 }

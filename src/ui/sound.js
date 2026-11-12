@@ -130,6 +130,30 @@ export function createSound(storage = globalThis.localStorage) {
       tone({ type: 'sawtooth', from: 420, to: 70, at: t + 0.05, length: 0.4, peak: 0.06 });
       tone({ from: 110, to: 55, at: t + 0.42, length: 0.18, peak: 0.25 });
     },
+    /** Bedtime: a Chip’um dozing off, a soft sleepy slide down. */
+    doze(t) {
+      tone({ from: 520, to: 260, at: t, length: 0.45, peak: 0.1, attack: 0.04 });
+      tone({ type: 'triangle', from: 390, to: 200, at: t + 0.1, length: 0.4, peak: 0.05 });
+    },
+    /** Bedtime: a Chip’um waking with a startled little chirp. */
+    wake(t) {
+      tone({ from: 600, to: 1200, at: t, length: 0.09, peak: 0.16 });
+      tone({ from: 900, to: 1600, at: t + 0.08, length: 0.08, peak: 0.1 });
+    },
+    /** Bedtime lost: a gentle three-note lullaby falling to sleep. */
+    lightsOut(t) {
+      [659.25, 523.25, 392].forEach((f, n) =>
+        tone({
+          type: 'triangle',
+          from: f,
+          at: t + n * 0.28,
+          length: 0.5,
+          peak: 0.13,
+          attack: 0.03,
+        }),
+      );
+      tone({ from: 196, at: t + 0.84, length: 0.8, peak: 0.08, attack: 0.06 });
+    },
     /** A card landing: a soft low thump. */
     land(t) {
       tone({ from: 160, to: 70, at: t, length: 0.14, peak: 0.22 });

@@ -2,7 +2,7 @@
   "name": "cozy-circuit-connections",
   "version": "0.1.0",
   "private": true,
-  "description": "A cozy browser matching puzzle with cartoon components, shields, walls, and a 14-stage campaign.",
+  "description": "A cozy browser matching puzzle with cartoon components, shields, walls, and a 16-stage campaign.",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

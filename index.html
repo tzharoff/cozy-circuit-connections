@@ -52,7 +52,11 @@
       </div>
       <div id="challengesRight" class="home-side home-side-right" aria-label="Challenges"></div>
       <button id="homePlay" class="home-play">
-        <small id="homeKind">Level</small><span id="homeLevel">1</span>
+        <small id="homeKind">Level</small><span id="homeLevel">1</span
+        ><span id="homeMoon" class="moon-badge" title="Bedtime level" hidden
+          ><svg class="moon-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M19.5 14.6A8 8 0 0 1 9.4 4.5a8 8 0 1 0 10.1 10.1Z" /></svg
+        ></span>
       </button>
     </section>
     <main id="game" class="play-screen">
@@ -61,7 +65,11 @@
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14M5 12h14M5 17h14" /></svg>
         </button>
         <div class="hud-pill hud-level">
-          <small id="levelKind">Level</small><strong id="levelBadge">1</strong>
+          <small id="levelKind">Level</small><strong id="levelBadge">1</strong
+          ><span id="levelMoon" class="moon-badge" title="Bedtime level" hidden
+            ><svg class="moon-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M19.5 14.6A8 8 0 0 1 9.4 4.5a8 8 0 1 0 10.1 10.1Z" /></svg
+          ></span>
         </div>
         <div class="hud-pill hud-goal" aria-label="Pairs left">
           <span id="goalIcon" aria-hidden="true"></span><strong id="left">18</strong>
@@ -81,7 +89,7 @@
       <div class="board-area">
         <section class="pcb" aria-label="Circuit matching puzzle">
           <div id="stuckNotice" class="stuck-notice" hidden role="status">
-            <span><strong>No moves left.</strong></span>
+            <span><strong id="stuckNoticeText">No moves left.</strong></span>
             <button id="stuckOptions">Options</button>
           </div>
           <div class="board-wrap">
@@ -196,8 +204,8 @@
           <span class="puff puff-1"></span><span class="puff puff-2"></span
           ><span id="stuckChipum" class="fried-chipum"></span>
         </div>
-        <p class="fried-title">Short circuit!</p>
-        <p class="fried-text">No pairs can connect.</p>
+        <p id="stuckHeadline" class="fried-title">Short circuit!</p>
+        <p id="stuckText" class="fried-text">No pairs can connect.</p>
       </div>
       <button id="stuckRestart" class="primary restart-button">
         <span id="stuckRestartLabel">Restart</span
@@ -235,6 +243,11 @@
         matches: the first cracks them, the second breaks them. Undo restores shields too.
       </p>
       <p>
+        On Bedtime levels (the moon) Chip’ums doze off over time. A sleepy Chip’um has to be your
+        first tap: tap it to wake it, then tap its partner. Matches also wake sleepers right beside
+        them. If everyone falls asleep, it’s lights out.
+      </p>
+      <p>
         Choose from Classic, Ring, Cross, Islands, Bridge, and Staircase layouts. All gaps and empty
         sockets inside the board carry wires. Orange-striped wall blocks cannot carry wires and
         cannot be removed. Choose a shape and press New board; your current game stays put until
@@ -242,7 +255,7 @@
       </p>
       <p>
         The edge is a hard boundary: wires cannot go around the outside. Clear every pair to finish
-        a board. The campaign introduces shapes, shields, and walls over 14 stages; each clear
+        a board. The campaign introduces shapes, shields, and walls over 16 stages; each clear
         unlocks the next. Endless mode keeps the original random boards.
       </p>
       <p>

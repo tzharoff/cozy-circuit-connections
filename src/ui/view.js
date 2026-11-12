@@ -25,6 +25,8 @@ export function boardMarkup({ state, selected, hints, busy, lit = [] }) {
         shieldClass = layers
           ? 'shielded' + (layers > 1 ? ' double' : '') + (cracked ? ' cracked' : '')
           : '',
+        // Bedtime: a sleeping Chip’um shows the sleepy face with a floating z.
+        asleep = !!state.asleep?.[i],
         shieldLabel = layers > 1 ? 'Double-shielded ' : layers ? 'Shielded ' : '',
         mark = layers
           ? '<span class="shield-mark" aria-hidden="true">' +
@@ -32,7 +34,7 @@ export function boardMarkup({ state, selected, hints, busy, lit = [] }) {
             '</span>' +
             (cracked ? crack : '')
           : '';
-      return `<button class="chip ${selected === i || lit.includes(i) ? 'selected' : ''} ${hints.includes(i) ? 'hint' : ''} ${busy && hints.includes(i) ? 'connecting' : ''} ${shieldClass}" style="--tone:${t.color}" data-chip="${i}" aria-label="${shieldLabel}${t.name}, row ${(i / 8) | 0}, column ${i % 8}" aria-pressed="${selected === i}">${componentIcon(v - 1)}<small>${t.name.slice(0, 3).toUpperCase()}</small>${mark}${selected === i || lit.includes(i) || (busy && hints.includes(i)) ? zapRing : ''}</button>`;
+      return `<button class="chip ${selected === i || lit.includes(i) ? 'selected' : ''} ${hints.includes(i) ? 'hint' : ''} ${busy && hints.includes(i) ? 'connecting' : ''} ${shieldClass} ${asleep ? 'asleep' : ''}" style="--tone:${t.color}" data-chip="${i}" aria-label="${asleep ? 'Sleeping ' : ''}${shieldLabel}${t.name}, row ${(i / 8) | 0}, column ${i % 8}" aria-pressed="${selected === i}">${componentIcon(v - 1, asleep ? 'sleepy' : 'happy')}${asleep ? '<span class="chip-zz" aria-hidden="true">z</span>' : ''}<small>${t.name.slice(0, 3).toUpperCase()}</small>${mark}${selected === i || lit.includes(i) || (busy && hints.includes(i)) ? zapRing : ''}</button>`;
     })
     .join('');
 }
