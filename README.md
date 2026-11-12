@@ -17,7 +17,7 @@ Open the local URL printed by Vite. Source modules need an HTTP server; double-c
 
 Open `/editor.html` for the **Level Workshop**: paint chips, shields, walls, and shapes; load stages; check solutions; play-test; save drafts; and import/export levels. See [the editor guide](docs/LEVEL_EDITOR.md) for replacing or appending campaign stages.
 
-Open `/playroom.html` for the **Play room**: a test board with sliders for the zap line (wire) and pop animation speeds, plus the selection's spark speed and a bold or subtle ring. Tap Zap (or turn on Loop) to watch and hear a connection at the current speeds, and use the Sounds board to play every sound effect. Changes save in that browser and apply to the game there too; **Copy values** gives the numbers to make them the shipped defaults in `src/ui/timing.js`.
+Open `/playroom.html` for the **Play room**: a test board with sliders for the zap line (wire) and pop animation speeds, plus the selection's spark speed, a bold or subtle ring, and idle timing with Blink, Yawn, Bounce, and Wiggle buttons. Tap Zap (or turn on Loop) to watch and hear a connection at the current speeds, and use the Sounds board to play every sound effect. Changes save in that browser and apply to the game there too; **Copy values** gives the numbers to make them the shipped defaults in `src/ui/timing.js`.
 
 ## Build, preview, or export
 
@@ -66,6 +66,7 @@ Checks cover the tutorial, every stage solution (including double shields), unlo
 - Tutorial completion and Stage Clear screens.
 - A burnt "Short circuit!" failed card and persistent board notice when no pairs can connect, with undo/restart recovery.
 - Endless mode and six board shapes.
+- Idle life: Chip’ums randomly blink, yawn, bounce, and wiggle on the board and home screen.
 - Synthesized sound effects (no audio files) for selecting, the zap line, pops, shields, cards, Charges, and Chip Coins, with a sound on/off button on home and in the menu.
 - Charges (lives) on a battery counter: restarting a level after making matches spends one, they refill every 30 minutes up to five, and at zero a Recharge refills them for Chip Coins.
 - Single-layer shields, walls, one free hint per level (more for Chip Coins), unlimited undo, and restart.

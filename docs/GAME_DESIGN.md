@@ -27,6 +27,7 @@ The Battery and Quartz types were renamed from Power and Crystal so names and ty
 
 - **Spelling:** on screen, "Chip’ums" with a curly apostrophe (singular "Chip’um"). In code, filenames, URLs, and asset names, `chipums` with no apostrophe. Store keywords should include Chip’ums, Chip'ums, and Chipums.
 - **Merchandise:** the Chip’ums are intended for plush toys and 3D-printed figures later. Keep each design merch-friendly: a simple, readable silhouette, flat color areas, the shared face (dot eyes, small smile, blush), and the fixed palette in `src/data/definitions.js`. Treat silhouette or palette changes as brand changes, not quick tweaks.
+- **Idle life:** added November 11, 2026. Every so often (about every 1.6 seconds on average, tunable in the play room) one random calm, visible Chip’um on the board or the home crew **blinks**, **yawns** (round mouth, squinting eyes), **bounces**, or **wiggles**. Selected, popping, and shielded Chip’ums stay still. With reduced motion they only blink. Code: `src/ui/idle.js`; the happy face's eyes, mouth, and a hidden yawn are tagged in `src/ui/components.js`.
 - **Before launch or merch:** run a trademark search on "Chip’ums", and consider individual names for each Chip’um.
 
 ## Progression and stars

@@ -3,6 +3,7 @@ import { route, findPair, breakShields, shieldLayers } from '../game/rules.js';
 import { createEffects } from '../ui/effects.js';
 import { boardMarkup } from '../ui/view.js';
 import { createSound } from '../ui/sound.js';
+import { createIdle, playIdle } from '../ui/idle.js';
 import {
   animTiming,
   timingDefaults,
@@ -30,6 +31,7 @@ const sliders = {
     ['popRing', 'Burst ring'],
   ],
   zapSliders: [['zapLap', 'Spark lap']],
+  idleSliders: [['idleGap', 'Time between']],
 };
 /** A random board with up to six shields, three of them double, to try both kinds. */
 function testBoard() {
@@ -205,6 +207,16 @@ $('soundBoard').onclick = (e) => {
   // Pops cycle through the six Chip’um notes; the zap lasts as long as a 4-cell wire.
   if (name === 'pop') sound.play('pop', { type: popType++ % 6 });
   else if (name) sound.play(name, { ms: wireTravelMs(4) });
+};
+createIdle(() => [
+  ...document.querySelectorAll('#board .chip:not(.selected):not(.popping):not(.shielded)'),
+]).start();
+// Idle buttons make every calm Chip’um do that action at once, to judge it quickly.
+$('idleBoard').onclick = (e) => {
+  const action = e.target.closest('[data-idle]')?.dataset.idle;
+  if (action)
+    for (const chip of document.querySelectorAll('#board .chip:not(.selected):not(.popping)'))
+      playIdle(chip, action);
 };
 syncSliders();
 render();

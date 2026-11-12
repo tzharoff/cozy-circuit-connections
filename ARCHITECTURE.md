@@ -18,6 +18,7 @@ The browser and future mobile app use the same web source. Native platform setup
 | `src/ui/components.js`    | Inline SVG character artwork                                              |
 | `src/ui/currency.js`      | Battery counter and Chip Coin artwork                                     |
 | `src/ui/sputter.js`       | The failed card's sputtering edge spark                                   |
+| `src/ui/idle.js`          | Idle life: random blinks, yawns, bounces, and wiggles                     |
 | `src/ui/sound.js`         | Synthesized sound effects (Web Audio) and the sound on/off setting        |
 | `src/ui/timing.js`        | Zap line and pop durations; play room tuning (`circuitTuning`)            |
 | `src/playroom/`           | Play room page (`playroom.html`) for tuning animation speeds              |

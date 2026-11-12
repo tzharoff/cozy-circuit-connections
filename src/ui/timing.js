@@ -24,6 +24,8 @@ export const timingDefaults = {
   popConfetti: 480,
   /** Ring that bursts around each popping chip. */
   popRing: 370,
+  /** Average time between idle moments (a Chip’um blinking, yawning, bouncing, or wiggling). */
+  idleGap: 1600,
   /** One lap of the sparks racing around a selected chip. */
   zapLap: 1250,
   /** Selection ring: 1 = bold (deeper green, thicker), 0 = subtle (paler, thinner). */
@@ -47,6 +49,7 @@ export const timingRanges = {
   popChip: [50, 1000, 10],
   popConfetti: [100, 2000, 10],
   popRing: [100, 2000, 10],
+  idleGap: [300, 6000, 100],
   zapLap: [200, 3000, 50],
   zapBold: [0, 1, 1],
 };

@@ -17,9 +17,10 @@ export function componentIcon(index, mood = 'happy') {
       ? sleepy
       : mood === 'fried'
         ? '<g stroke="#344546" stroke-width="2.4" stroke-linecap="round"><path d="M21 31l5 5m0-5-5 5M38 31l5 5m0-5-5 5"/><path d="M26 44q3-3 6 0t6 0" fill="none"/><g stroke="none" fill="#3a2a1c" opacity=".35"><ellipse cx="18" cy="24" rx="4" ry="2.5"/><ellipse cx="46" cy="44" rx="3" ry="2"/></g></g>'
-        : '<g stroke="#344546" stroke-width="2.4" stroke-linecap="round"><path d="M24 33v3m16-3v3"/><path d="M28 42q4 4 8 0" fill="none"/><g stroke="none" fill="#ef8b8c" opacity=".55"><ellipse cx="19" cy="40" rx="3" ry="2"/><ellipse cx="45" cy="40" rx="3" ry="2"/></g></g>';
+        : // Happy faces have tagged parts for idle animations: eyes blink, the mouth swaps for a yawn.
+          '<g stroke="#344546" stroke-width="2.4" stroke-linecap="round"><path class="eyes" d="M24 33v3m16-3v3"/><path class="mouth" d="M28 42q4 4 8 0" fill="none"/><ellipse class="yawn" cx="32" cy="43" rx="3" ry="3.6" fill="#344546" stroke="none"/><g stroke="none" fill="#ef8b8c" opacity=".55"><ellipse cx="19" cy="40" rx="3" ry="2"/><ellipse cx="45" cy="40" rx="3" ry="2"/></g></g>';
   return (
-    '<svg class="component-art" viewBox="0 0 64 64" aria-hidden="true"><ellipse cx="32" cy="58" rx="18" ry="3" fill="#193d3318"/><g stroke="#344546" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">' +
+    '<svg class="component-art" viewBox="0 0 64 64" aria-hidden="true"><ellipse cx="32" cy="58" rx="18" ry="3" fill="#193d3318"/><g class="idle" stroke="#344546" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">' +
     bodies[index] +
     face +
     '</g></svg>'

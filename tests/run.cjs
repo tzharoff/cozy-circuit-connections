@@ -14,6 +14,7 @@ for (const file of [
   'pop.cjs',
   'timing.mjs',
   'sound.mjs',
+  'idle.mjs',
 ]) {
   const result = spawnSync(process.execPath, [path.join('tests', file)], { stdio: 'inherit' });
   if (result.error) throw result.error;

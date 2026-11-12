@@ -3169,3 +3169,108 @@ dialog:focus {
     animation: none;
   }
 }
+/* Idle life (src/ui/idle.js): blinking, yawning, bouncing, and wiggling Chip’ums. */
+.component-art .eyes,
+.component-art .mouth,
+.component-art .yawn,
+.component-art .idle {
+  transform-box: fill-box;
+}
+.component-art .eyes,
+.component-art .yawn {
+  transform-origin: center;
+}
+.component-art .idle {
+  transform-origin: 50% 100%;
+}
+.component-art .yawn {
+  opacity: 0;
+}
+.idle-blink .eyes {
+  animation: idle-blink 0.26s ease-in-out;
+}
+.idle-yawn .yawn {
+  animation: idle-yawn 1.6s ease-in-out;
+}
+.idle-yawn .mouth {
+  animation: idle-hide 1.6s ease-in-out;
+}
+.idle-yawn .eyes {
+  animation: idle-squint 1.6s ease-in-out;
+}
+.idle-bounce .idle {
+  animation: idle-bounce 0.65s ease-out;
+}
+.idle-wiggle .idle {
+  animation: idle-wiggle 0.7s ease-in-out;
+}
+@keyframes idle-blink {
+  50% {
+    transform: scaleY(0.1);
+  }
+}
+@keyframes idle-yawn {
+  0% {
+    opacity: 1;
+    transform: scale(0.3);
+  }
+  30%,
+  70% {
+    opacity: 1;
+    transform: scale(1, 1.2);
+  }
+  95% {
+    opacity: 1;
+    transform: scale(0.3);
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes idle-hide {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  10%,
+  92% {
+    opacity: 0;
+  }
+}
+@keyframes idle-squint {
+  25%,
+  75% {
+    transform: scaleY(0.35);
+  }
+}
+@keyframes idle-bounce {
+  30% {
+    transform: translateY(-5px) scale(0.96, 1.05);
+  }
+  55% {
+    transform: translateY(0) scale(1.06, 0.93);
+  }
+  75% {
+    transform: translateY(-1.5px);
+  }
+}
+@keyframes idle-wiggle {
+  20% {
+    transform: rotate(-7deg);
+  }
+  40% {
+    transform: rotate(6deg);
+  }
+  60% {
+    transform: rotate(-4deg);
+  }
+  80% {
+    transform: rotate(2deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .idle-bounce .idle,
+  .idle-wiggle .idle {
+    animation: none;
+  }
+}

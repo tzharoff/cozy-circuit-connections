@@ -17,6 +17,7 @@ import { componentIcon } from './ui/components.js';
 import { batteryIcon, chipCoinIcon } from './ui/currency.js';
 import { createSputter } from './ui/sputter.js';
 import { createSound } from './ui/sound.js';
+import { createIdle } from './ui/idle.js';
 import { animTiming, wireTravelMs } from './ui/timing.js';
 import { createEffects } from './ui/effects.js';
 import { boardMarkup } from './ui/view.js';
@@ -814,6 +815,14 @@ $('chargesRecharge').onclick = recharge;
 $('homeCoinIcon').innerHTML = $('rechargeCoin').innerHTML = chipCoinIcon(true);
 $('rechargePrice').textContent = RECHARGE_PRICE;
 $('chargesBastion').innerHTML = componentIcon(1, 'sleepy') + '<span class="zzz">z</span>';
+// Idle life: calm, visible Chip’ums on the board and the home crew blink, yawn, bounce, wiggle.
+createIdle(() =>
+  [
+    ...(document.querySelectorAll?.(
+      '#board .chip:not(.selected):not(.popping):not(.shielded), #homeCrew .crew',
+    ) || []),
+  ].filter((el) => el.offsetParent !== null),
+).start();
 // Refills happen in real time, so the battery counts down while the game is open.
 if (typeof setInterval === 'function') setInterval(updateCharges, 1000);
 if (state) {
