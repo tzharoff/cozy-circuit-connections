@@ -190,7 +190,7 @@ Decided and started November 12, 2026. Shields are the first **cover**: the rule
 | Leaf pile                                   | Planned | For Leaf Pile                                          |                                         |
 | Cocoon, sandcastle, flower bud, ghost sheet | Planned | For Bug Buddies, Beach Day, Garden Party, Spooky Night |                                         |
 
-When a cover breaks, bits burst out in the theme's color and the freed Chip’um hops. The play room's Covers panel switches the test board between themes.
+Campaign levels 17 "Ice box", 18 "Gift wrapped", and 19 "Egg hunt" show the three themed covers. When a cover breaks, bits burst out in the theme's color and the freed Chip’um hops. The play room's Covers panel switches the test board between themes.
 
 ### The 26 slots
 

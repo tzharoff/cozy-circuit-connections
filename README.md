@@ -61,7 +61,7 @@ Checks cover the tutorial, every stage solution (including double shields), unlo
 ## Included
 
 - Guided Level 0: matching, bends, shields, and walls.
-- 16 deterministic stages played in order (13 and 14 introduce double shields; 15 and 16 are Bedtime levels): progress only moves forward, Toon Blast style.
+- 19 deterministic stages played in order (13 and 14 introduce double shields; 15 and 16 are Bedtime levels; 17 to 19 show ice, gift, and egg covers): progress only moves forward, Toon Blast style.
 - A home screen with the chip crew and a Play button for the next level; side columns are reserved for challenge icons.
 - Tutorial completion and Stage Clear screens.
 - A burnt "Short circuit!" failed card and persistent board notice when no pairs can connect, with undo/restart recovery.

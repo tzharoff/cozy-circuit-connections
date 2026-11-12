@@ -8,7 +8,7 @@ The detailed record is [docs/GAME_DESIGN.md](docs/GAME_DESIGN.md), including cur
 
 ## Current milestone
 
-The guided Level 0, 16-stage campaign (13 and 14 add double shields; 15 and 16 are Bedtime levels), tutorial completion screen, and Stage Clear screen work. Existing matching, shields, walls, shape selection, hints, undo, wire animation, and pop effects are included.
+The guided Level 0, 19-stage campaign (13 and 14 add double shields; 15 and 16 are Bedtime levels; 17 to 19 use ice, gift, and egg covers), tutorial completion screen, and Stage Clear screen work. Existing matching, shields, walls, shape selection, hints, undo, wire animation, and pop effects are included.
 
 Dead ends are possible, but uncommon and unevenly distributed across the current campaign. A dead end means chips remain with no legal pair. The implemented recovery dialog still offers undo and free restart, plus a persistent board notice. Saved dead ends are detected on reload. This is the prototype behavior, not the new lives/economy design.
 

@@ -223,6 +223,36 @@ export const levels = [
     dozeScale: 1,
     tip: 'Matches wake the sleepers right beside them. Keep the crew busy!',
   },
+  {
+    name: 'Ice box',
+    shape: 'cross',
+    pairs: 10,
+    shields: 4,
+    doubleShields: 1,
+    walls: 0,
+    cover: 'ice',
+    tip: 'Brr! Frozen Chip’ums thaw out when you match right beside them.',
+  },
+  {
+    name: 'Gift wrapped',
+    shape: 'classic',
+    pairs: 12,
+    shields: 5,
+    doubleShields: 2,
+    walls: 0,
+    cover: 'gift',
+    tip: 'Surprise! Match next to a present to unwrap the Chip’um inside.',
+  },
+  {
+    name: 'Egg hunt',
+    shape: 'islands',
+    pairs: 8,
+    shields: 5,
+    doubleShields: 2,
+    walls: 2,
+    cover: 'egg',
+    tip: 'Crack the eggs with nearby matches and watch the Chip’ums hatch.',
+  },
 ].map((spec, index) => {
   const authored = authoredLevels[index + 1];
   return authored ? { ...spec, name: authored.name, tip: authored.tip } : spec;
