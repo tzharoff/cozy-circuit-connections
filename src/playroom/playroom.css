@@ -116,3 +116,21 @@
 .playroom .pcb {
   width: 100%;
 }
+.sound-board {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  padding: 4px 0 10px;
+}
+.sound-board button {
+  min-height: 44px;
+  border: 3px solid var(--rim);
+  border-radius: 14px;
+  background: radial-gradient(circle at 40% 28%, #36735f, #22463f 72%);
+  color: var(--cream);
+  font: 600 16px var(--ui);
+  cursor: pointer;
+}
+.sound-board button:active {
+  transform: translateY(2px);
+}

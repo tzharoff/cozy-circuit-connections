@@ -15,11 +15,14 @@ import {
 import { componentIcon } from './ui/components.js';
 import { batteryIcon, chipCoinIcon } from './ui/currency.js';
 import { createSputter } from './ui/sputter.js';
+import { createSound } from './ui/sound.js';
+import { wireTravelMs } from './ui/timing.js';
 import { createEffects } from './ui/effects.js';
 import { boardMarkup } from './ui/view.js';
 /** Application controller: selection, stage navigation, UI events, and match commits. */
 
 const $ = (id) => document.getElementById(id);
+const sound = createSound();
 function tutorialGuide() {
   const l = lessons[state.tutorialStep],
     empty = state.board.every((v) => !v);
@@ -111,6 +114,8 @@ function openCharges() {
   const card = $('chargesDialog');
   land(card);
   if (card.open) return;
+  // A soft thump as the card finishes dropping in.
+  setTimeout(() => sound.play('land'), 380);
   card.classList?.remove('arrive');
   void card.offsetWidth;
   card.classList?.add('arrive');
@@ -124,10 +129,13 @@ function recharge() {
   if (charges.count > 0) return;
   if (chipCoins < RECHARGE_PRICE) {
     chargesNote = 'Not enough Chip Coins';
+    sound.play('blocked');
     updateCharges();
     return;
   }
   chipCoins -= RECHARGE_PRICE;
+  sound.play('coin');
+  sound.play('recharge');
   storage.saveChipCoins(chipCoins);
   charges = fullCharges();
   storage.saveCharges(charges);
@@ -148,6 +156,7 @@ function paidRestart() {
     }
     charges = spent;
     storage.saveCharges(charges);
+    sound.play('spend');
   }
   restartBoard();
   updateCharges();
@@ -186,6 +195,7 @@ function openClearCard() {
   const card = $('stageWin');
   land(card);
   if (card.open) return;
+  sound.play('clear');
   card.classList?.remove('arrive');
   void card.offsetWidth;
   card.classList?.add('arrive');
@@ -209,6 +219,7 @@ function land(card) {
  * reduced motion or where animations aren't available. */
 function flyOut(card) {
   if (!card.open || card.leaving) return;
+  sound.play('whoosh');
   if (globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches || !card.animate) {
     card.close();
     return;
@@ -381,6 +392,7 @@ function showStuck(force = false) {
   void card.offsetWidth;
   card.classList?.add('clunk');
   card.showModal();
+  sound.play('shortCircuit');
   sputter.start(800);
 }
 function save() {
@@ -458,6 +470,7 @@ function choose(i) {
     return;
   }
   if (selected === null) {
+    sound.play('select');
     selected = i;
     hints = [];
     say('Find its matching partner. The wire can bend twice.');
@@ -465,6 +478,7 @@ function choose(i) {
     return;
   }
   if (selected === i) {
+    sound.play('deselect');
     selected = null;
     say('Selection cleared. Choose any chip.');
     render();
@@ -477,7 +491,9 @@ function choose(i) {
     hints = [first, i];
     say('Power flowing…');
     render();
-    draw(path, () =>
+    sound.play('zap', { ms: wireTravelMs(path.length) });
+    draw(path, () => {
+      sound.play('pop', { type: state.board[i] - 1 });
       popPair(first, i, () => {
         state.history.push({
           board: state.board.slice(),
@@ -485,6 +501,7 @@ function choose(i) {
           score: state.score,
         });
         const freed = breakShields(state.shields, first, i);
+        if (freed) sound.play('shield');
         state.board[first] = state.board[i] = 0;
         state.score++;
         selected = null;
@@ -496,11 +513,12 @@ function choose(i) {
             : 'Connection made. One less pair in the machine.',
         );
         render();
-      }),
-    );
+      });
+    });
   } else {
     selected = i;
     hints = [];
+    sound.play('blocked');
     say('No route there. Wires can’t cross chips or walls, or bend more than twice.');
     render();
   }
@@ -657,6 +675,22 @@ $('homePlay').onclick = () => {
   else target[2]();
 };
 $('homeButton').onclick = showHome;
+/** Sound on/off, shown on home and in the menu; remembered in this browser. */
+function showSoundState() {
+  for (const id of ['homeSound', 'menuSound'])
+    $(id).setAttribute?.('aria-pressed', String(!sound.muted));
+}
+$('homeSound').onclick = $('menuSound').onclick = () => {
+  sound.setMuted(!sound.muted);
+  showSoundState();
+  sound.play('tap');
+};
+showSoundState();
+// Ordinary buttons tap; chips, and buttons with their own sounds, are left alone.
+document.addEventListener?.('click', (e) => {
+  const button = e.target.closest?.('button');
+  if (button && !button.matches('[data-chip], .sound-button')) sound.play('tap');
+});
 $('homeHelp').onclick = () => $('manual').showModal();
 $('homeCrew').innerHTML = [0, 4, 2, 1, 5]
   .map((i) => '<span class="crew">' + componentIcon(i) + '</span>')
@@ -702,8 +736,10 @@ else {
 
 // Start the hold after the artwork is decoded and the game has initialized.
 const studioSplash = document.getElementById('studioSplash');
-if (studioSplash) {
-  const artwork = studioSplash.querySelector('img');
+// Test fakes have no real elements, so only run with a real image.
+const splashArt = studioSplash?.querySelector?.('img');
+if (typeof splashArt?.decode === 'function') {
+  const artwork = splashArt;
   artwork
     .decode()
     .catch(() => {})

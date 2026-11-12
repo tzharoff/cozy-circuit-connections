@@ -88,6 +88,21 @@ Decided November 11, 2026. The premium currency is **Chip Coins**: our own small
 - **Small sizes:** at price-tag size, drop the inner ring and bars and thicken the C so it stays readable.
 - Mockup colors: coin `#f6c94a`, edge `#c98a1a`, ring `#e0a92e`, C and bars `#7a4c06`.
 
+## Sound effects
+
+Added November 11, 2026. Every sound is synthesized in code with Web Audio (`src/ui/sound.js`), so there are no audio files to license or load, and each one is a short, editable recipe:
+
+- **Select / deselect:** a soft rising or falling blip. **No route:** two low, gentle buzzes.
+- **Zap line:** a rising electric hum with crackle, lasting exactly as long as the wire travels.
+- **Pop:** a bubbly drop on a cozy pentatonic scale; each Chip’um type has its own note.
+- **Shield break:** a bright glassy clink. **Level clear:** a rising bell arpeggio with a sparkle.
+- **Short circuit** (failed card): a fizzle, a falling buzz, and a thud as the card lands.
+- **Cards:** a soft thump when the Charges card lands; a rising whoosh when any card flies off.
+- **Charges and coins:** a short downward hum when a restart spends a Charge; a power-up hum and ding for Recharge, with a two-note coin.
+- **Buttons:** a quiet tap.
+
+A speaker button on home and in the menu turns sound on or off (remembered on the device). The play room has a Sounds board to audition each one, and its Zap button plays the zap and pop sounds with the animations.
+
 ## Agreed gameplay and recovery direction
 
 - Keep the two-click pair-matching game, wire effects, and chip pop effects.

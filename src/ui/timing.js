@@ -23,6 +23,11 @@ export const timingDefaults = {
   popRing: 370,
 };
 
+/** How long the zap line takes to travel a path of `cells` cells. */
+export function wireTravelMs(cells) {
+  return Math.min(animTiming.wireMax, animTiming.wireBase + (cells - 1) * animTiming.wirePerCell);
+}
+
 /** Slider ranges for the play room: [min, max, step]. */
 export const timingRanges = {
   wireBase: [50, 1500, 10],

@@ -20,6 +20,18 @@
         <div class="home-coins" aria-label="Chip Coins">
           <span id="homeCoinIcon" aria-hidden="true"></span><strong id="homeCoins">0</strong>
         </div>
+        <button
+          id="homeSound"
+          class="hud-button sound-button"
+          aria-label="Sound"
+          aria-pressed="true"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4Z" />
+            <path class="sound-waves" d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11" />
+            <path class="sound-off" d="m16 9.5 5 5m0-5-5 5" />
+          </svg>
+        </button>
         <button id="homeHelp" class="hud-button" aria-label="How to play">
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M9.2 9a3 3 0 1 1 4.3 2.7c-.9.5-1.5 1.2-1.5 2.3" />
@@ -113,7 +125,19 @@
       <h2 id="stageTitle"></h2>
       <p id="stageTip"></p>
       <div class="sheet-buttons">
-        <button id="homeButton" class="primary">Home</button>
+        <button id="homeButton" class="primary">Home</button
+        ><button
+          id="menuSound"
+          class="hud-button sound-button"
+          aria-label="Sound"
+          aria-pressed="true"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4Z" />
+            <path class="sound-waves" d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11" />
+            <path class="sound-off" d="m16 9.5 5 5m0-5-5 5" />
+          </svg>
+        </button>
       </div>
       <div class="shape-picker" id="shapePicker">
         <label for="shape">Next board shape</label

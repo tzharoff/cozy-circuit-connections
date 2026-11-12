@@ -1,5 +1,5 @@
 import { types } from '../data/definitions.js';
-import { animTiming } from './timing.js';
+import { animTiming, wireTravelMs } from './timing.js';
 /** Visual effects own their timers; callbacks commit a match after arrival/pop. */
 export function createEffects({ getElement: $, getState }) {
   let wireFrame = null,
@@ -77,10 +77,7 @@ export function createEffects({ getElement: $, getState }) {
         lengths[i - 1] +
         Math.hypot(coords[i][0] - coords[i - 1][0], coords[i][1] - coords[i - 1][1]);
     const total = lengths.at(-1),
-      duration = Math.min(
-        animTiming.wireMax,
-        animTiming.wireBase + (path.length - 1) * animTiming.wirePerCell,
-      ),
+      duration = wireTravelMs(path.length),
       ringMs = animTiming.wireRing,
       fadeAt = duration + animTiming.wireLinger,
       gone = fadeAt + animTiming.wireFade;

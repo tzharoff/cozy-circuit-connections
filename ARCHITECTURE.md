@@ -18,6 +18,7 @@ The browser and future mobile app use the same web source. Native platform setup
 | `src/ui/components.js`    | Inline SVG character artwork                                              |
 | `src/ui/currency.js`      | Battery counter and Chip Coin artwork                                     |
 | `src/ui/sputter.js`       | The failed card's sputtering edge spark                                   |
+| `src/ui/sound.js`         | Synthesized sound effects (Web Audio) and the sound on/off setting        |
 | `src/ui/timing.js`        | Zap line and pop durations; play room tuning (`circuitTuning`)            |
 | `src/playroom/`           | Play room page (`playroom.html`) for tuning animation speeds              |
 | `src/ui/effects.js`       | Wires, spark, pop particles, and animation timing                         |
@@ -41,7 +42,7 @@ Routing version 2 uses only the inner 6×6 board, with a hard edge. The 8×8 arr
 
 Change content in `src/data/definitions.js`. Component IDs are one-based array positions stored in saves: do not reorder or remove existing components without a migration. Stage numbering, deterministic seeds, and shape keys also identify saved content.
 
-Existing localStorage keys are preserved: `circuitState`, `circuitCampaign`, `circuitWins`, `circuitEndlessState`, and `circuitShapeChoice`. `circuitCharges` (`{ count, since }`, where `since` is when the current refill began) and `circuitChipCoins` (a whole number) were added for Charges; a missing or unreadable value means a full battery or the starting coin balance. A standalone export opened at the same previous local file path keeps using that browser's existing saves. Moving to another origin, browser, or native app needs a separate migration if progress must follow.
+Existing localStorage keys are preserved: `circuitState`, `circuitCampaign`, `circuitWins`, `circuitEndlessState`, and `circuitShapeChoice`. `circuitCharges` (`{ count, since }`, where `since` is when the current refill began) and `circuitChipCoins` (a whole number) were added for Charges; `circuitSound` (`on` or `off`) remembers the sound setting; a missing or unreadable value means a full battery or the starting coin balance. A standalone export opened at the same previous local file path keeps using that browser's existing saves. Moving to another origin, browser, or native app needs a separate migration if progress must follow.
 
 ## Build and export
 

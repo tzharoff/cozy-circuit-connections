@@ -2149,8 +2149,26 @@ button[hidden] {
   align-items: center;
   gap: 8px;
 }
-.home-top #homeHelp {
+.home-top #homeSound {
   margin-left: auto;
+}
+/* Sound toggle: waves when on, a cross when off. */
+.sound-button .sound-off,
+.sound-button[aria-pressed='false'] .sound-waves {
+  display: none;
+}
+.sound-button[aria-pressed='false'] .sound-off {
+  display: inline;
+}
+.sound-button[aria-pressed='false'] {
+  color: var(--muted);
+}
+.play .sheet-buttons #menuSound {
+  flex: none;
+  color: var(--mint);
+}
+.play .sheet-buttons #menuSound[aria-pressed='false'] {
+  color: var(--muted);
 }
 .play .home-title {
   grid-column: 1 / -1;
