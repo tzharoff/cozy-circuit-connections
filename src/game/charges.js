@@ -4,6 +4,8 @@ export const MAX_CHARGES = 5;
 export const REFILL_MS = 30 * 60 * 1000;
 /** Placeholder until prices are chosen (see docs/GAME_DESIGN.md). */
 export const RECHARGE_PRICE = 20;
+/** Placeholder price of one hint after the free one each level. */
+export const HINT_PRICE = 10;
 /** Placeholder: there is no shop yet, so new players start with enough for a few Recharges. */
 export const STARTING_CHIP_COINS = 60;
 

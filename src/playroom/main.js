@@ -51,6 +51,7 @@ const soundLabels = {
   spend: 'Spend Charge',
   recharge: 'Recharge',
   coin: 'Chip Coin',
+  hint: 'Hint',
 };
 let popType = 0;
 

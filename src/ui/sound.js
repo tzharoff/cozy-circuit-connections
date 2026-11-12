@@ -125,6 +125,11 @@ export function createSound(storage = globalThis.localStorage) {
     whoosh(t) {
       hiss({ from: 500, to: 3500, at: t, length: 0.32, peak: 0.12, q: 1.2, attack: 0.08 });
     },
+    /** A hint appearing: a soft two-note twinkle. */
+    hint(t) {
+      tone({ from: 1319, at: t, length: 0.12, peak: 0.12 });
+      tone({ from: 1760, at: t + 0.08, length: 0.2, peak: 0.1 });
+    },
     /** Any ordinary button. */
     tap(t) {
       tone({ from: 520, to: 600, at: t, length: 0.04, peak: 0.12 });

@@ -121,6 +121,37 @@ run('charges={count:0,since:Date.now()};showHome()');
 els.homePlay.onclick();
 assert(els.chargesDialog.open);
 assert(els.game.hidden);
+// Hints: one free per level, then the Hint card sells them for Chip Coins.
+run('startStage(5)');
+assert.equal(els.hintBadge.innerHTML, '1');
+els.hint.onclick();
+assert(run('state.hintUsed'));
+assert.equal(run('hints.length'), 2);
+assert(!els.hintDialog?.open);
+// Tapping again while that hint is showing costs nothing.
+els.hint.onclick();
+assert(!els.hintDialog?.open);
+assert(els.hintBadge.innerHTML.includes('coin-art'));
+// After a match clears the hint, the next one opens the Hint card.
+run('var p=findPair(state.board,state.shields,state.walls);choose(p.a);choose(p.z)');
+els.hint.onclick();
+assert(els.hintDialog.open);
+assert.equal(run('hints.length'), 0);
+run('chipCoins=3');
+els.hintBuy.onclick();
+assert.equal(els.hintNote.textContent, 'Not enough Chip Coins');
+assert.equal(run('chipCoins'), 3);
+run('chipCoins=30');
+els.hintBuy.onclick();
+assert.equal(run('chipCoins'), 30 - run('HINT_PRICE'));
+assert.equal(JSON.parse(saved.circuitChipCoins), 30 - run('HINT_PRICE'));
+assert.equal(run('hints.length'), 2);
+assert(!els.hintDialog?.open);
+// A new level brings a new free hint; the tutorial's hints are always free.
+run('startStage(5)');
+assert(!run('state.hintUsed'));
+run('state.tutorial=true;state.hintUsed=true');
+assert(run('freeHint()'));
 console.log(
-  'PASS: Charges refill/cap/spend, restart costs, free untouched restarts, zero-Charge Recharge from booster, failed card, and Play, Chip Coin balance and saves',
+  'PASS: one free hint per level, Hint card purchases, Charges refill/cap/spend, restart costs, free untouched restarts, zero-Charge Recharge from booster, failed card, and Play, Chip Coin balance and saves',
 );

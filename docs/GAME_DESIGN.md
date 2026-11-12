@@ -88,6 +88,15 @@ Decided November 11, 2026. The premium currency is **Chip Coins**: our own small
 - **Small sizes:** at price-tag size, drop the inner ring and bars and thicken the C so it stays readable.
 - Mockup colors: coin `#f6c94a`, edge `#c98a1a`, ring `#e0a92e`, C and bars `#7a4c06`.
 
+## Hints
+
+Decided November 11, 2026. Each level (and each Endless board) gets **one free hint**; the tutorial's hints are always free. There is no penalty for not using it, and running out of moves is still announced by the failed card.
+
+- **Hint button:** a small mint "1" badge while the free hint is left; a Chip Coin badge once it's used. Tapping again while a hint is showing re-shows it for free.
+- **Hint card:** after the free hint, tapping the button opens a card like the Charges card: heading **Hint**, Lulo the Logic with a glowing bulb, your Chip Coin balance, and a **Buy** button with the price. Buy spends the coins, closes the card, and shows the hint at once. Without enough coins it says "Not enough Chip Coins".
+- The free hint stays used across restarts of the same level (restarts already cost a Charge); a new level or Endless board brings a new one.
+- **Placeholder price:** `HINT_PRICE` is 10 Chip Coins, in `src/game/charges.js`.
+
 ## Sound effects
 
 Added November 11, 2026. Every sound is synthesized in code with Web Audio (`src/ui/sound.js`), so there are no audio files to license or load, and each one is a short, editable recipe:
@@ -126,7 +135,7 @@ No currency, life, or item balance has been chosen. The current recovery screen 
 | Lives (Charges) | Restarting a level spends one Charge; shown as a battery whose cells fill to match      | Recharge price, other ways to earn Charges, confirmation flow                                      |
 | Chip Coins      | Buy Recharges and Shield Breakers; can be earned from challenge rewards                 | Prices, purchase packs, balances, caps, and other uses                                             |
 | Shield Breakers | Remove one layer from a chosen shield; available through currency and challenge rewards | Shop/inventory flow, whether to buy-and-use or store items, behavior when no helpful target exists |
-| Hints           | Part of the monetization plan, including optional rewarded ads for extra hints          | Free allowance, refill rules, prices, and rewards                                                  |
+| Hints           | One free per level; more cost Chip Coins (placeholder 10); rewarded ads still possible  | Final price, ad rewards                                                                            |
 | Cosmetics       | Sell component art, board themes, wire effects, and pop effects                         | Pack contents, unlock requirements, direct purchase versus currency pricing                        |
 | Ads             | Optional rewarded ads; no interruptions during a board                                  | Specific placements, rewards, availability, consent and store integration                          |
 

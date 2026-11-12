@@ -2933,3 +2933,81 @@ button[hidden] {
 dialog:focus {
   outline: none;
 }
+/* Hint: a "1" badge while the level's free hint is left, a coin once it's used. */
+.booster-main {
+  position: relative;
+}
+.hint-badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  border: 2.5px solid #17704e;
+  border-radius: 50%;
+  background: #94f6d0;
+  color: #0d3a2b;
+  font: 700 16px var(--ui);
+  line-height: 1;
+  pointer-events: none;
+}
+.hint-badge.paid {
+  border-color: #c98a1a;
+  background: #fde6a6;
+}
+.hint-badge .coin-art {
+  width: 20px;
+  height: 20px;
+}
+.hint-art {
+  display: flex;
+  align-items: end;
+  justify-content: center;
+  gap: 4px;
+}
+.hint-art .component-art {
+  width: 84px;
+  height: 84px;
+  display: block;
+}
+.hint-bulb {
+  width: 54px;
+  height: 54px;
+  margin-bottom: 30px;
+  fill: #ffe46b;
+  stroke: #7a5106;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 0 6px #ffd36b);
+}
+.play .hint-card .hint-wallet {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin: 10px 0 0;
+  font-size: 22px;
+  font-weight: 600;
+  color: #0f3d2e;
+  font-variant-numeric: tabular-nums;
+}
+.hint-wallet .coin-art {
+  width: 26px;
+  height: 26px;
+}
+.play .hint-card .hint-note {
+  min-height: 1.3em;
+  margin: 4px 0 0;
+  font-size: 17px;
+  font-weight: 600;
+  color: #8a3a10;
+}
+.play .hint-card #hintBuy {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}

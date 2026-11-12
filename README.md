@@ -68,7 +68,7 @@ Checks cover the tutorial, 12 stage solutions, unlocks and save restoration, 300
 - Endless mode and six board shapes.
 - Synthesized sound effects (no audio files) for selecting, the zap line, pops, shields, cards, Charges, and Chip Coins, with a sound on/off button on home and in the menu.
 - Charges (lives) on a battery counter: restarting a level after making matches spends one, they refill every 30 minutes up to five, and at zero a Recharge refills them for Chip Coins.
-- Single-layer shields, walls, free hints, unlimited undo, and restart.
+- Single-layer shields, walls, one free hint per level (more for Chip Coins), unlimited undo, and restart.
 - Cartoon SVG components, traveling sparks, glowing wires, and pop effects.
 - Browser saves, responsive layouts, and reduced-motion support.
 

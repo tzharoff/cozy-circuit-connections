@@ -4,6 +4,7 @@ import { make, makeStage, makeTutorial } from './game/generate.js';
 import { clone, valid } from './game/state.js';
 import { createStorage } from './platform/storage.js';
 import {
+  HINT_PRICE,
   MAX_CHARGES,
   RECHARGE_PRICE,
   clock,
@@ -437,6 +438,7 @@ function render() {
   $('deal').textContent = 'BOARD ' + String(state.seed).slice(-5);
   if (state.tutorial) tutorialGuide();
   $('board').innerHTML = boardMarkup({ state, selected, hints, busy });
+  updateHintBadge();
   if (!left && (!state.tutorial || state.tutorialStep === lessons.length - 1)) {
     if (state.tutorial) tutorialDone = true;
     if (!state.claimed) {
@@ -624,19 +626,90 @@ $('confirmCancel').onclick = () => {
   confirmed = null;
   flyOut($('confirmDialog'));
 };
-$('hint').onclick = () => {
-  const p = findPair(state.board, state.shields, state.walls);
+/** Each level (or Endless board) gets one free hint; the tutorial's are always free.
+ * After that, the hint button opens the Hint card to buy one with Chip Coins. */
+function freeHint() {
+  return !!state.tutorial || !state.hintUsed;
+}
+function revealHint(p) {
   selected = null;
-  if (p) {
-    hints = [p.a, p.z];
-    say('These two chips connect. Click one, then the other.');
-    render();
-    draw(p.path);
-  } else {
+  hints = [p.a, p.z];
+  sound.play('hint');
+  say('These two chips connect. Click one, then the other.');
+  render();
+  draw(p.path);
+}
+/** The free hint badge on the button, or a coin once it's used. */
+function updateHintBadge() {
+  const free = freeHint();
+  $('hintBadge').innerHTML = free ? '1' : chipCoinIcon(true);
+  $('hintBadge').classList?.toggle('paid', !free);
+}
+let hintNote = '';
+function updateHintCard() {
+  $('hintWallet').textContent = chipCoins;
+  $('hintNote').textContent = hintNote;
+}
+function openHintCard() {
+  hintNote = '';
+  updateHintCard();
+  const card = $('hintDialog');
+  land(card);
+  if (card.open) return;
+  card.classList?.remove('arrive');
+  void card.offsetWidth;
+  card.classList?.add('arrive');
+  showCard(card);
+  setTimeout(() => sound.play('land'), 380);
+}
+function buyHint() {
+  const p = findPair(state.board, state.shields, state.walls);
+  if (!p) {
+    flyOut($('hintDialog'));
+    return;
+  }
+  if (chipCoins < HINT_PRICE) {
+    hintNote = 'Not enough Chip Coins';
+    sound.play('blocked');
+    updateHintCard();
+    return;
+  }
+  chipCoins -= HINT_PRICE;
+  storage.saveChipCoins(chipCoins);
+  sound.play('coin');
+  updateCharges();
+  flyOut($('hintDialog'));
+  revealHint(p);
+}
+$('hint').onclick = () => {
+  if (busy) return;
+  // The hint already on screen can be shown again for free.
+  if (
+    hints.length === 2 &&
+    state.board[hints[0]] &&
+    state.board[hints[1]] &&
+    route(state.board, hints[0], hints[1], state.shields, state.walls)
+  ) {
+    draw(route(state.board, hints[0], hints[1], state.shields, state.walls));
+    return;
+  }
+  const p = findPair(state.board, state.shields, state.walls);
+  // No pair means a dead end: the failed card covers that, and nothing is spent.
+  if (!p) {
     hints = [];
     render();
+    return;
   }
+  if (freeHint()) {
+    if (!state.tutorial) state.hintUsed = true;
+    revealHint(p);
+  } else openHintCard();
 };
+$('hintBuy').onclick = buyHint;
+$('hintClose').onclick = () => flyOut($('hintDialog'));
+$('hintCoin').innerHTML = $('hintWalletCoin').innerHTML = chipCoinIcon(true);
+$('hintPrice').textContent = HINT_PRICE;
+$('hintChipum').innerHTML = componentIcon(2);
 $('help').onclick = () => {
   closeMenu();
   showCard($('manual'));
