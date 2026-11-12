@@ -7,3 +7,5 @@
 `tony-in-the-game-splash-v3.png` replaces the v2 controller with the website's excited illustrated Tony mascot. Built-in image edit prompt: replace only the controller with Tony from `public/tony/excited.png` in the website source, preserving his identity, raised fists, wordmark, palette, outlines and portrait background. Saved as a concept; not installed as the launch screen.
 
 The v3 splash is approved and installed in the iOS Splash asset catalog. The launch storyboard uses aspect fit to keep the complete logo visible on all device shapes.
+
+Icon updated to full bleed: the blue bevel reaches the canvas edges without exterior padding. Built-in image edit preserved the bolt and cyan/gold lighting while extending the blue surface into every corner.

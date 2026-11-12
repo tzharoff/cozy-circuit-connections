@@ -19,22 +19,7 @@ for (const [density, size, adaptive] of [
 ]) {
   const dir = `android/app/src/main/res/mipmap-${density}`;
   for (const name of ['ic_launcher', 'ic_launcher_round']) resize(size, `${dir}/${name}.png`);
-  // Keep the complete approved tile inside Android's adaptive icon safe area.
-  const foreground = `${dir}/ic_launcher_foreground.png`;
-  resize(Math.round(adaptive * 0.6), foreground);
-  execFileSync(
-    'sips',
-    [
-      '-p',
-      String(adaptive),
-      String(adaptive),
-      '--padColor',
-      '030D30',
-      foreground,
-      '--out',
-      foreground,
-    ],
-    { stdio: 'ignore' },
-  );
+  // Full-bleed artwork; Android applies the launcher mask.
+  resize(adaptive, `${dir}/ic_launcher_foreground.png`);
 }
 console.log('Updated browser, iOS, and Android icons.');
