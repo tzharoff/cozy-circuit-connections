@@ -12,6 +12,15 @@ The prototype has Level 0, 12 campaign stages played strictly in order, Endless 
 
 Decided November 11, 2026. The six component characters are called **Chip’ums**, as in "chip chums". The game itself does not have a final name yet.
 
+### Brand direction
+
+Decided November 12, 2026. **The Chip’ums are the brand**, and this puzzle game is the first place they live. They should be able to appear in other games, merch (plush, 3D prints, stickers), and seasonal events, so character design, names, and personalities are treated as brand assets.
+
+- **Naming pattern:** "Chip’ums" first, the game second, so each game builds the brand: for example _Chip’ums: Cozy Circuits_ or _Chip’ums Connect_, and later _Chip’ums Garden_, _Chip’ums Holiday_. "Cozy Chips" was considered; it is cute but collides with snack-food searches.
+- **Audience:** cozy, cute, low-pressure play for adult casual puzzle players (the genre skews toward women). Design around what those players enjoy (charm, collecting, short sessions, warm social features, fair monetization), not gendered labels or a pink-everything look.
+- **Not decided:** the final game title. The project currently uses three names that must match before store listings: "Cozy Circuit Connections" (home screen, page title, `capacitor.config.json`, Android `app_name`, iOS `Info.plist`) and "Spark Pals" (the iOS build setting `INFOPLIST_KEY_CFBundleDisplayName`, which is what the iPhone home screen shows). The store title and the shorter home-screen name can differ, but "Spark Pals" doesn't fit the Chip’ums brand and will be replaced once the final name is chosen.
+- **Before launch or merch:** trademark search on "Chip’ums" and the chosen title, and check the App Store, Google Play, domain, and social handles.
+
 The working cast (names are shown in How to play; the type names are used in tips and labels):
 
 | Chip’um             | Look                        | Personality hook                          |
