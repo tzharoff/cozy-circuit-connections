@@ -1529,6 +1529,17 @@ button[hidden] {
   gap: 5px;
   padding: 4px;
   background-image: none;
+  /* Six fixed, equal rows: row height never depends on the chips, so breaking a shield
+     (thinner border, no badge) can't resize the board. Real iPhones showed it shrinking. */
+  grid-template-rows: repeat(6, minmax(0, 1fr));
+}
+.play .board > * {
+  min-height: 0;
+}
+/* Only the board area flexes; the HUD and tools keep their own height. */
+.play .hud,
+.play .boosters {
+  flex: none;
 }
 .play .empty.socket {
   border: 0;
