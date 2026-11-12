@@ -6,6 +6,25 @@ html {
   touch-action: manipulation;
 }
 
+/* It's a game, not a page: no text selection, long-press callout menus, image dragging, or
+   gray tap flashes. Text fields (the play room and Level Workshop) stay selectable. */
+body.play {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+}
+body.play img,
+body.play svg {
+  -webkit-user-drag: none;
+}
+body.play input,
+body.play textarea,
+body.play select {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
 .board > .outside {
   display: none !important;
 }
