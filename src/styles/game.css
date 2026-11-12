@@ -3063,11 +3063,12 @@ dialog:focus {
   animation: zap-flicker 0.9s steps(1) infinite;
 }
 .zap-sparks {
-  stroke: #ffffff;
-  stroke-width: 9;
+  /* Soft, thin sparks: they barely overlap the Chip’um inside the bold ring. */
+  stroke: #f4ffd8;
+  stroke-width: 6;
   stroke-linecap: round;
-  stroke-dasharray: 10 40;
-  filter: drop-shadow(0 0 2px #f2ff5c) drop-shadow(0 0 6px #d9ff3c) drop-shadow(0 0 10px #4dff8a);
+  stroke-dasharray: 12 38;
+  filter: drop-shadow(0 0 3px #c8ff7a) drop-shadow(0 0 6px #7dff9e);
   animation: zap-run var(--zap-lap-ms, 1s) linear infinite;
 }
 .play .chip.selected {
@@ -3113,14 +3114,8 @@ dialog:focus {
     display: none;
   }
 }
-/* Subtle selection (play room option): thinner, softer sparks on a paler ring. */
+/* Subtle ring (play room option): a thinner, paler ring around the same sparks. */
 [data-zap='subtle'] .zap-track {
   stroke: #6fe39a;
   stroke-width: 6;
-}
-[data-zap='subtle'] .zap-sparks {
-  stroke: #f4ffd8;
-  stroke-width: 6;
-  stroke-dasharray: 12 38;
-  filter: drop-shadow(0 0 3px #c8ff7a) drop-shadow(0 0 6px #7dff9e);
 }

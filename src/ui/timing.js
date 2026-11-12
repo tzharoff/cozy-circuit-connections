@@ -23,8 +23,8 @@ export const timingDefaults = {
   /** Ring that bursts around each popping chip. */
   popRing: 370,
   /** One lap of the sparks racing around a selected chip. */
-  zapLap: 1000,
-  /** Selection style: 1 = bold (thick, bright sparks), 0 = subtle (thinner, softer). */
+  zapLap: 1250,
+  /** Selection ring: 1 = bold (deeper green, thicker), 0 = subtle (paler, thinner). */
   zapBold: 1,
 };
 
