@@ -27,6 +27,14 @@ import { boardMarkup } from './ui/view.js';
 
 const $ = (id) => document.getElementById(id);
 const sound = createSound();
+/** Plays a card's entrance (`arrive` drop-and-squash, or `clunk`) by restarting its class.
+ * Called after the card is open: iOS Safari skips CSS animations started while a dialog is
+ * still hidden, which is why the clear card didn't bounce on the phone. */
+function enter(card, cls) {
+  card.classList?.remove(cls);
+  void card.offsetWidth;
+  card.classList?.add(cls);
+}
 /** Opens a card or sheet with focus on the card itself, so no button inside starts out
  * highlighted (browsers otherwise focus the first button, often the ✕). */
 function showCard(card) {
@@ -126,10 +134,8 @@ function openCharges() {
   if (card.open) return;
   // A soft thump as the card finishes dropping in.
   setTimeout(() => sound.play('land'), 380);
-  card.classList?.remove('arrive');
-  void card.offsetWidth;
-  card.classList?.add('arrive');
   showCard(card);
+  enter(card, 'arrive');
 }
 function closeCharges() {
   closeCard($('chargesDialog'));
@@ -206,10 +212,8 @@ function openClearCard() {
   land(card);
   if (card.open) return;
   sound.play('clear');
-  card.classList?.remove('arrive');
-  void card.offsetWidth;
-  card.classList?.add('arrive');
   showCard(card);
+  enter(card, 'arrive');
 }
 /** Closes a card at once, unless it is already flying off. */
 function closeCard(card) {
@@ -411,10 +415,8 @@ function showStuck(force = false) {
   $('stuckText').textContent = out ? 'Everyone fell asleep.' : 'No pairs can connect.';
   $('stuckUndo').hidden = out;
   card.classList?.toggle('lights-out', out);
-  card.classList?.remove('clunk');
-  void card.offsetWidth;
-  card.classList?.add('clunk');
   showCard(card);
+  enter(card, 'clunk');
   sound.play(out ? 'lightsOut' : 'shortCircuit');
   if (!out) sputter.start(800);
 }
@@ -730,10 +732,8 @@ function openHintCard() {
   const card = $('hintDialog');
   land(card);
   if (card.open) return;
-  card.classList?.remove('arrive');
-  void card.offsetWidth;
-  card.classList?.add('arrive');
   showCard(card);
+  enter(card, 'arrive');
   setTimeout(() => sound.play('land'), 380);
 }
 function buyHint() {
@@ -839,6 +839,8 @@ $('homeSound').onclick = $('menuSound').onclick = () => {
   sound.play('tap');
 };
 showSoundState();
+// iOS Safari only shows :active (pressed) styles on touch when the page listens for touches.
+document.addEventListener?.('touchstart', () => {}, { passive: true });
 // Ordinary buttons tap; chips, and buttons with their own sounds, are left alone.
 document.addEventListener?.('click', (e) => {
   const button = e.target.closest?.('button');
