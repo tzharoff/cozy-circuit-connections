@@ -162,6 +162,10 @@ frame(0);
 frame(1000);
 assert(!animated.els.stageWin.open);
 assert(animated.run('busy&&state.board.filter(Boolean).length===2'));
+// When the wire lands, both chips light up and hold for a beat before popping.
+assert(animated.run('lit.length === 2'));
+timers.find((t) => t.ms === animated.run('animTiming.wireHold')).f();
+assert(!animated.els.stageWin.open);
 timers.find((t) => t.ms === animated.run('animTiming.popChip')).f();
 assert(animated.els.stageWin.open);
 assert(animated.run('!busy&&state.board.every(v=>!v)'));

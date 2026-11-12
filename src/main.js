@@ -17,7 +17,7 @@ import { componentIcon } from './ui/components.js';
 import { batteryIcon, chipCoinIcon } from './ui/currency.js';
 import { createSputter } from './ui/sputter.js';
 import { createSound } from './ui/sound.js';
-import { wireTravelMs } from './ui/timing.js';
+import { animTiming, wireTravelMs } from './ui/timing.js';
 import { createEffects } from './ui/effects.js';
 import { boardMarkup } from './ui/view.js';
 /** Application controller: selection, stage navigation, UI events, and match commits. */
@@ -362,6 +362,8 @@ function showGame() {
 state = storage.migrate(state);
 let selected = null,
   hints = [],
+  /** Chips shown selected during a connection (see choose). */
+  lit = [],
   busy = false;
 function say(s) {
   $('message').textContent = s;
@@ -437,7 +439,7 @@ function render() {
   for (const id of ['new', 'restart', 'hint']) $(id).disabled = busy;
   $('deal').textContent = 'BOARD ' + String(state.seed).slice(-5);
   if (state.tutorial) tutorialGuide();
-  $('board').innerHTML = boardMarkup({ state, selected, hints, busy });
+  $('board').innerHTML = boardMarkup({ state, selected, hints, busy, lit });
   updateHintBadge();
   if (!left && (!state.tutorial || state.tutorialStep === lessons.length - 1)) {
     if (state.tutorial) tutorialDone = true;
@@ -496,11 +498,23 @@ function choose(i) {
   if (path) {
     const first = selected;
     busy = true;
-    hints = [first, i];
+    // The first chip stays selected while the wire leaps across; the second lights up when
+    // it lands, both hold for a beat, then pop.
+    selected = null;
+    hints = [];
+    lit = [first];
     say('Power flowing…');
     render();
     sound.play('zap', { ms: wireTravelMs(path.length) });
     draw(path, () => {
+      lit = [first, i];
+      render();
+      // Without animation frames (tests, some previews) there is nothing to hold for.
+      const hold = globalThis.requestAnimationFrame ? animTiming.wireHold : 0;
+      if (hold) setTimeout(pop, hold);
+      else pop();
+    });
+    function pop() {
       sound.play('pop', { type: state.board[i] - 1 });
       popPair(first, i, () => {
         state.history.push({
@@ -514,6 +528,7 @@ function choose(i) {
         state.score++;
         selected = null;
         hints = [];
+        lit = [];
         busy = false;
         say(
           freed
@@ -522,7 +537,7 @@ function choose(i) {
         );
         render();
       });
-    });
+    }
   } else {
     selected = i;
     hints = [];

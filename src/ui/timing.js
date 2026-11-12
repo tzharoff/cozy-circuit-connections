@@ -16,6 +16,8 @@ export const timingDefaults = {
   wireLinger: 190,
   /** Wire fade-out. */
   wireFade: 280,
+  /** Pause after the wire lands, with both chips lit, before they pop. */
+  wireHold: 120,
   /** Chip shrink-and-vanish; the pair is removed when this ends. */
   popChip: 180,
   /** Confetti bits flying out. */
@@ -41,6 +43,7 @@ export const timingRanges = {
   wireRing: [0, 1000, 10],
   wireLinger: [0, 1500, 10],
   wireFade: [0, 1500, 10],
+  wireHold: [0, 800, 10],
   popChip: [50, 1000, 10],
   popConfetti: [100, 2000, 10],
   popRing: [100, 2000, 10],

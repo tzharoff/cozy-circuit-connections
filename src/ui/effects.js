@@ -36,6 +36,30 @@ export function createEffects({ getElement: $, getState }) {
           ]
         : [((p % 8) - 0.5) * (100 / 6), (((p / 8) | 0) - 0.5) * (100 / 6)];
     });
+    // The wire leaps off the middle of the first chip's facing edge and lands on the middle
+    // of the second chip's edge, instead of running from center to center.
+    const half = path.map((p) => {
+      const rect = grid.children?.[p]?.getBoundingClientRect?.();
+      return bounds?.width && bounds?.height && rect
+        ? [(rect.width / 2 / bounds.width) * 100, (rect.height / 2 / bounds.height) * 100]
+        : [100 / 12, 100 / 12];
+    });
+    // Wires run straight, so move only along the main direction (tiny rounding differences
+    // on the other axis would otherwise push the end onto a corner).
+    const toEdge = (i, j) => {
+      const dx = coords[j][0] - coords[i][0],
+        dy = coords[j][1] - coords[i][1];
+      return Math.abs(dx) >= Math.abs(dy)
+        ? [coords[i][0] + Math.sign(dx) * half[i][0], coords[i][1]]
+        : [coords[i][0], coords[i][1] + Math.sign(dy) * half[i][1]];
+    };
+    if (coords.length > 1) {
+      const last = coords.length - 1,
+        start = toEdge(0, 1),
+        end = toEdge(last, last - 1);
+      coords[0] = start;
+      coords[last] = end;
+    }
     const points = coords.map((p) => p.join(',')).join(' ');
     if (
       globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches ||

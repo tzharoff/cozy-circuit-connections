@@ -43,6 +43,9 @@ assert(vm.runInContext('state.score===0', ctx));
 vm.runInContext('choose(p.a)', ctx);
 assert(vm.runInContext('state.score===0', ctx));
 next(11000);
+// The wire has landed: both chips are lit and hold for a beat; nothing is removed yet.
+assert(vm.runInContext('busy&&state.score===0&&lit.length===2', ctx));
+timers.at(-1)();
 assert(
   vm.runInContext(
     '!busy&&state.score===1&&!state.board[p.a]&&!state.board[p.z]&&state.history.length===1',

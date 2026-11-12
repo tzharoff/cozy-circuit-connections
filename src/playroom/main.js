@@ -22,6 +22,7 @@ const sliders = {
     ['wireRing', 'Arrival ring'],
     ['wireLinger', 'Stay before fade'],
     ['wireFade', 'Fade out'],
+    ['wireHold', 'Hold before pop'],
   ],
   popSliders: [
     ['popChip', 'Chip vanish'],
@@ -32,6 +33,7 @@ const sliders = {
 };
 let state = make(Math.floor(Math.random() * 2147483647), 'classic'),
   selected = null,
+  lit = [],
   busy = false,
   loopTimer = null;
 const effects = createEffects({ getElement: $, getState: () => state });
@@ -57,7 +59,7 @@ const soundLabels = {
 let popType = 0;
 
 function render() {
-  $('board').innerHTML = boardMarkup({ state, selected, hints: [], busy });
+  $('board').innerHTML = boardMarkup({ state, selected, hints: [], busy, lit });
 }
 function freshBoard() {
   if (busy) return;
@@ -67,21 +69,29 @@ function freshBoard() {
   render();
 }
 /** Runs one connection with the real wire and pop effects, then removes the pair. */
+/** Same sequence as the game: the first chip stays lit while the wire leaps across, the
+ * second lights up when it lands, both hold for a beat, then pop. */
 function connect(a, z, path) {
   busy = true;
   selected = null;
+  lit = [a];
   render();
   sound.play('zap', { ms: wireTravelMs(path.length) });
   effects.draw(path, () => {
-    sound.play('pop', { type: state.board[a] - 1 });
-    effects.popPair(a, z, () => {
-      breakShields(state.shields, a, z);
-      state.board[a] = state.board[z] = 0;
-      busy = false;
-      render();
-      if (!findPair(state.board, state.shields, state.walls)) setTimeout(freshBoard, 400);
-      if ($('loop').checked) loopTimer = setTimeout(zap, 700);
-    });
+    lit = [a, z];
+    render();
+    setTimeout(() => {
+      sound.play('pop', { type: state.board[a] - 1 });
+      effects.popPair(a, z, () => {
+        breakShields(state.shields, a, z);
+        state.board[a] = state.board[z] = 0;
+        lit = [];
+        busy = false;
+        render();
+        if (!findPair(state.board, state.shields, state.walls)) setTimeout(freshBoard, 400);
+        if ($('loop').checked) loopTimer = setTimeout(zap, 700);
+      });
+    }, animTiming.wireHold);
   });
 }
 function zap() {
