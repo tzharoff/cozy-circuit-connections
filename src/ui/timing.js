@@ -1,4 +1,5 @@
-/** Animation timings for the zap line (wire) and the chip pop, in milliseconds.
+/** Animation timings for the zap line (wire), the chip pop, and the selection sparks, in
+ * milliseconds (plus the selection style).
  * The play room (playroom.html) adjusts these and saves them in this browser under
  * `circuitTuning`; the game uses the saved values too, so they can be felt in real play.
  * To ship new values, change `timingDefaults` below. */
@@ -21,6 +22,10 @@ export const timingDefaults = {
   popConfetti: 480,
   /** Ring that bursts around each popping chip. */
   popRing: 370,
+  /** One lap of the sparks racing around a selected chip. */
+  zapLap: 1000,
+  /** Selection style: 1 = bold (thick, bright sparks), 0 = subtle (thinner, softer). */
+  zapBold: 1,
 };
 
 /** How long the zap line takes to travel a path of `cells` cells. */
@@ -39,6 +44,8 @@ export const timingRanges = {
   popChip: [50, 1000, 10],
   popConfetti: [100, 2000, 10],
   popRing: [100, 2000, 10],
+  zapLap: [200, 3000, 50],
+  zapBold: [0, 1, 1],
 };
 
 const TUNING_KEY = 'circuitTuning';
@@ -73,6 +80,8 @@ export function applyTimingCss(root = globalThis.document?.documentElement) {
   style.setProperty('--pop-chip-ms', animTiming.popChip + 'ms');
   style.setProperty('--pop-confetti-ms', animTiming.popConfetti + 'ms');
   style.setProperty('--pop-ring-ms', animTiming.popRing + 'ms');
+  style.setProperty('--zap-lap-ms', animTiming.zapLap + 'ms');
+  if (root.dataset) root.dataset.zap = animTiming.zapBold ? 'bold' : 'subtle';
 }
 
 /** Changes timings live and saves them (play room only). */

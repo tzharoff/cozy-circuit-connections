@@ -134,3 +134,23 @@
 .sound-board button:active {
   transform: translateY(2px);
 }
+.room-toggle {
+  display: flex;
+  gap: 8px;
+  padding: 2px 0 6px;
+}
+.room-toggle button {
+  flex: 1;
+  height: 42px;
+  border: 3px solid var(--rim);
+  border-radius: 14px;
+  background: #22463f;
+  color: var(--cream);
+  font: 600 16px var(--ui);
+  cursor: pointer;
+}
+.room-toggle button[aria-pressed='true'] {
+  border-color: #17704e;
+  background: linear-gradient(#94f6d0, #44d29d);
+  color: #0d3a2b;
+}

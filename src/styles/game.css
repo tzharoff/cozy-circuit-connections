@@ -3068,7 +3068,7 @@ dialog:focus {
   stroke-linecap: round;
   stroke-dasharray: 10 40;
   filter: drop-shadow(0 0 2px #f2ff5c) drop-shadow(0 0 6px #d9ff3c) drop-shadow(0 0 10px #4dff8a);
-  animation: zap-run 0.7s linear infinite;
+  animation: zap-run var(--zap-lap-ms, 1s) linear infinite;
 }
 .play .chip.selected {
   box-shadow:
@@ -3112,4 +3112,15 @@ dialog:focus {
   .zap-sparks {
     display: none;
   }
+}
+/* Subtle selection (play room option): thinner, softer sparks on a paler ring. */
+[data-zap='subtle'] .zap-track {
+  stroke: #6fe39a;
+  stroke-width: 6;
+}
+[data-zap='subtle'] .zap-sparks {
+  stroke: #f4ffd8;
+  stroke-width: 6;
+  stroke-dasharray: 12 38;
+  filter: drop-shadow(0 0 3px #c8ff7a) drop-shadow(0 0 6px #7dff9e);
 }

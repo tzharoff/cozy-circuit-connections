@@ -33,7 +33,9 @@
         ><label class="room-loop"><input id="loop" type="checkbox" /> Loop</label
         ><button id="newBoard">New board</button>
       </div>
-      <p class="room-hint">Tap Zap, or tap two matching Chip’ums yourself.</p>
+      <p class="room-hint">
+        Tap Zap, or tap two matching Chip’ums yourself. Tap one Chip’um to see the selection.
+      </p>
       <section class="room-panel" aria-labelledby="wireTitle">
         <h2 id="wireTitle">Zap line</h2>
         <div id="wireSliders"></div>
@@ -41,6 +43,14 @@
       <section class="room-panel" aria-labelledby="popTitle">
         <h2 id="popTitle">Pop</h2>
         <div id="popSliders"></div>
+      </section>
+      <section class="room-panel" aria-labelledby="zapTitle">
+        <h2 id="zapTitle">Selection</h2>
+        <div class="room-toggle" role="group" aria-label="Selection style">
+          <button id="zapBold" aria-pressed="true">Bold</button
+          ><button id="zapSubtle" aria-pressed="false">Subtle</button>
+        </div>
+        <div id="zapSliders"></div>
       </section>
       <section class="room-panel" aria-labelledby="soundTitle">
         <h2 id="soundTitle">Sounds</h2>

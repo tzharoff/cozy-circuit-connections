@@ -28,6 +28,7 @@ const sliders = {
     ['popConfetti', 'Confetti'],
     ['popRing', 'Burst ring'],
   ],
+  zapSliders: [['zapLap', 'Spark lap']],
 };
 let state = make(Math.floor(Math.random() * 2147483647), 'classic'),
   selected = null,
@@ -118,18 +119,41 @@ function sliderRow([key, label]) {
   const [min, max, step] = timingRanges[key];
   return `<label class="room-slider"><span>${label}</span><input type="range" id="t-${key}" min="${min}" max="${max}" step="${step}" value="${animTiming[key]}" /><output id="o-${key}">${animTiming[key]} ms</output></label>`;
 }
+/** Every setting that has a slider (the selection style is a toggle instead). */
+const sliderKeys = () => Object.values(sliders).flatMap((rows) => rows.map(([key]) => key));
 function syncSliders() {
-  for (const key of Object.keys(timingDefaults)) {
+  $('zapBold').setAttribute('aria-pressed', String(!!animTiming.zapBold));
+  $('zapSubtle').setAttribute('aria-pressed', String(!animTiming.zapBold));
+  for (const key of sliderKeys()) {
     $('t-' + key).value = animTiming[key];
     $('o-' + key).textContent = animTiming[key] + ' ms';
     $('o-' + key).classList.toggle('changed', animTiming[key] !== timingDefaults[key]);
   }
 }
 for (const [box, rows] of Object.entries(sliders)) $(box).innerHTML = rows.map(sliderRow).join('');
-for (const key of Object.keys(timingDefaults))
+/** Selection settings show on a selected chip, so pick one if nothing is selected. */
+function showSelection() {
+  if (selected !== null || busy) return;
+  const chip = $('board').querySelector('.chip:not(.shielded)');
+  if (chip) {
+    selected = Number(chip.dataset.chip);
+    render();
+  }
+}
+for (const key of sliderKeys())
   $('t-' + key).oninput = (e) => {
     setTiming({ [key]: Number(e.target.value) });
     syncSliders();
+    if (key.startsWith('zap')) showSelection();
+  };
+for (const [id, bold] of [
+  ['zapBold', 1],
+  ['zapSubtle', 0],
+])
+  $(id).onclick = () => {
+    setTiming({ zapBold: bold });
+    syncSliders();
+    showSelection();
   };
 $('zap').onclick = zap;
 $('loop').onchange = () => {

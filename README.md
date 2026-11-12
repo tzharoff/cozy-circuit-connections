@@ -17,7 +17,7 @@ Open the local URL printed by Vite. Source modules need an HTTP server; double-c
 
 Open `/editor.html` for the **Level Workshop**: paint chips, shields, walls, and shapes; load stages; check solutions; play-test; save drafts; and import/export levels. See [the editor guide](docs/LEVEL_EDITOR.md) for replacing or appending campaign stages.
 
-Open `/playroom.html` for the **Play room**: a test board with sliders for the zap line (wire) and pop animation speeds. Tap Zap (or turn on Loop) to watch and hear a connection at the current speeds, and use the Sounds board to play every sound effect. Changes save in that browser and apply to the game there too; **Copy values** gives the numbers to make them the shipped defaults in `src/ui/timing.js`.
+Open `/playroom.html` for the **Play room**: a test board with sliders for the zap line (wire) and pop animation speeds, plus the selection's spark speed and a Bold/Subtle style toggle. Tap Zap (or turn on Loop) to watch and hear a connection at the current speeds, and use the Sounds board to play every sound effect. Changes save in that browser and apply to the game there too; **Copy values** gives the numbers to make them the shipped defaults in `src/ui/timing.js`.
 
 ## Build, preview, or export
 
