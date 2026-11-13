@@ -116,6 +116,106 @@ Built November 13, 2026, in the home screen's left challenge column. Three quest
 - The play room's Quests panel can finish all of today's quests or force a new day, for testing.
 - Open: final reward amounts, streak bonuses, and whether quests should ever be rerolled for coins.
 
+## Spending Chip Coins: collections and cosmetics (plan)
+
+Planned November 13, 2026; nothing here is built yet. Failing is rare and hints are optional, so Charges and hints alone don't give Chip Coins much to do. Coins are mostly spent on **cute things to collect and show off**, which is the healthiest kind of spending for a cozy game: nothing is ever needed to win. Every item here is cosmetic.
+
+Each two-week season adds to all four collections below (see Seasonal rotation), so every update visibly brings new Chip’ums, outfits, furniture, and a theme.
+
+### 1. Chip’um friends (collect the crew)
+
+- **New characters** join the original six, each a circuit part with a name, a look, and a personality, keeping the brand rules (simple silhouette, flat colors, the shared face, on-palette). Starter ideas:
+
+  | Friend                | Part        | Personality hook                       |
+  | --------------------- | ----------- | -------------------------------------- |
+  | Dot the Diode         | Diode       | One-way thinker; always pointing ahead |
+  | Lumi the LED          | LED         | Glows when happy; shy in the dark      |
+  | Fizz the Fuse         | Fuse        | Excitable; the first to cheer          |
+  | Tara the Transistor   | Transistor  | Organized; switches plans in a snap    |
+  | Pip the Potentiometer | Knob        | Turns everything up (or down) a notch  |
+  | Mo the Motor          | Tiny motor  | Never sits still; loves spinning       |
+  | Buzz the Buzzer       | Buzzer      | Loud laugh, big heart                  |
+  | Sol the Solar Cell    | Solar panel | Sunny mood; naps when it's cloudy      |
+
+- **Meeting friends (not buying them):** friends are met through the workshop, not bought directly (see "Visits" under section 4). Coins buy furniture; furniture attracts friends; visits turn into friendship. One new friend per season, attracted by that season's furniture.
+- **Choose your crew:** the board always has six matching types, but the player picks which six Chip’ums play them (the original six by default). Swap in favorites, for example Lumi instead of Ralph. Matching rules don't change, because the board still saves the six type IDs; the crew is the look for each. The crew picker checks that all six colors stay clearly distinct, so pairs are easy to spot. Your crew also appears on the home workbench.
+- **Collection book:** every friend's portrait, part, personality, favorite things ("Lumi loves: lamps, stargazing, string lights"), and birthday (a birthday can be a tiny in-game event). Friends you haven't met show as silhouettes with a clue, like "Loves a warm glow after dark…", so players work out how to attract them.
+
+### 2. Unlockable animations
+
+Each Chip’um (or friend) can learn extra idle moves that join their blink, yawn, bounce, and wiggle rotation. Bought with coins or earned from Favors and seasons. A first list to sit down with and expand:
+
+- **Wave:** a little hand-wave (a body tilt and a hop for the armless ones).
+- **Happy dance:** a side-to-side shuffle with a sparkle.
+- **Spin:** a quick 360 twirl.
+- **Heart pop:** a tiny heart floats up.
+- **Sneeze sparks:** a little "achoo" with a spark puff.
+- **Peekaboo:** ducks down, then pops back up.
+- **Zoomies:** a jittery speed-wiggle (perfect for Mo the Motor).
+- **Stretch:** a big sleepy stretch after a yawn.
+- **Hum:** music notes drift up.
+- **High-five:** two neighbors lean in and tap.
+- **Blush:** cheeks glow pink.
+- **Seasonal moves:** shivering (winter), sunbathing (summer), spooky "boo" (Halloween).
+
+Rules: animations stay short (under a second or two), never move a chip out of its cell, and respect reduced motion (blink-only). The play room's Idle panel previews them.
+
+### 3. Outfits and accessories
+
+- Little hats, scarves, bows, glasses, and seasonal pieces (party hat, beanie, sunhat, witch hat, flower crown), drawn as simple shapes on top of the character so they stay merch-friendly.
+- Each Chip’um or friend can wear one accessory; the choice shows on the board, home, and collection book.
+- Bought with Chip Coins; each season brings 2 or 3 new ones. Seasonal items return in later years, so missing a season never means missing an item forever.
+
+### 4. Home: decorating the workshop
+
+- The home screen's workbench becomes the Chip’ums' **workshop**, a room to decorate over time, in the spirit of cozy home-decorating games: buy furniture and decor and place it in set spots (wall, shelf, floor, window, lights).
+- Starter ideas: a desk lamp, a cozy rug, a potted plant, a bookshelf, string lights, a window with weather outside, a little clock, posters of the Chip’ums.
+- **Seasonal furniture:** each season adds 3 to 5 themed pieces (a snow globe, a pumpkin, a gift pile, a beach umbrella).
+- **Visits:** each friend has favorite furniture. Place it and they start dropping by, using their favorite piece (napping on the rug, reading by the lamp). After a few visits they **move in**: they join your collection and can join your crew. A visitor may leave a small thank-you gift (a few Chip Coins or a tiny item).
+- **Conditions make it magical:** the workshop follows the real local clock and season.
+  - **Day and night:** the window shows the sky and lamps switch on after dark. Lumi only visits when the desk lamp is on, and it only turns on at night; Sol the Solar Cell only visits in daylight.
+  - **Seasons and weather:** some friends only come in winter, on rainy days, or around their birthday.
+  - **Rare visitors** need combinations ("string lights and the radio, at night").
+- The loop: earn coins (Favors, play) → buy furniture → friends visit → friends move in → new crew looks and collection entries. Decorating always has a purpose.
+- This is the collect-them-all appeal (discover, befriend, build a team, show off), with its own cozy identity: you meet Chip’ums by making a home they'd love, not by catching them.
+
+### 5. Board and effect themes
+
+- **Colored circuit boards:** buy new board trays and socket colors (and matching wire glows), alongside wire colors, pop confetti styles, and selection sparks (already listed under cosmetics in the economy table). They pair with the season palettes from the Themed covers art pass.
+
+### Rough price ladder (placeholders)
+
+Daily Favors pay about 55 Chip Coins a day when all three are claimed.
+
+| Item                     | Price (Chip Coins) | About                  |
+| ------------------------ | ------------------ | ---------------------- |
+| Animation                | 40                 | under a day            |
+| Accessory                | 60–90              | 1–2 days               |
+| Furniture piece          | 30–150             | half a day to 3 days   |
+| Board or effect theme    | 120                | 2–3 days               |
+| Furniture a friend loves | 150–250            | 3–5 days (then visits) |
+
+### Daily Favors (rename)
+
+Proposed November 13, 2026: rename Daily quests to **Daily Favors**, with **Favors** as the one-word card heading. Each favor is asked by a Chip’um, with that character's face on its icon and a happy hop when you claim. "Daily Bytes" stays in reserve as a name for a special event.
+
+### Open questions
+
+- The friends roster, names, favorite furniture, visit conditions, and which arrives first.
+- How many visits until a friend moves in, and whether visits need the app open.
+- How decor placement works (fixed spots or free placement), and how big the workshop gets.
+- Final prices, and which items are coin-only, season rewards, or Favors streak rewards.
+- Whether some premium items come only from purchased coins (keep fair: never gameplay power).
+
+### Suggested build order
+
+1. Rename to Daily Favors (small).
+2. **Shop and collection book** frame: a Shop card with tabs, owned/unowned states, and buying with Chip Coins.
+3. **Unlockable animations** (reuses the idle system; quickest visible win).
+4. **Accessories** (art plus one layer on the character).
+5. **Workshop decorating** (plan the room layout first), with the day/night window.
+6. **Chip’um friends:** visits, moving in, conditions, and the crew picker.
+
 ## Hints
 
 Decided November 11, 2026. Each level (and each Endless board) gets **one free hint**; the tutorial's hints are always free. There is no penalty for not using it, and running out of moves is still announced by the failed card.
@@ -267,14 +367,14 @@ No currency, life, or item balance has been chosen. The current recovery screen 
 
 ## Economy and monetization direction
 
-| Item or system  | Decision                                                                                | Still to define                                                                                    |
-| --------------- | --------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
-| Lives (Charges) | Restarting a level spends one Charge; shown as a battery whose cells fill to match      | Recharge price, other ways to earn Charges, confirmation flow                                      |
-| Chip Coins      | Buy Recharges and Shield Breakers; can be earned from challenge rewards                 | Prices, purchase packs, balances, caps, and other uses                                             |
-| Shield Breakers | Remove one layer from a chosen shield; available through currency and challenge rewards | Shop/inventory flow, whether to buy-and-use or store items, behavior when no helpful target exists |
-| Hints           | One free per level; more cost Chip Coins (placeholder 10); rewarded ads still possible  | Final price, ad rewards                                                                            |
-| Cosmetics       | Sell component art, board themes, wire effects, and pop effects                         | Pack contents, unlock requirements, direct purchase versus currency pricing                        |
-| Ads             | Optional rewarded ads; no interruptions during a board                                  | Specific placements, rewards, availability, consent and store integration                          |
+| Item or system  | Decision                                                                                                               | Still to define                                                                                    |
+| --------------- | ---------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| Lives (Charges) | Restarting a level spends one Charge; shown as a battery whose cells fill to match                                     | Recharge price, other ways to earn Charges, confirmation flow                                      |
+| Chip Coins      | Buy Recharges and Shield Breakers; can be earned from challenge rewards                                                | Prices, purchase packs, balances, caps, and other uses                                             |
+| Shield Breakers | Remove one layer from a chosen shield; available through currency and challenge rewards                                | Shop/inventory flow, whether to buy-and-use or store items, behavior when no helpful target exists |
+| Hints           | One free per level; more cost Chip Coins (placeholder 10); rewarded ads still possible                                 | Final price, ad rewards                                                                            |
+| Cosmetics       | Chip’um friends, unlockable animations, accessories, workshop decor, and board/effect themes (see Spending Chip Coins) | Pack contents, unlock requirements, direct purchase versus currency pricing                        |
+| Ads             | Optional rewarded ads; no interruptions during a board                                                                 | Specific placements, rewards, availability, consent and store integration                          |
 
 No payment or ad integration is implemented. Premium currency is now an agreed part of the Shield Breaker plan, superseding the earlier idea to begin with direct cosmetic purchases only. Optional tools such as shuffle, demolition, and auto-connect were discussed but are not committed features.
 
