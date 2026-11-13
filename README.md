@@ -68,6 +68,7 @@ Checks cover the tutorial, every stage solution (including double shields), unlo
 - Tutorial completion and Stage Clear screens.
 - A burnt "Short circuit!" failed card and persistent board notice when no pairs can connect, with undo/restart recovery.
 - Endless mode and six board shapes.
+- Daily quests: three goals a day (collect a Chip’um, make connections, break shields, clear levels, first-try clears) shown as rings on the home screen; Claim pays Chip Coins.
 - Themed covers: shields can wear seasonal outfits (ice, gift wrap, eggshell) with their own cracks, bursts, sounds, and messages.
 - Bedtime levels: a night-blue board where Chip’ums doze off over time; a sleeper can only be the first tap, and if everyone falls asleep it’s Lights out.
 - Idle life: Chip’ums randomly blink, yawn, bounce, and wiggle on the board and home screen.

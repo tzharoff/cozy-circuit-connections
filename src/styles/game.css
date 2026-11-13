@@ -3511,3 +3511,192 @@ dialog:focus {
   border-color: #8a6a3a;
   color: #5a4220;
 }
+/* Daily quests: round icons with progress rings in the home screen's left column, and the
+   Quests card. A finished quest glows gold with a "!" until claimed. */
+.play .quest-icon {
+  position: relative;
+  width: 58px;
+  height: 58px;
+  padding: 0;
+  border: 3px solid var(--rim);
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 28%, #36735f, #22463f 72%);
+  box-shadow:
+    inset 0 2px 0 #ffffff26,
+    0 4px 0 #071713,
+    0 8px 12px #0006;
+  cursor: pointer;
+}
+.play .quest-icon:active {
+  transform: translateY(3px);
+  box-shadow:
+    inset 0 2px 0 #ffffff26,
+    0 1px 0 #071713;
+}
+.quest-ring {
+  position: absolute;
+  inset: -3px;
+  width: calc(100% + 6px);
+  height: calc(100% + 6px);
+  transform: rotate(-90deg);
+  pointer-events: none;
+}
+.quest-ring circle {
+  fill: none;
+  stroke-width: 5;
+  stroke-linecap: round;
+}
+.quest-ring .track {
+  stroke: #0b2e2366;
+}
+.quest-ring .fill {
+  stroke: var(--mint);
+}
+.quest-icon.ready .quest-ring .fill {
+  stroke: #ffd36b;
+}
+.quest-icon.ready {
+  animation: quest-glow 1.4s ease-in-out infinite alternate;
+}
+.quest-icon.claimed {
+  opacity: 0.55;
+}
+@keyframes quest-glow {
+  to {
+    box-shadow:
+      inset 0 2px 0 #ffffff26,
+      0 4px 0 #071713,
+      0 0 16px #ffd36baa;
+  }
+}
+.quest-art {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+}
+.quest-icon .component-art {
+  width: 36px;
+  height: 36px;
+}
+.quest-glyph {
+  width: 26px;
+  height: 26px;
+  fill: #ffe46b;
+  stroke: #7a5106;
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+.quest-badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  border: 2px solid #7a5106;
+  border-radius: 50%;
+  background: #ffd36b;
+  color: #4a2f00;
+  font: 700 14px var(--ui);
+}
+.quest-badge.done {
+  border-color: #17704e;
+  background: #94f6d0;
+  color: #0d3a2b;
+}
+.quest-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+.quest-row {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  text-align: left;
+}
+.quest-row.claimed {
+  opacity: 0.6;
+}
+.quest-row .quest-art {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #cfeee0;
+}
+.quest-row .component-art {
+  width: 36px;
+  height: 36px;
+}
+.quest-info {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+.play .quest-info b {
+  font-size: 16px;
+  line-height: 1.2;
+  color: #0f3d2e;
+}
+.quest-info small {
+  font-size: 13px;
+  color: #3b6b57;
+  font-variant-numeric: tabular-nums;
+}
+.quest-bar {
+  height: 8px;
+  border-radius: 8px;
+  background: #b9e3cf;
+  overflow: hidden;
+}
+.quest-bar i {
+  display: block;
+  height: 100%;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #44d29d, #94f6d0);
+}
+.quest-reward,
+.quest-claim .price-tag {
+  font-size: 16px;
+}
+.quest-reward .coin-art,
+.quest-claim .coin-art {
+  width: 20px;
+  height: 20px;
+}
+.play .quest-card .quest-claim {
+  width: auto;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 6px 6px 8px;
+  border-width: 2px;
+  border-radius: 14px;
+  font-size: 15px;
+  -webkit-text-stroke-width: 4px;
+}
+.play .quest-card .quest-claim .price-tag {
+  padding: 1px 6px 1px 2px;
+  font-size: 14px;
+}
+.quest-claimed {
+  font: 700 22px var(--ui);
+  color: #17704e;
+}
+.play .quest-card .quest-reset {
+  margin: 12px 0 0;
+  font-size: 13px;
+  color: #3b6b57;
+}
+@media (prefers-reduced-motion: reduce) {
+  .quest-icon.ready {
+    animation: none;
+  }
+}

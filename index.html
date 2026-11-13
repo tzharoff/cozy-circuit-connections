@@ -41,7 +41,7 @@
       </div>
       <h1 class="home-title">Cozy Circuit <span>Connections</span></h1>
       <!-- Challenge icons go in these columns once events exist; they stay empty until then. -->
-      <div id="challengesLeft" class="home-side home-side-left" aria-label="Challenges"></div>
+      <div id="challengesLeft" class="home-side home-side-left" aria-label="Daily quests"></div>
       <div class="home-scene" aria-hidden="true">
         <div class="home-glow"></div>
         <svg class="home-spark" viewBox="0 0 200 60">
@@ -365,6 +365,21 @@
           ><span id="rechargePrice">20</span></span
         >
       </button>
+    </dialog>
+    <dialog
+      tabindex="-1"
+      id="questDialog"
+      class="level-card quest-card"
+      aria-labelledby="questTitle"
+    >
+      <header class="card-head">
+        <h2 id="questTitle">Quests</h2>
+        <button id="questClose" class="card-close" aria-label="Close">×</button>
+      </header>
+      <div class="card-body">
+        <ul id="questList" class="quest-list"></ul>
+        <p id="questReset" class="quest-reset"></p>
+      </div>
     </dialog>
     <dialog tabindex="-1" id="hintDialog" class="level-card hint-card" aria-labelledby="hintTitle">
       <header class="card-head">

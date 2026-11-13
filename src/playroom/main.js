@@ -294,5 +294,23 @@ for (const button of document.querySelectorAll('[data-cover-pick]'))
       b.setAttribute('aria-pressed', String(b === button));
     render();
   };
+// Quests live in the game's saves (circuitQuests); these shortcuts edit them for testing.
+$('questsFinish').onclick = () => {
+  try {
+    const saved = JSON.parse(localStorage.getItem('circuitQuests'));
+    if (!saved?.quests) throw new Error('none');
+    for (const q of saved.quests) q.progress = q.target;
+    localStorage.setItem('circuitQuests', JSON.stringify(saved));
+    $('roomStatus').textContent = 'Quests finished. Open the game to claim them.';
+  } catch {
+    $('roomStatus').textContent = 'Open the game once first so today’s quests exist.';
+  }
+};
+$('questsNewDay').onclick = () => {
+  try {
+    localStorage.removeItem('circuitQuests');
+  } catch {}
+  $('roomStatus').textContent = 'Fresh quests will be dealt next time the game opens.';
+};
 syncSliders();
 render();

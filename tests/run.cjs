@@ -8,6 +8,7 @@ for (const file of [
   'stuck.cjs',
   'charges.cjs',
   'bedtime.cjs',
+  'quests.cjs',
   'tutorial.cjs',
   'campaign.cjs',
   'walls.cjs',

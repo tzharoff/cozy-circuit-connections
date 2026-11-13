@@ -3,6 +3,14 @@ import { coverThemes, coverOf } from './data/covers.js';
 import { route, findPair, breakShields, boardStatus, shieldLayers } from './game/rules.js';
 import { make, makeStage, makeTutorial } from './game/generate.js';
 import { clone, valid } from './game/state.js';
+import {
+  questDay,
+  questsToday,
+  questLabel,
+  questDone,
+  questEvent,
+  claimQuest,
+} from './game/quests.js';
 import { isBedtime, noSleep, dozeCandidates, lightsOut, wakeNeighbors } from './game/bedtime.js';
 import { createStorage } from './platform/storage.js';
 import {
@@ -98,6 +106,136 @@ let charges = storage.loadCharges(),
   chipCoins = storage.loadChipCoins(),
   /** Replaces the refill line on the Charges card until it closes (e.g. not enough coins). */
   chargesNote = '';
+/** Daily quests: three goals a day, tracked from play, claimed for Chip Coins. */
+let quests = questsToday(storage.loadQuests(), questDay());
+/** Small round icons for each quest kind (collect quests show the Chip’um itself). */
+const questGlyphs = {
+  connect: '<path d="M13 2 4 14h7l-1 8 9-12h-7Z"/>',
+  shield: '<path d="M12 2.5 20.2 7.2v9.6L12 21.5 3.8 16.8V7.2Z"/>',
+  clear: '<path d="M5 21V4m0 0h11l-2 4 2 4H5"/>',
+  firstTry:
+    '<path d="M12 2.8 14.8 8.6l6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3-4.6-4.4 6.3-.9Z"/>',
+};
+function questArt(q) {
+  return q.kind === 'collect'
+    ? componentIcon(q.type)
+    : '<svg class="quest-glyph" viewBox="0 0 24 24" aria-hidden="true">' +
+        questGlyphs[q.kind] +
+        '</svg>';
+}
+/** Deals new quests after local midnight. */
+function refreshQuestDay() {
+  const day = questDay();
+  if (quests.day === day) return false;
+  quests = questsToday(null, day);
+  storage.saveQuests(quests);
+  return true;
+}
+/** Feeds one play event to today's quests and redraws them if anything moved. */
+function questTick(event) {
+  refreshQuestDay();
+  if (questEvent(quests, event)) {
+    storage.saveQuests(quests);
+    renderQuests();
+  }
+}
+/** Quest icons in the home screen's left column: a progress ring, glowing gold when ready. */
+function renderQuests() {
+  const ring = (q) => {
+    const c = 2 * Math.PI * 27,
+      done = Math.min(1, q.progress / q.target);
+    return (
+      '<svg class="quest-ring" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="27" class="track"/><circle cx="32" cy="32" r="27" class="fill" stroke-dasharray="' +
+      (done * c).toFixed(1) +
+      ' ' +
+      c.toFixed(1) +
+      '"/></svg>'
+    );
+  };
+  $('challengesLeft').innerHTML = quests.quests
+    .map(
+      (q, i) =>
+        '<button class="quest-icon ' +
+        (q.claimed ? 'claimed' : questDone(q) ? 'ready' : '') +
+        '" data-quest="' +
+        i +
+        '" aria-label="' +
+        questLabel(q, types) +
+        ': ' +
+        q.progress +
+        ' of ' +
+        q.target +
+        (q.claimed ? ', claimed' : questDone(q) ? ', ready to claim' : '') +
+        '">' +
+        ring(q) +
+        '<span class="quest-art">' +
+        questArt(q) +
+        '</span>' +
+        (q.claimed
+          ? '<span class="quest-badge done">✓</span>'
+          : questDone(q)
+            ? '<span class="quest-badge">!</span>'
+            : '') +
+        '</button>',
+    )
+    .join('');
+  if ($('questDialog').open) renderQuestCard();
+}
+/** The Quests card: each quest with its progress, reward, and a Claim button when done. */
+function renderQuestCard() {
+  $('questList').innerHTML = quests.quests
+    .map(
+      (q, i) =>
+        '<li class="quest-row ' +
+        (q.claimed ? 'claimed' : '') +
+        '"><span class="quest-art">' +
+        questArt(q) +
+        '</span><div class="quest-info"><b>' +
+        questLabel(q, types) +
+        '</b><span class="quest-bar"><i style="width:' +
+        Math.round((100 * q.progress) / q.target) +
+        '%"></i></span><small>' +
+        q.progress +
+        ' / ' +
+        q.target +
+        '</small></div>' +
+        (q.claimed
+          ? '<span class="quest-claimed" aria-label="Claimed">✓</span>'
+          : questDone(q)
+            ? '<button class="quest-claim primary" data-claim="' +
+              i +
+              '">Claim<span class="price-tag">' +
+              chipCoinIcon(true) +
+              q.reward +
+              '</span></button>'
+            : '<span class="price-tag quest-reward">' + chipCoinIcon(true) + q.reward + '</span>') +
+        '</li>',
+    )
+    .join('');
+  $('questReset').textContent = 'New quests at midnight';
+}
+function openQuests() {
+  refreshQuestDay();
+  renderQuests();
+  renderQuestCard();
+  const card = $('questDialog');
+  land(card);
+  if (card.open) return;
+  showCard(card);
+  enter(card, 'arrive');
+  setTimeout(() => sound.play('land'), 380);
+}
+function claim(index) {
+  const reward = claimQuest(quests, index);
+  if (!reward) return;
+  chipCoins += reward;
+  storage.saveChipCoins(chipCoins);
+  storage.saveQuests(quests);
+  sound.play('coin');
+  updateCharges();
+  renderQuests();
+  renderQuestCard();
+}
 /** Restarting a campaign level after making matches spends a Charge; the tutorial,
  * Endless, untouched boards, and the one-time layout upgrade are free. */
 function restartCosts() {
@@ -105,6 +243,7 @@ function restartCosts() {
 }
 /** Adds refilled Charges and redraws the battery wherever it shows. */
 function updateCharges() {
+  if (refreshQuestDay()) renderQuests();
   const now = Date.now(),
     settled = settle(charges, now);
   if (settled.count !== charges.count || settled.since !== charges.since) {
@@ -471,6 +610,7 @@ function render() {
     if (!state.claimed) {
       state.claimed = true;
       wins++;
+      if (!state.tutorial) questTick({ clear: true, firstTry: !!state.stage && !state.restarted });
     }
     if (state.stage && !completed.includes(state.stage)) completed.push(state.stage);
     say(
@@ -574,6 +714,8 @@ function choose(i) {
             .filter((n) => n >= 0);
         if (freed) sound.play(cover.breakSound);
         else if (cracked) sound.play(cover.crackSound);
+        if (!state.tutorial)
+          questTick({ connect: state.board[first] - 1, shields: freed + cracked });
         if (state.asleep) {
           state.asleep[first] = state.asleep[i] = 0;
           if (wakeNeighbors(state.asleep, first, i)) sound.play('wake');
@@ -665,6 +807,8 @@ function restartBoard() {
     return;
   }
   winKey = '';
+  // A restart after making matches means this attempt is no longer a first try (quests).
+  if (state.score) state.restarted = true;
   state.board = state.initial.slice();
   state.shields = state.initialShields.slice();
   state.history = [];
@@ -865,6 +1009,15 @@ $('stuckRestart').onclick = () => {
   paidRestart();
 };
 $('homeCharges').onclick = openCharges;
+$('challengesLeft').onclick = (e) => {
+  if (e.target.closest?.('[data-quest]')) openQuests();
+};
+$('questList').onclick = (e) => {
+  const button = e.target.closest?.('[data-claim]');
+  if (button) claim(Number(button.dataset.claim));
+};
+$('questClose').onclick = () => flyOut($('questDialog'));
+renderQuests();
 $('chargesClose').onclick = () => flyOut($('chargesDialog'));
 $('chargesRecharge').onclick = recharge;
 $('homeCoinIcon').innerHTML = $('rechargeCoin').innerHTML = chipCoinIcon(true);

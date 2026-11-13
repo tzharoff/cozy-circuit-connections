@@ -103,6 +103,14 @@ export function createStorage(storage) {
     saveChipCoins(coins) {
       write('circuitChipCoins', coins);
     },
+    /** Today's quests ({ day, quests }); anything unreadable means a fresh deal. */
+    loadQuests() {
+      const saved = read('circuitQuests');
+      return saved && typeof saved.day === 'string' && Array.isArray(saved.quests) ? saved : null;
+    },
+    saveQuests(quests) {
+      write('circuitQuests', quests);
+    },
     loadShapeChoice() {
       try {
         return storage.getItem('circuitShapeChoice') || 'random';

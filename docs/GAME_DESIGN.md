@@ -98,6 +98,24 @@ Decided November 11, 2026. The premium currency is **Chip Coins**: our own small
 - **Small sizes:** at price-tag size, drop the inner ring and bars and thicken the C so it stays readable.
 - Mockup colors: coin `#f6c94a`, edge `#c98a1a`, ring `#e0a92e`, C and bars `#7a4c06`.
 
+## Daily quests
+
+Built November 13, 2026, in the home screen's left challenge column. Three quests a day, dealt from the local date (so the same day always deals the same three, and new ones arrive at local midnight). Each is a different kind:
+
+| Kind      | Example                        | Counts                                                        | Reward (placeholder) |
+| --------- | ------------------------------ | ------------------------------------------------------------- | -------------------- |
+| Collect   | Collect 20 Lulos               | Individual chips of one Chip’um type matched (2 per match)    | 15 Chip Coins        |
+| Connect   | Make 40 connections            | Matches                                                       | 15                   |
+| Shields   | Break 8 shields                | Shield layers removed (a double shield counts twice)          | 20                   |
+| Clear     | Clear 3 levels                 | Campaign levels and Endless boards cleared (not the tutorial) | 20                   |
+| First try | Clear a level on the first try | Campaign levels cleared without restarting after a match      | 25                   |
+
+- **Home:** each quest is a round icon with a progress ring; a finished one glows gold with a "!" until claimed, then shows a check.
+- **Quests card:** tapping an icon opens it: each quest's label, progress bar, count, and reward, with a **Claim** button on finished quests. Claim adds the Chip Coins with the coin sound.
+- Progress counts only after the day's quests are dealt; the tutorial never counts. Saved as `circuitQuests`. Rules in `src/game/quests.js`.
+- The play room's Quests panel can finish all of today's quests or force a new day, for testing.
+- Open: final reward amounts, streak bonuses, and whether quests should ever be rerolled for coins.
+
 ## Hints
 
 Decided November 11, 2026. Each level (and each Endless board) gets **one free hint**; the tutorial's hints are always free. There is no penalty for not using it, and running out of moves is still announced by the failed card.
